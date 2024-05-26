@@ -31,10 +31,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             OrderStatusCB.ItemsSource = DBEntities.GetContext().OrderStatus.ToList();
             this.order = order;
             DataContext = this.order;
-
-            // Установка начальных значений для DatePicker и TimeTextBox
-            DatePicker.SelectedDate = order.DateTimeOrder.Date;
-            TimeTextBox.Text = order.DateTimeOrder.ToString("hh\\:mm");
         }
 
         private void SaveButton(object sender, RoutedEventArgs e)
@@ -64,12 +60,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
-                    order.IdMedicine = idMedicine;
-                    order.OrderDescription = OrderDescriptionTB.Text;
-                    order.Count = count;
-                    order.IdOrderStatus = idOrderStatus;
-                    order.DateTimeOrder = dateTimeOrder;
-
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     this.Close();
@@ -87,7 +77,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+                this.Close();
+            }
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
