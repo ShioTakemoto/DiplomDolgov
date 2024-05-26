@@ -69,7 +69,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+                this.Close();
+            }
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)

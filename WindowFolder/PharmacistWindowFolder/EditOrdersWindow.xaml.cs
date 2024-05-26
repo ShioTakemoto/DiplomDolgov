@@ -31,6 +31,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             OrderStatusCB.ItemsSource = DBEntities.GetContext().OrderStatus.ToList();
             this.order = order;
             DataContext = this.order;
+
+            // Установка начальных значений для DatePicker и TimeTextBox
+            DatePicker.SelectedDate = order.DateTimeOrder.Date;
+            TimeTextBox.Text = order.DateTimeOrder.ToString("hh\\:mm");
         }
 
         private void SaveButton(object sender, RoutedEventArgs e)

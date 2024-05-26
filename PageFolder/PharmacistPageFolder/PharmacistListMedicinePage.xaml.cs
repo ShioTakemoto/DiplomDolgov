@@ -144,7 +144,6 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().SaveChanges();
 
                     new MaterialDesignMessageBox($"{medicine.NameMedicine} успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-
                     // Обновление ListBox
                     LoadMedicines();
                     ListMedicineLB.Items.Refresh();
@@ -203,7 +202,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            new AddMedicineWindow().Show();
+            new AddMedicineWindow().ShowDialog();
             LoadMedicines();
             ListMedicineLB.Items.Refresh();
         }

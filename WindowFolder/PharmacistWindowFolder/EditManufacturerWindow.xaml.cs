@@ -24,16 +24,16 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
     public partial class EditManufacturerWindow : Window
     {
         private Manufacturer manufacturer;
-
         public EditManufacturerWindow(Manufacturer manufacturer)
         {
             InitializeComponent();
             this.manufacturer = manufacturer;
             DataContext = this.manufacturer;
+            // Загрузка списка стран производителей
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
 
-        
+
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -42,7 +42,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+                this.Close();
+            }
         }
 
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
@@ -72,7 +77,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         DBEntities.GetContext().ManufacturerCountry.Add(newManufacturerCountry);
                         DBEntities.GetContext().SaveChanges();
 
-                        ManufacturerCountryCB.ItemsSource = context.ManufacturerCountry.ToList();
+                        ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
                         ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
                     }
                 }
@@ -103,30 +108,17 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
-                    var manufacturerToUpdate = DBEntities.GetContext().Manufacturer.FirstOrDefault(u => u.IdManufacturer == manufacturer.IdManufacturer);
-                    // Преобразование значения из комбобокса
-                    int idManufacturerCountry = Convert.ToInt32(ManufacturerCountryCB.SelectedValue);
-                    if (manufacturerToUpdate != null)
+                    try
                     {
-                        // Сохранение данных
-                        manufacturerToUpdate.NameManufacturer = NameManufacturerTB.Text;
-                        manufacturerToUpdate.Address = AddressTB.Text;
-                        manufacturerToUpdate.PhoneNumberContactPersonManufacturer = PhoneNumberContactPersonManufacturerTB.Text;
-                        manufacturerToUpdate.EmailManufacturer = EmailManufacturerTB.Text;
-                        manufacturerToUpdate.ContactPersonName = ContactPersonNameTB.Text;
-                        manufacturerToUpdate.IdManufacturerCountry = idManufacturerCountry;
 
                         DBEntities.GetContext().SaveChanges();
-
-                        // Обновление ComboBox после сохранения изменений
-                        ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
 
                         new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
                         this.Close();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        new MaterialDesignMessageBox("Производитель не найден", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     }
                 }
                 else

@@ -52,7 +52,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+                this.Close();
+            }
         }
 
         private void AddPhoto(object sender, RoutedEventArgs e)
@@ -266,29 +271,16 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         new MaterialDesignMessageBox($"Длина инструкций не должна превышать {maxInstructionsLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
                         return;
                     }
-
-                    // Преобразование значений из комбобоксов
-                    int idTypeMedicine = Convert.ToInt32(TypeMedicineCB.SelectedValue);
-                    int idActiveSubstance = Convert.ToInt32(ActiveSubstanceCB.SelectedValue);
-                    int idManufacturer = Convert.ToInt32(ManufacturerCB.SelectedValue);
-                    int idReleaseForm = Convert.ToInt32(ReleaseFormCB.SelectedValue);
-                    int idBestBeforeDate = Convert.ToInt32(BestBeforeDateCB.SelectedValue);
-                    int idPrescriptionDrugStatus = Convert.ToInt32(PrescriptionDrugStatusCB.SelectedValue);
-
-                    medicine.NameMedicine = NameMedicineTB.Text;
-                    medicine.IdTypeMedicine = idTypeMedicine;
-                    medicine.IdActiveSubstance = idActiveSubstance;
-                    medicine.IdManufacturer = idManufacturer;
-                    medicine.IdReleaseForm = idReleaseForm;
-                    medicine.Dosage = dosage;
-                    medicine.IdBestBeforeDate = idBestBeforeDate;
-                    medicine.UnitsPerPackage = unitsPerPackage;
-                    medicine.Instructions = InstructionsTB.Text;
-                    medicine.IdPrescriptionDrugStatus = idPrescriptionDrugStatus;
-                    medicine.MedicinePhoto = !string.IsNullOrEmpty(selectedFileName) ? ImageClass.ConvertImageToByteArray(selectedFileName) : null;
-                    DBEntities.GetContext().SaveChanges();
-                    new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    this.Close();
+                    try
+                    {
+                        DBEntities.GetContext().SaveChanges();
+                        new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    }
                 }
                 else
                 {

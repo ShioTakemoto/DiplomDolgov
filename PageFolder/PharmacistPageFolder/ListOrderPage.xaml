@@ -98,7 +98,7 @@
                             Width="*"/>
 
                 <DataGridTextColumn Header="Описание"
-                            Binding="{Binding OrderDiscription}"
+                            Binding="{Binding OrderDescription}"
                             Width="*"/>
 
                 <DataGridTextColumn Header="Кол-во"
