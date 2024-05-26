@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.PharmacistWindowFolder"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Добавление производителя" Height="500" Width="800"
+        Title="Редактирование производителя" Height="500" Width="800"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Grid>
@@ -171,7 +171,7 @@
                 Background="#FF8B7249" 
                 Foreground="White"
                 FontFamily="Roboto" 
-                Click="SaveButton"
+                Click="SaveManufacturerButton"
                 FontSize="20"
                 Grid.Row="4"
                 Grid.Column="1"

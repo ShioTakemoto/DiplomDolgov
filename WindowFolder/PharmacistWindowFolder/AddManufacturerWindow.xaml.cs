@@ -83,14 +83,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    // Проверка телефонного номера на наличие только цифр
                     if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
                     {
                         new MaterialDesignMessageBox("Номер телефона должен содержать только цифры", MessageType.Error, MessageButtons.Ok).ShowDialog();
                         return;
                     }
 
-                    // Проверка имени контактной персоны на наличие только букв
                     if (!ContactPersonNameTB.Text.All(char.IsLetter))
                     {
                         new MaterialDesignMessageBox("Имя контактной персоны должно содержать только буквы", MessageType.Error, MessageButtons.Ok).ShowDialog();
@@ -102,14 +100,13 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                     var context = DBEntities.GetContext();
 
-                    var existingManufacturer = context.Manufacturer
-                        .FirstOrDefault(m =>
-                            m.NameManufacturer == NameManufacturerTB.Text &&
-                            m.Address == AddressTB.Text &&
-                            m.PhoneNumberContactPersonManufacturer == PhoneNumberContactPersonManufacturerTB.Text &&
-                            m.EmailManufacturer == EmailManufacturerTB.Text &&
-                            m.ContactPersonName == ContactPersonNameTB.Text &&
-                            m.IdManufacturerCountry == idManufacturerCountry);
+                    var existingManufacturer = context.Manufacturer.FirstOrDefault(m =>
+                        m.NameManufacturer == NameManufacturerTB.Text &&
+                        m.Address == AddressTB.Text &&
+                        m.PhoneNumberContactPersonManufacturer == PhoneNumberContactPersonManufacturerTB.Text &&
+                        m.EmailManufacturer == EmailManufacturerTB.Text &&
+                        m.ContactPersonName == ContactPersonNameTB.Text &&
+                        m.IdManufacturerCountry == idManufacturerCountry);
 
                     if (existingManufacturer != null)
                     {
@@ -140,7 +137,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
     }

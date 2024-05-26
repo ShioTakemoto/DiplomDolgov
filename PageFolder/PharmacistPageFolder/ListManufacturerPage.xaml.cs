@@ -29,7 +29,6 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             InitializeComponent();
             LoadManufacturerCountries();
-            Search();
         }
 
         private void LoadManufacturerCountries()
@@ -157,7 +156,6 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             new EditManufacturerWindow(manufacturer).ShowDialog();
-            RefreshDataGrid();
         }
 
         private void RefreshDataGrid()

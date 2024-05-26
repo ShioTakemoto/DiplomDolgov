@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -217,7 +218,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             try
             {
-
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
                     string dosageText = DosageTB.Text.Trim();
@@ -234,6 +234,36 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     if (!int.TryParse(UnitsPerPackageTB.Text, out var unitsPerPackage))
                     {
                         new MaterialDesignMessageBox("Неверный формат количества единиц в упаковке", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    // Проверка на допустимость значений дозировки и количества единиц в упаковке
+                    if (dosage <= 0 || unitsPerPackage <= 0)
+                    {
+                        new MaterialDesignMessageBox("Дозировка и количество единиц в упаковке должны быть положительными числами!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    // Проверка на допустимость символов в наименовании лекарства
+                    if (!ContainsOnlyLetters(NameMedicineTB.Text))
+                    {
+                        new MaterialDesignMessageBox("Некорректное наименование лекарства! Используйте только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    int maxNameLength = 100; // Максимальная длина наименования
+                    int maxInstructionsLength = 1000; // Максимальная длина инструкций
+
+                    // Проверка на длину наименования и инструкций
+                    if (NameMedicineTB.Text.Length > maxNameLength)
+                    {
+                        new MaterialDesignMessageBox($"Длина наименования лекарства не должна превышать {maxNameLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    if (InstructionsTB.Text.Length > maxInstructionsLength)
+                    {
+                        new MaterialDesignMessageBox($"Длина инструкций не должна превышать {maxInstructionsLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
                         return;
                     }
 
@@ -270,7 +300,13 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
+
         private bool IsValidName(string input)
+        {
+            return !Regex.IsMatch(input, @"\d");
+        }
+
+        private bool ContainsOnlyLetters(string input)
         {
             return input.All(char.IsLetter);
         }

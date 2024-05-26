@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -103,6 +104,29 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
+                    // Проверка на допустимость символов в наименовании лекарства
+                    if (!ContainsOnlyLetters(NameMedicineTB.Text))
+                    {
+                        new MaterialDesignMessageBox("Некорректное наименование лекарства! Используйте только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    int maxNameLength = 100; // Максимальная длина наименования
+                    int maxInstructionsLength = 1000; // Максимальная длина инструкций
+
+                    // Проверка на длину наименования и инструкций
+                    if (NameMedicineTB.Text.Length > maxNameLength)
+                    {
+                        new MaterialDesignMessageBox($"Длина наименования лекарства не должна превышать {maxNameLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    if (InstructionsTB.Text.Length > maxInstructionsLength)
+                    {
+                        new MaterialDesignMessageBox($"Длина инструкций не должна превышать {maxInstructionsLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
                     // Преобразование значений из комбобоксов
                     int idTypeMedicine = Convert.ToInt32(TypeMedicineCB.SelectedValue);
                     int idActiveSubstance = Convert.ToInt32(ActiveSubstanceCB.SelectedValue);
@@ -165,6 +189,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
+
         private void AddTypeMedicine(object sender, RoutedEventArgs e)
         {
             var inputWindow = new InputDialogWindow("Введите новый тип медикамента");
@@ -302,6 +327,11 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         }
 
         private bool IsValidName(string input)
+        {
+            return !Regex.IsMatch(input, @"\d");
+        }
+
+        private bool ContainsOnlyLetters(string input)
         {
             return input.All(char.IsLetter);
         }

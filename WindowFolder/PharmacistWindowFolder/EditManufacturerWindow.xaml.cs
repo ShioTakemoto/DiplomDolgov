@@ -23,69 +23,13 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
     public partial class EditManufacturerWindow : Window
     {
         private Manufacturer manufacturer;
-
         public EditManufacturerWindow(Manufacturer manufacturer)
         {
+            InitializeComponent();
             this.manufacturer = manufacturer;
             DataContext = this.manufacturer;
-            InitializeComponent();
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
-
-        private void SaveButton(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ElementsToolsClass.AllFieldsFilled(this))
-                {
-                    // Проверка телефонного номера на наличие только цифр
-                    if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
-                    {
-                        new MaterialDesignMessageBox("Номер телефона должен содержать только цифры", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
-
-                    // Проверка имени контактной персоны на наличие только букв
-                    if (!ContactPersonNameTB.Text.All(char.IsLetter))
-                    {
-                        new MaterialDesignMessageBox("Имя контактной персоны должно содержать только буквы", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
-
-                    // Преобразование значений из комбобоксов
-                    int idManufacturerCountry = Convert.ToInt32(ManufacturerCountryCB.SelectedValue);
-
-                        manufacturer.NameManufacturer = NameManufacturerTB.Text;
-                        manufacturer.Address = AddressTB.Text;
-                        manufacturer.PhoneNumberContactPersonManufacturer = PhoneNumberContactPersonManufacturerTB.Text;
-                        manufacturer.EmailManufacturer = EmailManufacturerTB.Text;
-                        manufacturer.ContactPersonName = ContactPersonNameTB.Text;
-                        manufacturer.IdManufacturerCountry = idManufacturerCountry;
-                        DBEntities.GetContext().SaveChanges();
-                    new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    this.Close();
-                    }
-                else
-                {
-                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-            }
-            catch (Exception ex)
-            {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
-            }
-        }
-
-        private void MinusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void ExitBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
         {
             var inputWindow = new InputDialogWindow("Введите новую страну производителя");
@@ -119,6 +63,75 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 }
             }
         }
+
+        private void SaveManufacturerButton(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(NameManufacturerTB.Text))
+                {
+                    new MaterialDesignMessageBox("Введите название производителя", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else if (string.IsNullOrEmpty(AddressTB.Text))
+                {
+                    new MaterialDesignMessageBox("Введите адрес", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else if (string.IsNullOrEmpty(PhoneNumberContactPersonManufacturerTB.Text))
+                {
+                    new MaterialDesignMessageBox("Введите номер телефона", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else if (string.IsNullOrEmpty(EmailManufacturerTB.Text))
+                {
+                    new MaterialDesignMessageBox("Введите почту", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else if (string.IsNullOrEmpty(ContactPersonNameTB.Text))
+                {
+                    new MaterialDesignMessageBox("Введите имя контактного лица", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else if (ManufacturerCountryCB.SelectedIndex == -1)
+                {
+                    new MaterialDesignMessageBox("Вы не выбрали страну производителя", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
+                else
+                {
+                    var manufacturerToUpdate = DBEntities.GetContext().Manufacturer.FirstOrDefault(m => m.IdManufacturer == manufacturer.IdManufacturer);
+
+                    if (manufacturerToUpdate != null)
+                    {
+                        manufacturerToUpdate.NameManufacturer = NameManufacturerTB.Text;
+                        manufacturerToUpdate.Address = AddressTB.Text;
+                        manufacturerToUpdate.PhoneNumberContactPersonManufacturer = PhoneNumberContactPersonManufacturerTB.Text;
+                        manufacturerToUpdate.EmailManufacturer = EmailManufacturerTB.Text;
+                        manufacturerToUpdate.ContactPersonName = ContactPersonNameTB.Text;
+                        manufacturerToUpdate.IdManufacturerCountry = (int)ManufacturerCountryCB.SelectedValue;
+
+                        DBEntities.GetContext().SaveChanges();
+                        new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        new MaterialDesignMessageBox("Производитель не найден", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+            }
+        }
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        
         private bool IsValidName(string input)
         {
             return input.All(char.IsLetter);
