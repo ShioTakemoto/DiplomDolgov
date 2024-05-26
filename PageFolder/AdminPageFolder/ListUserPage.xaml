@@ -1,0 +1,139 @@
+﻿<Page x:Class="DiplomDolgov.PageFolder.AdminPageFolder.ListUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiplomDolgov.PageFolder.AdminPageFolder"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="Список пользователей">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
+
+        <TextBox Name="SearchTB"
+                 VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Left"
+                 FontFamily="Roboto"
+                 Grid.Column="1"
+                 materialDesign:HintAssist.Hint="Поиск"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="1"
+                 Width="580"
+                 Height="50"
+                 FontSize="20"
+                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Foreground="#FF152D51" 
+                 SelectionBrush="#FF152D51" 
+                 CaretBrush="#FF152D51" 
+                 BorderBrush="#FF152D51"
+                 TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
+
+        <ComboBox Name="RoleCB"
+          Grid.Column="4"
+          Grid.Row="1"
+          SelectedValuePath="IdRole"
+          SelectedItem="{Binding Role}"
+          DisplayMemberPath="NameRole"
+          FontSize="13"
+          Height="50"
+          Style="{StaticResource MaterialDesignComboBox}"
+          materialDesign:HintAssist.Hint="Роль"
+          BorderThickness="0 0 0 1"
+          SelectionChanged="RoleCB_SelectionChanged"/>
+
+        <DataGrid x:Name="ListUserDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding User}" Grid.Row="2" Grid.Column="1"
+          Grid.ColumnSpan="4"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить пользователя" x:Name="DeleteM1"
+                      Click="DeleteM1_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать пользователя" x:Name="EditM1"
+                      Click="EditM1_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Логин"
+                            Binding="{Binding LoginUser}"
+                            Width="*"/>
+
+                <DataGridTextColumn Header="Пароль"
+                            Binding="{Binding PasswordUser}"
+                            Width="*"/>
+
+                <DataGridTextColumn Header="Роль"
+                            Binding="{Binding NameRole}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Name="TogglePasswords" BorderBrush="Black" Background="#00000000" 
+                Foreground="#00000000" 
+                Height="20" 
+                Width="20" 
+                Grid.Column="2" 
+                Grid.Row="2" Margin="190,60,40,20" Click="TogglePasswords_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="\Resources\Eye.png" />
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <TextBlock x:Name="AddUserForgot"
+                Text="Добавить"
+                Foreground="#FF152D51"
+                Grid.Column="5"
+                Grid.Row="1"
+                Height="25"
+                Width="100"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                TextDecorations="Underline"
+                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+                Cursor="Hand" Margin="70,41,0,0"/>
+
+        <Image Source="\Resources\AddUser.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
+
+    </Grid>
+</Page>

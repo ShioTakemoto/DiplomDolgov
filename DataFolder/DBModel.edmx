@@ -1,0 +1,1274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActiveSubstance">
+          <Key>
+            <PropertyRef Name="IdActiveSubstance" />
+          </Key>
+          <Property Name="IdActiveSubstance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameActiveSubstance" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BestBeforeDate">
+          <Key>
+            <PropertyRef Name="IdBestBeforeDate" />
+          </Key>
+          <Property Name="IdBestBeforeDate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameBestBeforeDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="IdGender" />
+          </Key>
+          <Property Name="IdGender" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameGender" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Guests">
+          <Key>
+            <PropertyRef Name="IdGuest" />
+          </Key>
+          <Property Name="IdGuest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRoom" Type="int" Nullable="false" />
+          <Property Name="PhoneNumberGuest" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="EmailGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdGender" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="IdManufacturer" />
+          </Key>
+          <Property Name="IdManufacturer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PhoneNumberContactPersonManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactPersonName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdManufacturerCountry" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManufacturerCountry">
+          <Key>
+            <PropertyRef Name="IdManufacturerCountry" />
+          </Key>
+          <Property Name="IdManufacturerCountry" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameManufacturerCountry" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medicine">
+          <Key>
+            <PropertyRef Name="IdMedicine" />
+          </Key>
+          <Property Name="IdMedicine" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameMedicine" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTypeMedicine" Type="int" Nullable="false" />
+          <Property Name="IdActiveSubstance" Type="int" Nullable="false" />
+          <Property Name="IdManufacturer" Type="int" Nullable="false" />
+          <Property Name="IdReleaseForm" Type="int" Nullable="false" />
+          <Property Name="Dosage" Type="decimal" Precision="5" Scale="5" Nullable="false" />
+          <Property Name="IdBestBeforeDate" Type="int" Nullable="false" />
+          <Property Name="UnitsPerPackage" Type="int" Nullable="false" />
+          <Property Name="Instructions" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdPrescriptionDrugStatus" Type="int" Nullable="false" />
+          <Property Name="MedicinePhoto" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="IdOrder" />
+          </Key>
+          <Property Name="IdOrder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="OrderDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="int" Nullable="false" />
+          <Property Name="DateTimeOrder" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="IdOrderStatus" />
+          </Key>
+          <Property Name="IdOrderStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameOrderStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="IdPost" />
+          </Key>
+          <Property Name="IdPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePost" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PrescriptionDrugStatus">
+          <Key>
+            <PropertyRef Name="IdPrescriptionDrugStatus" />
+          </Key>
+          <Property Name="IdPrescriptionDrugStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePrescriptionDrugStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Realization">
+          <Key>
+            <PropertyRef Name="IdRealization" />
+          </Key>
+          <Property Name="IdRealization" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStaff" Type="int" />
+          <Property Name="IdGuest" Type="int" />
+          <Property Name="DateTimeRealization" Type="datetime" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReleaseForm">
+          <Key>
+            <PropertyRef Name="IdReleaseForm" />
+          </Key>
+          <Property Name="IdReleaseForm" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameReleaseForm" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="IdRoom" />
+          </Key>
+          <Property Name="IdRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="IdStaff" />
+          </Key>
+          <Property Name="IdStaff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdPost" Type="int" Nullable="false" />
+          <Property Name="EmailStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumberStaff" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StaffPhoto" Type="varbinary(max)" />
+          <Property Name="IdGender" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockUnit">
+          <Key>
+            <PropertyRef Name="IdStockUnit" />
+          </Key>
+          <Property Name="IdStockUnit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypeMedicine">
+          <Key>
+            <PropertyRef Name="IdTypeMedicine" />
+          </Key>
+          <Property Name="IdTypeMedicine" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTypeMedicine" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Guests_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="IdRoom" />
+            </Principal>
+            <Dependent Role="Guests">
+              <PropertyRef Name="IdRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Manufacturer_ManufacturerCountry">
+          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="1" />
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManufacturerCountry">
+              <PropertyRef Name="IdManufacturerCountry" />
+            </Principal>
+            <Dependent Role="Manufacturer">
+              <PropertyRef Name="IdManufacturerCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_ActiveSubstance">
+          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActiveSubstance">
+              <PropertyRef Name="IdActiveSubstance" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdActiveSubstance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_BestBeforeDate">
+          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BestBeforeDate">
+              <PropertyRef Name="IdBestBeforeDate" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdBestBeforeDate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="IdManufacturer" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdManufacturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_PrescriptionDrugStatus">
+          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrescriptionDrugStatus">
+              <PropertyRef Name="IdPrescriptionDrugStatus" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdPrescriptionDrugStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_ReleaseForm">
+          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReleaseForm">
+              <PropertyRef Name="IdReleaseForm" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdReleaseForm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_TypeMedicine">
+          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeMedicine">
+              <PropertyRef Name="IdTypeMedicine" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdTypeMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="IdOrderStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Guests">
+          <End Role="Guests" Type="Self.Guests" Multiplicity="0..1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guests">
+              <PropertyRef Name="IdGuest" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdGuest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="IdStaff" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="IdGender" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockUnit_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="StockUnit" Type="Self.StockUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="StockUnit">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DBModelContainer">
+          <EntitySet Name="ActiveSubstance" EntityType="Self.ActiveSubstance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BestBeforeDate" EntityType="Self.BestBeforeDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Guests" EntityType="Self.Guests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManufacturerCountry" EntityType="Self.ManufacturerCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrescriptionDrugStatus" EntityType="Self.PrescriptionDrugStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Realization" EntityType="Self.Realization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReleaseForm" EntityType="Self.ReleaseForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockUnit" EntityType="Self.StockUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeMedicine" EntityType="Self.TypeMedicine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Guests_Room" Association="Self.FK_Guests_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Guests" EntitySet="Guests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manufacturer_ManufacturerCountry" Association="Self.FK_Manufacturer_ManufacturerCountry">
+            <End Role="ManufacturerCountry" EntitySet="ManufacturerCountry" />
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_ActiveSubstance" Association="Self.FK_Medicine_ActiveSubstance">
+            <End Role="ActiveSubstance" EntitySet="ActiveSubstance" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_BestBeforeDate" Association="Self.FK_Medicine_BestBeforeDate">
+            <End Role="BestBeforeDate" EntitySet="BestBeforeDate" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_Manufacturer" Association="Self.FK_Medicine_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_PrescriptionDrugStatus" Association="Self.FK_Medicine_PrescriptionDrugStatus">
+            <End Role="PrescriptionDrugStatus" EntitySet="PrescriptionDrugStatus" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_ReleaseForm" Association="Self.FK_Medicine_ReleaseForm">
+            <End Role="ReleaseForm" EntitySet="ReleaseForm" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_TypeMedicine" Association="Self.FK_Medicine_TypeMedicine">
+            <End Role="TypeMedicine" EntitySet="TypeMedicine" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Medicine" Association="Self.FK_Orders_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_OrderStatus" Association="Self.FK_Orders_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Guests" Association="Self.FK_Realization_Guests">
+            <End Role="Guests" EntitySet="Guests" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Medicine" Association="Self.FK_Realization_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Staff" Association="Self.FK_Realization_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Gender" Association="Self.FK_Staff_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Post" Association="Self.FK_Staff_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockUnit_Medicine" Association="Self.FK_StockUnit_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="StockUnit" EntitySet="StockUnit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActiveSubstance">
+          <Key>
+            <PropertyRef Name="IdActiveSubstance" />
+          </Key>
+          <Property Name="IdActiveSubstance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameActiveSubstance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_ActiveSubstance" FromRole="ActiveSubstance" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="BestBeforeDate">
+          <Key>
+            <PropertyRef Name="IdBestBeforeDate" />
+          </Key>
+          <Property Name="IdBestBeforeDate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameBestBeforeDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_BestBeforeDate" FromRole="BestBeforeDate" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="IdGender" />
+          </Key>
+          <Property Name="IdGender" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameGender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_Gender" FromRole="Gender" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Guests">
+          <Key>
+            <PropertyRef Name="IdGuest" />
+          </Key>
+          <Property Name="IdGuest" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRoom" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNumberGuest" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdGender" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_Guests_Room" FromRole="Guests" ToRole="Room" />
+          <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_Guests" FromRole="Guests" ToRole="Realization" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="IdManufacturer" />
+          </Key>
+          <Property Name="IdManufacturer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumberContactPersonManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactPersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdManufacturerCountry" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ManufacturerCountry" Relationship="Self.FK_Manufacturer_ManufacturerCountry" FromRole="Manufacturer" ToRole="ManufacturerCountry" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_Manufacturer" FromRole="Manufacturer" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="ManufacturerCountry">
+          <Key>
+            <PropertyRef Name="IdManufacturerCountry" />
+          </Key>
+          <Property Name="IdManufacturerCountry" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameManufacturerCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Manufacturer" Relationship="Self.FK_Manufacturer_ManufacturerCountry" FromRole="ManufacturerCountry" ToRole="Manufacturer" />
+        </EntityType>
+        <EntityType Name="Medicine">
+          <Key>
+            <PropertyRef Name="IdMedicine" />
+          </Key>
+          <Property Name="IdMedicine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameMedicine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdTypeMedicine" Type="Int32" Nullable="false" />
+          <Property Name="IdActiveSubstance" Type="Int32" Nullable="false" />
+          <Property Name="IdManufacturer" Type="Int32" Nullable="false" />
+          <Property Name="IdReleaseForm" Type="Int32" Nullable="false" />
+          <Property Name="Dosage" Type="Decimal" Precision="5" Scale="5" Nullable="false" />
+          <Property Name="IdBestBeforeDate" Type="Int32" Nullable="false" />
+          <Property Name="UnitsPerPackage" Type="Int32" Nullable="false" />
+          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdPrescriptionDrugStatus" Type="Int32" Nullable="false" />
+          <Property Name="MedicinePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ActiveSubstance" Relationship="Self.FK_Medicine_ActiveSubstance" FromRole="Medicine" ToRole="ActiveSubstance" />
+          <NavigationProperty Name="BestBeforeDate" Relationship="Self.FK_Medicine_BestBeforeDate" FromRole="Medicine" ToRole="BestBeforeDate" />
+          <NavigationProperty Name="Manufacturer" Relationship="Self.FK_Medicine_Manufacturer" FromRole="Medicine" ToRole="Manufacturer" />
+          <NavigationProperty Name="PrescriptionDrugStatus" Relationship="Self.FK_Medicine_PrescriptionDrugStatus" FromRole="Medicine" ToRole="PrescriptionDrugStatus" />
+          <NavigationProperty Name="ReleaseForm" Relationship="Self.FK_Medicine_ReleaseForm" FromRole="Medicine" ToRole="ReleaseForm" />
+          <NavigationProperty Name="TypeMedicine" Relationship="Self.FK_Medicine_TypeMedicine" FromRole="Medicine" ToRole="TypeMedicine" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Medicine" FromRole="Medicine" ToRole="Orders" />
+          <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_Medicine" FromRole="Medicine" ToRole="Realization" />
+          <NavigationProperty Name="StockUnit" Relationship="Self.FK_StockUnit_Medicine" FromRole="Medicine" ToRole="StockUnit" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="IdOrder" />
+          </Key>
+          <Property Name="IdOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="OrderDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" />
+          <Property Name="DateTimeOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Orders_Medicine" FromRole="Orders" ToRole="Medicine" />
+          <NavigationProperty Name="OrderStatus" Relationship="Self.FK_Orders_OrderStatus" FromRole="Orders" ToRole="OrderStatus" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="IdOrderStatus" />
+          </Key>
+          <Property Name="IdOrderStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameOrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_OrderStatus" FromRole="OrderStatus" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="IdPost" />
+          </Key>
+          <Property Name="IdPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_Post" FromRole="Post" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="PrescriptionDrugStatus">
+          <Key>
+            <PropertyRef Name="IdPrescriptionDrugStatus" />
+          </Key>
+          <Property Name="IdPrescriptionDrugStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePrescriptionDrugStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_PrescriptionDrugStatus" FromRole="PrescriptionDrugStatus" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="Realization">
+          <Key>
+            <PropertyRef Name="IdRealization" />
+          </Key>
+          <Property Name="IdRealization" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStaff" Type="Int32" />
+          <Property Name="IdGuest" Type="Int32" />
+          <Property Name="DateTimeRealization" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Guests" Relationship="Self.FK_Realization_Guests" FromRole="Realization" ToRole="Guests" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Realization_Medicine" FromRole="Realization" ToRole="Medicine" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Realization_Staff" FromRole="Realization" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="ReleaseForm">
+          <Key>
+            <PropertyRef Name="IdReleaseForm" />
+          </Key>
+          <Property Name="IdReleaseForm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameReleaseForm" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_ReleaseForm" FromRole="ReleaseForm" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="IdRoom" />
+          </Key>
+          <Property Name="IdRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Guests" Relationship="Self.FK_Guests_Room" FromRole="Room" ToRole="Guests" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="IdStaff" />
+          </Key>
+          <Property Name="IdStaff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdPost" Type="Int32" Nullable="false" />
+          <Property Name="EmailStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumberStaff" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdGender" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Staff_Gender" FromRole="Staff" ToRole="Gender" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Staff_Post" FromRole="Staff" ToRole="Post" />
+          <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_Staff" FromRole="Staff" ToRole="Realization" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Staff_User" FromRole="Staff" ToRole="User" />
+        </EntityType>
+        <EntityType Name="StockUnit">
+          <Key>
+            <PropertyRef Name="IdStockUnit" />
+          </Key>
+          <Property Name="IdStockUnit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_StockUnit_Medicine" FromRole="StockUnit" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeMedicine">
+          <Key>
+            <PropertyRef Name="IdTypeMedicine" />
+          </Key>
+          <Property Name="IdTypeMedicine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTypeMedicine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_TypeMedicine" FromRole="TypeMedicine" ToRole="Medicine" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_User" FromRole="User" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK_Medicine_ActiveSubstance">
+          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActiveSubstance">
+              <PropertyRef Name="IdActiveSubstance" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdActiveSubstance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_BestBeforeDate">
+          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BestBeforeDate">
+              <PropertyRef Name="IdBestBeforeDate" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdBestBeforeDate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="IdGender" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guests_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="IdRoom" />
+            </Principal>
+            <Dependent Role="Guests">
+              <PropertyRef Name="IdRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Guests">
+          <End Role="Guests" Type="Self.Guests" Multiplicity="0..1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guests">
+              <PropertyRef Name="IdGuest" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdGuest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Manufacturer_ManufacturerCountry">
+          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="1" />
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManufacturerCountry">
+              <PropertyRef Name="IdManufacturerCountry" />
+            </Principal>
+            <Dependent Role="Manufacturer">
+              <PropertyRef Name="IdManufacturerCountry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="IdManufacturer" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdManufacturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_PrescriptionDrugStatus">
+          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrescriptionDrugStatus">
+              <PropertyRef Name="IdPrescriptionDrugStatus" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdPrescriptionDrugStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_ReleaseForm">
+          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReleaseForm">
+              <PropertyRef Name="IdReleaseForm" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdReleaseForm" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medicine_TypeMedicine">
+          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeMedicine">
+              <PropertyRef Name="IdTypeMedicine" />
+            </Principal>
+            <Dependent Role="Medicine">
+              <PropertyRef Name="IdTypeMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockUnit_Medicine">
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="StockUnit" Type="Self.StockUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medicine">
+              <PropertyRef Name="IdMedicine" />
+            </Principal>
+            <Dependent Role="StockUnit">
+              <PropertyRef Name="IdMedicine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_OrderStatus">
+          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="IdOrderStatus" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="IdOrderStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="IdStaff" />
+            </Principal>
+            <Dependent Role="Realization">
+              <PropertyRef Name="IdStaff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActiveSubstance" EntityType="Self.ActiveSubstance" />
+          <EntitySet Name="BestBeforeDate" EntityType="Self.BestBeforeDate" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Guests" EntityType="Self.Guests" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" />
+          <EntitySet Name="ManufacturerCountry" EntityType="Self.ManufacturerCountry" />
+          <EntitySet Name="Medicine" EntityType="Self.Medicine" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="PrescriptionDrugStatus" EntityType="Self.PrescriptionDrugStatus" />
+          <EntitySet Name="Realization" EntityType="Self.Realization" />
+          <EntitySet Name="ReleaseForm" EntityType="Self.ReleaseForm" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Room" EntityType="Self.Room" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="StockUnit" EntityType="Self.StockUnit" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypeMedicine" EntityType="Self.TypeMedicine" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Medicine_ActiveSubstance" Association="Self.FK_Medicine_ActiveSubstance">
+            <End Role="ActiveSubstance" EntitySet="ActiveSubstance" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_BestBeforeDate" Association="Self.FK_Medicine_BestBeforeDate">
+            <End Role="BestBeforeDate" EntitySet="BestBeforeDate" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Gender" Association="Self.FK_Staff_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guests_Room" Association="Self.FK_Guests_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Guests" EntitySet="Guests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Guests" Association="Self.FK_Realization_Guests">
+            <End Role="Guests" EntitySet="Guests" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manufacturer_ManufacturerCountry" Association="Self.FK_Manufacturer_ManufacturerCountry">
+            <End Role="ManufacturerCountry" EntitySet="ManufacturerCountry" />
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_Manufacturer" Association="Self.FK_Medicine_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_PrescriptionDrugStatus" Association="Self.FK_Medicine_PrescriptionDrugStatus">
+            <End Role="PrescriptionDrugStatus" EntitySet="PrescriptionDrugStatus" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_ReleaseForm" Association="Self.FK_Medicine_ReleaseForm">
+            <End Role="ReleaseForm" EntitySet="ReleaseForm" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medicine_TypeMedicine" Association="Self.FK_Medicine_TypeMedicine">
+            <End Role="TypeMedicine" EntitySet="TypeMedicine" />
+            <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Medicine" Association="Self.FK_Orders_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Medicine" Association="Self.FK_Realization_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockUnit_Medicine" Association="Self.FK_StockUnit_Medicine">
+            <End Role="Medicine" EntitySet="Medicine" />
+            <End Role="StockUnit" EntitySet="StockUnit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_OrderStatus" Association="Self.FK_Orders_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Post" Association="Self.FK_Staff_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Staff" Association="Self.FK_Realization_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Realization" EntitySet="Realization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="ActiveSubstance">
+            <EntityTypeMapping TypeName="DBModel.ActiveSubstance">
+              <MappingFragment StoreEntitySet="ActiveSubstance">
+                <ScalarProperty Name="IdActiveSubstance" ColumnName="IdActiveSubstance" />
+                <ScalarProperty Name="NameActiveSubstance" ColumnName="NameActiveSubstance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BestBeforeDate">
+            <EntityTypeMapping TypeName="DBModel.BestBeforeDate">
+              <MappingFragment StoreEntitySet="BestBeforeDate">
+                <ScalarProperty Name="IdBestBeforeDate" ColumnName="IdBestBeforeDate" />
+                <ScalarProperty Name="NameBestBeforeDate" ColumnName="NameBestBeforeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="DBModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
+                <ScalarProperty Name="NameGender" ColumnName="NameGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Guests">
+            <EntityTypeMapping TypeName="DBModel.Guests">
+              <MappingFragment StoreEntitySet="Guests">
+                <ScalarProperty Name="IdGuest" ColumnName="IdGuest" />
+                <ScalarProperty Name="LastNameGuest" ColumnName="LastNameGuest" />
+                <ScalarProperty Name="FirstNameGuest" ColumnName="FirstNameGuest" />
+                <ScalarProperty Name="MiddleNameGuest" ColumnName="MiddleNameGuest" />
+                <ScalarProperty Name="IdRoom" ColumnName="IdRoom" />
+                <ScalarProperty Name="PhoneNumberGuest" ColumnName="PhoneNumberGuest" />
+                <ScalarProperty Name="EmailGuest" ColumnName="EmailGuest" />
+                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturer">
+            <EntityTypeMapping TypeName="DBModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="IdManufacturer" ColumnName="IdManufacturer" />
+                <ScalarProperty Name="NameManufacturer" ColumnName="NameManufacturer" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumberContactPersonManufacturer" ColumnName="PhoneNumberContactPersonManufacturer" />
+                <ScalarProperty Name="EmailManufacturer" ColumnName="EmailManufacturer" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="IdManufacturerCountry" ColumnName="IdManufacturerCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManufacturerCountry">
+            <EntityTypeMapping TypeName="DBModel.ManufacturerCountry">
+              <MappingFragment StoreEntitySet="ManufacturerCountry">
+                <ScalarProperty Name="IdManufacturerCountry" ColumnName="IdManufacturerCountry" />
+                <ScalarProperty Name="NameManufacturerCountry" ColumnName="NameManufacturerCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medicine">
+            <EntityTypeMapping TypeName="DBModel.Medicine">
+              <MappingFragment StoreEntitySet="Medicine">
+                <ScalarProperty Name="IdMedicine" ColumnName="IdMedicine" />
+                <ScalarProperty Name="NameMedicine" ColumnName="NameMedicine" />
+                <ScalarProperty Name="IdTypeMedicine" ColumnName="IdTypeMedicine" />
+                <ScalarProperty Name="IdActiveSubstance" ColumnName="IdActiveSubstance" />
+                <ScalarProperty Name="IdManufacturer" ColumnName="IdManufacturer" />
+                <ScalarProperty Name="IdReleaseForm" ColumnName="IdReleaseForm" />
+                <ScalarProperty Name="Dosage" ColumnName="Dosage" />
+                <ScalarProperty Name="IdBestBeforeDate" ColumnName="IdBestBeforeDate" />
+                <ScalarProperty Name="UnitsPerPackage" ColumnName="UnitsPerPackage" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+                <ScalarProperty Name="IdPrescriptionDrugStatus" ColumnName="IdPrescriptionDrugStatus" />
+                <ScalarProperty Name="MedicinePhoto" ColumnName="MedicinePhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DBModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="IdMedicine" ColumnName="IdMedicine" />
+                <ScalarProperty Name="OrderDescription" ColumnName="OrderDescription" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
+                <ScalarProperty Name="DateTimeOrder" ColumnName="DateTimeOrder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="DBModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="IdOrderStatus" ColumnName="IdOrderStatus" />
+                <ScalarProperty Name="NameOrderStatus" ColumnName="NameOrderStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="DBModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="NamePost" ColumnName="NamePost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrescriptionDrugStatus">
+            <EntityTypeMapping TypeName="DBModel.PrescriptionDrugStatus">
+              <MappingFragment StoreEntitySet="PrescriptionDrugStatus">
+                <ScalarProperty Name="IdPrescriptionDrugStatus" ColumnName="IdPrescriptionDrugStatus" />
+                <ScalarProperty Name="NamePrescriptionDrugStatus" ColumnName="NamePrescriptionDrugStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Realization">
+            <EntityTypeMapping TypeName="DBModel.Realization">
+              <MappingFragment StoreEntitySet="Realization">
+                <ScalarProperty Name="IdRealization" ColumnName="IdRealization" />
+                <ScalarProperty Name="IdStaff" ColumnName="IdStaff" />
+                <ScalarProperty Name="IdGuest" ColumnName="IdGuest" />
+                <ScalarProperty Name="DateTimeRealization" ColumnName="DateTimeRealization" />
+                <ScalarProperty Name="IdMedicine" ColumnName="IdMedicine" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReleaseForm">
+            <EntityTypeMapping TypeName="DBModel.ReleaseForm">
+              <MappingFragment StoreEntitySet="ReleaseForm">
+                <ScalarProperty Name="IdReleaseForm" ColumnName="IdReleaseForm" />
+                <ScalarProperty Name="NameReleaseForm" ColumnName="NameReleaseForm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Room">
+            <EntityTypeMapping TypeName="DBModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="IdRoom" ColumnName="IdRoom" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="DBModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="IdStaff" ColumnName="IdStaff" />
+                <ScalarProperty Name="LastNameStaff" ColumnName="LastNameStaff" />
+                <ScalarProperty Name="FirstNameStaff" ColumnName="FirstNameStaff" />
+                <ScalarProperty Name="MiddleNameStaff" ColumnName="MiddleNameStaff" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="EmailStaff" ColumnName="EmailStaff" />
+                <ScalarProperty Name="PhoneNumberStaff" ColumnName="PhoneNumberStaff" />
+                <ScalarProperty Name="StaffPhoto" ColumnName="StaffPhoto" />
+                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockUnit">
+            <EntityTypeMapping TypeName="DBModel.StockUnit">
+              <MappingFragment StoreEntitySet="StockUnit">
+                <ScalarProperty Name="IdStockUnit" ColumnName="IdStockUnit" />
+                <ScalarProperty Name="IdMedicine" ColumnName="IdMedicine" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeMedicine">
+            <EntityTypeMapping TypeName="DBModel.TypeMedicine">
+              <MappingFragment StoreEntitySet="TypeMedicine">
+                <ScalarProperty Name="IdTypeMedicine" ColumnName="IdTypeMedicine" />
+                <ScalarProperty Name="NameTypeMedicine" ColumnName="NameTypeMedicine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
+                <ScalarProperty Name="PasswordUser" ColumnName="PasswordUser" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

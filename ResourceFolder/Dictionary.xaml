@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="FillFon" Color="#FCF5EA"/>
+    <SolidColorBrush x:Key="FillFont" Color="Black"/>
+    <SolidColorBrush x:Key="FillBorder" Color="Black"/>
+    <SolidColorBrush x:Key="FillFonOfBorder" Color="#E1E1E1"/>
+</ResourceDictionary>
