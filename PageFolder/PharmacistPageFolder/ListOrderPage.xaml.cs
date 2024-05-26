@@ -96,10 +96,11 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
                     if (result == true)
                     {
-                        context.Orders.Remove(order);
-                        context.SaveChanges();
+                        DBEntities.GetContext().Orders.Remove(order);
+                        DBEntities.GetContext().SaveChanges();
                         new MaterialDesignMessageBox("Заказ успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
                         LoadData();
+                        ListOrderDG.Items.Refresh();
                     }
                 }
             }
@@ -130,6 +131,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             new EditOrdersWindow(order).ShowDialog();
             LoadData();
+            ListOrderDG.Items.Refresh();
         }
     }
 }

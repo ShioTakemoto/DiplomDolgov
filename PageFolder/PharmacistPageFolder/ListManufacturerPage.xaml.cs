@@ -1,6 +1,5 @@
 ﻿using DiplomDolgov.ClassFolder;
 using DiplomDolgov.DataFolder;
-using DiplomDolgov.WindowFolder.AdminWindowFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
@@ -29,6 +28,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             InitializeComponent();
             LoadManufacturerCountries();
+            Search();
         }
 
         private void LoadManufacturerCountries()
@@ -124,10 +124,11 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
                     if (result == true)
                     {
-                        context.Manufacturer.Remove(manufacturer);
-                        context.SaveChanges();
+                        DBEntities.GetContext().Manufacturer.Remove(manufacturer);
+                        DBEntities.GetContext().SaveChanges();
                         new MaterialDesignMessageBox("Производитель успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                        RefreshDataGrid();
+                        RefreshDataGrid(); // Вызываем метод RefreshDataGrid после удаления производителя
+                        ListManufacturerDG.Items.Refresh();
                     }
                 }
             }
@@ -156,6 +157,8 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             new EditManufacturerWindow(manufacturer).ShowDialog();
+            RefreshDataGrid();
+            ListManufacturerDG.Items.Refresh();
         }
 
         private void RefreshDataGrid()
@@ -177,6 +180,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             new AddManufacturerWindow().Show();
             RefreshDataGrid();
+            ListManufacturerDG.Items.Refresh();
         }
     }
 }

@@ -102,10 +102,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     else
                     {
                         var newTypeMedicine = new TypeMedicine { NameTypeMedicine = inputText };
-                        context.TypeMedicine.Add(newTypeMedicine);
-                        context.SaveChanges();
+                        DBEntities.GetContext().TypeMedicine.Add(newTypeMedicine);
+                        DBEntities.GetContext().SaveChanges();
 
-                        TypeMedicineCB.ItemsSource = context.TypeMedicine.ToList();
+                        TypeMedicineCB.ItemsSource = DBEntities.GetContext().TypeMedicine.ToList();
                         TypeMedicineCB.SelectedItem = newTypeMedicine;
                     }
                 }
@@ -170,10 +170,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     else
                     {
                         var newReleaseForm = new ReleaseForm { NameReleaseForm = inputText };
-                        context.ReleaseForm.Add(newReleaseForm);
-                        context.SaveChanges();
+                        DBEntities.GetContext().ReleaseForm.Add(newReleaseForm);
+                        DBEntities.GetContext().SaveChanges();
 
-                        ReleaseFormCB.ItemsSource = context.ReleaseForm.ToList();
+                        ReleaseFormCB.ItemsSource = DBEntities.GetContext().ReleaseForm.ToList();
                         ReleaseFormCB.SelectedItem = newReleaseForm;
                     }
                 }
@@ -197,17 +197,17 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 else
                 {
                     var context = DBEntities.GetContext();
-                    if (context.BestBeforeDate.Any(bb => bb.NameBestBeforeDate == inputText))
+                    if (DBEntities.GetContext().BestBeforeDate.Any(bb => bb.NameBestBeforeDate == inputText))
                     {
                         new MaterialDesignMessageBox("Такой срок годности уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     }
                     else
                     {
                         var newBestBeforeDate = new BestBeforeDate { NameBestBeforeDate = inputText };
-                        context.BestBeforeDate.Add(newBestBeforeDate);
-                        context.SaveChanges();
+                        DBEntities.GetContext().BestBeforeDate.Add(newBestBeforeDate);
+                        DBEntities.GetContext().SaveChanges();
 
-                        BestBeforeDateCB.ItemsSource = context.BestBeforeDate.ToList();
+                        BestBeforeDateCB.ItemsSource = DBEntities.GetContext().BestBeforeDate.ToList();
                         BestBeforeDateCB.SelectedItem = newBestBeforeDate;
                     }
                 }

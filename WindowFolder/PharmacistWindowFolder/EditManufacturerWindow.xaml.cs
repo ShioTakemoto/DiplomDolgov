@@ -4,6 +4,7 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
     public partial class EditManufacturerWindow : Window
     {
         private Manufacturer manufacturer;
+
         public EditManufacturerWindow(Manufacturer manufacturer)
         {
             InitializeComponent();
@@ -30,6 +32,19 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             DataContext = this.manufacturer;
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
+
+        
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
         {
             var inputWindow = new InputDialogWindow("Введите новую страну производителя");
@@ -54,8 +69,8 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     else
                     {
                         var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
-                        context.ManufacturerCountry.Add(newManufacturerCountry);
-                        context.SaveChanges();
+                        DBEntities.GetContext().ManufacturerCountry.Add(newManufacturerCountry);
+                        DBEntities.GetContext().SaveChanges();
 
                         ManufacturerCountryCB.ItemsSource = context.ManufacturerCountry.ToList();
                         ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
@@ -63,49 +78,49 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 }
             }
         }
+        private bool IsValidName(string input)
+        {
+            return input.All(char.IsLetter);
+        }
 
-        private void SaveManufacturerButton(object sender, RoutedEventArgs e)
+        private void SaveButton(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(NameManufacturerTB.Text))
+                if (ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    new MaterialDesignMessageBox("Введите название производителя", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else if (string.IsNullOrEmpty(AddressTB.Text))
-                {
-                    new MaterialDesignMessageBox("Введите адрес", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else if (string.IsNullOrEmpty(PhoneNumberContactPersonManufacturerTB.Text))
-                {
-                    new MaterialDesignMessageBox("Введите номер телефона", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else if (string.IsNullOrEmpty(EmailManufacturerTB.Text))
-                {
-                    new MaterialDesignMessageBox("Введите почту", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else if (string.IsNullOrEmpty(ContactPersonNameTB.Text))
-                {
-                    new MaterialDesignMessageBox("Введите имя контактного лица", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else if (ManufacturerCountryCB.SelectedIndex == -1)
-                {
-                    new MaterialDesignMessageBox("Вы не выбрали страну производителя", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
-                else
-                {
-                    var manufacturerToUpdate = DBEntities.GetContext().Manufacturer.FirstOrDefault(m => m.IdManufacturer == manufacturer.IdManufacturer);
+                    // Проверка корректности номера телефона
+                    if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
+                    {
+                        new MaterialDesignMessageBox("Номер телефона должен содержать только цифры", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
 
+                    // Проверка корректности имени контактного лица
+                    if (!ContactPersonNameTB.Text.All(char.IsLetter))
+                    {
+                        new MaterialDesignMessageBox("Имя контактной персоны должно содержать только буквы", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+                    var manufacturerToUpdate = DBEntities.GetContext().Manufacturer.FirstOrDefault(u => u.IdManufacturer == manufacturer.IdManufacturer);
+                    // Преобразование значения из комбобокса
+                    int idManufacturerCountry = Convert.ToInt32(ManufacturerCountryCB.SelectedValue);
                     if (manufacturerToUpdate != null)
                     {
+                        // Сохранение данных
                         manufacturerToUpdate.NameManufacturer = NameManufacturerTB.Text;
                         manufacturerToUpdate.Address = AddressTB.Text;
                         manufacturerToUpdate.PhoneNumberContactPersonManufacturer = PhoneNumberContactPersonManufacturerTB.Text;
                         manufacturerToUpdate.EmailManufacturer = EmailManufacturerTB.Text;
                         manufacturerToUpdate.ContactPersonName = ContactPersonNameTB.Text;
-                        manufacturerToUpdate.IdManufacturerCountry = (int)ManufacturerCountryCB.SelectedValue;
+                        manufacturerToUpdate.IdManufacturerCountry = idManufacturerCountry;
 
                         DBEntities.GetContext().SaveChanges();
+
+                        // Обновление ComboBox после сохранения изменений
+                        ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
+
                         new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
                         this.Close();
                     }
@@ -114,27 +129,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         new MaterialDesignMessageBox("Производитель не найден", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     }
                 }
+                else
+                {
+                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
-        }
-
-        private void MinusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void ExitBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        
-        private bool IsValidName(string input)
-        {
-            return input.All(char.IsLetter);
         }
     }
 }

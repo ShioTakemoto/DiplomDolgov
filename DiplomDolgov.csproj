@@ -413,6 +413,11 @@
     <Resource Include="Resources\ManufacturerAdd.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\OrdersAdd.png" />
+    <Resource Include="Resources\OrderIcon.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <Content Include="DataFolder\DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBModel.edmx</DependentUpon>
@@ -423,8 +428,6 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Resources\OrdersAdd.png" />
-    <Resource Include="Resources\OrderIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

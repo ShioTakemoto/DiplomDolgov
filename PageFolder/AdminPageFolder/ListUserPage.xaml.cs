@@ -94,6 +94,7 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Пользователь успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     RefreshDataGrid();
+                    ListUserDG.Items.Refresh();
                 }
             }
             catch (Exception ex)
@@ -122,6 +123,7 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
 
             new EditUserWindow(user).ShowDialog();
             RefreshDataGrid();
+            ListUserDG.Items.Refresh();
         }
 
         private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
@@ -169,6 +171,7 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
         {
             new AddUserWindow().Show();
             RefreshDataGrid();
+            ListUserDG.Items.Refresh();
         }
     }
 }

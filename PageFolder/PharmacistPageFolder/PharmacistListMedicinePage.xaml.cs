@@ -147,6 +147,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
                     // Обновление ListBox
                     LoadMedicines();
+                    ListMedicineLB.Items.Refresh();
                 }
             }
             catch (Exception ex)
@@ -175,6 +176,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             new EditMedicineWindow(medicine).ShowDialog();
             LoadMedicines();
+            ListMedicineLB.Items.Refresh();
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
@@ -203,6 +205,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             new AddMedicineWindow().Show();
             LoadMedicines();
+            ListMedicineLB.Items.Refresh();
         }
 
         private void ActiveSubstanceCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
