@@ -1,20 +1,9 @@
 ﻿using DiplomDolgov.ClassFolder;
 using DiplomDolgov.DataFolder;
-using DiplomDolgov.PageFolder.AdminPageFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.AdminWindowFolder
 {
@@ -31,9 +20,7 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-            if (Result.Value)
+            if (new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
             {
                 this.Close();
             }
@@ -59,34 +46,29 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
                 {
                     new MaterialDesignMessageBox("Вы не выбрали роль!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 }
-                else if (DBEntities.GetContext()
-                            .User
-                            .FirstOrDefault(
-                    u => u.LoginUser == LoginTB.Text) != null)
+                else if (DBEntities.GetContext().User.Any(u => u.LoginUser == LoginTB.Text))
                 {
                     new MaterialDesignMessageBox("Пользователь с таким логином уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-
                     LoginTB.Focus();
-
                 }
                 else
                 {
                     var context = DBEntities.GetContext();
-                    User user = new User();
-                    user.LoginUser = LoginTB.Text;
-                    user.PasswordUser = PasswordPB.Password;
-                    user.IdRole = Int32.Parse
-                        (RoleCB.SelectedValue.ToString());
+                    var user = new User
+                    {
+                        LoginUser = LoginTB.Text,
+                        PasswordUser = PasswordPB.Password,
+                        IdRole = Convert.ToInt32(RoleCB.SelectedValue)
+                    };
                     context.User.Add(user);
                     context.SaveChanges();
                     new MaterialDesignMessageBox("Пользователь создан", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     ElementsToolsClass.ClearAllControls(this);
-
                 }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox($"Ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
 

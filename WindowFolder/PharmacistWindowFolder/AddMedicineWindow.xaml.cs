@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -33,18 +34,17 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         public AddMedicineWindow()
         {
             InitializeComponent();
-            ActiveSubstanceCB.ItemsSource = DBEntities.GetContext()
-            .ActiveSubstance.ToList();
-            ReleaseFormCB.ItemsSource = DBEntities.GetContext()
-            .ReleaseForm.ToList();
-            BestBeforeDateCB.ItemsSource = DBEntities.GetContext()
-            .BestBeforeDate.ToList();
-            PrescriptionDrugStatusCB.ItemsSource = DBEntities.GetContext()
-            .PrescriptionDrugStatus.ToList();
-            TypeMedicineCB.ItemsSource = DBEntities.GetContext()
-            .TypeMedicine.ToList();
-            ManufacturerCB.ItemsSource = DBEntities.GetContext()
-            .Manufacturer.ToList();
+            InitializeComboBoxes();
+        }
+
+        private void InitializeComboBoxes()
+        {
+            ActiveSubstanceCB.ItemsSource = DBEntities.GetContext().ActiveSubstance.ToList();
+            ReleaseFormCB.ItemsSource = DBEntities.GetContext().ReleaseForm.ToList();
+            BestBeforeDateCB.ItemsSource = DBEntities.GetContext().BestBeforeDate.ToList();
+            PrescriptionDrugStatusCB.ItemsSource = DBEntities.GetContext().PrescriptionDrugStatus.ToList();
+            TypeMedicineCB.ItemsSource = DBEntities.GetContext().TypeMedicine.ToList();
+            ManufacturerCB.ItemsSource = DBEntities.GetContext().Manufacturer.ToList();
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+            bool? Result = ShowConfirmationMessage($"Вы уверены что хотите выйти?");
 
             if (Result.Value)
             {
@@ -81,7 +81,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage($"{ex}");
             }
         }
 
@@ -89,7 +89,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             try
             {
-
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
                     string dosageText = DosageTB.Text.Trim();
@@ -99,20 +98,20 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                     if (!decimal.TryParse(dosageText, NumberStyles.Number, CultureInfo.InvariantCulture, out var dosage))
                     {
-                        new MaterialDesignMessageBox("Неверный формат дозировки", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Неверный формат дозировки");
                         return;
                     }
 
                     if (!int.TryParse(UnitsPerPackageTB.Text, out var unitsPerPackage))
                     {
-                        new MaterialDesignMessageBox("Неверный формат количества единиц в упаковке", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Неверный формат количества единиц в упаковке");
                         return;
                     }
 
                     // Проверка на допустимость символов в наименовании лекарства
                     if (!ContainsOnlyLetters(NameMedicineTB.Text))
                     {
-                        new MaterialDesignMessageBox("Некорректное наименование лекарства! Используйте только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Некорректное наименование лекарства! Используйте только буквы.");
                         return;
                     }
 
@@ -122,28 +121,27 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     // Проверка на длину наименования и инструкций
                     if (NameMedicineTB.Text.Length > maxNameLength)
                     {
-                        new MaterialDesignMessageBox($"Длина наименования лекарства не должна превышать {maxNameLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage($"Длина наименования лекарства не должна превышать {maxNameLength} символов.");
                         return;
                     }
 
                     if (InstructionsTB.Text.Length > maxInstructionsLength)
                     {
-                        new MaterialDesignMessageBox($"Длина инструкций не должна превышать {maxInstructionsLength} символов.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage($"Длина инструкций не должна превышать {maxInstructionsLength} символов.");
                         return;
                     }
 
                     // Преобразование значений из комбобоксов
-                    int idTypeMedicine = Convert.ToInt32(TypeMedicineCB.SelectedValue);
-                    int idActiveSubstance = Convert.ToInt32(ActiveSubstanceCB.SelectedValue);
-                    int idManufacturer = Convert.ToInt32(ManufacturerCB.SelectedValue);
-                    int idReleaseForm = Convert.ToInt32(ReleaseFormCB.SelectedValue);
-                    int idBestBeforeDate = Convert.ToInt32(BestBeforeDateCB.SelectedValue);
-                    int idPrescriptionDrugStatus = Convert.ToInt32(PrescriptionDrugStatusCB.SelectedValue);
+                    int idTypeMedicine = GetComboBoxItemId<TypeMedicine>(TypeMedicineCB);
+                    int idActiveSubstance = GetComboBoxItemId<ActiveSubstance>(ActiveSubstanceCB);
+                    int idManufacturer = GetComboBoxItemId<Manufacturer>(ManufacturerCB);
+                    int idReleaseForm = GetComboBoxItemId<ReleaseForm>(ReleaseFormCB);
+                    int idBestBeforeDate = GetComboBoxItemId<BestBeforeDate>(BestBeforeDateCB);
+                    int idPrescriptionDrugStatus = GetComboBoxItemId<PrescriptionDrugStatus>(PrescriptionDrugStatusCB);
 
                     var context = DBEntities.GetContext();
 
-                    var existingMedicine = context.Medicine
-                        .FirstOrDefault(m =>
+                    var existingMedicine = context.Medicine.FirstOrDefault(m =>
                             m.NameMedicine == NameMedicineTB.Text &&
                             m.IdTypeMedicine == idTypeMedicine &&
                             m.IdActiveSubstance == idActiveSubstance &&
@@ -157,7 +155,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                     if (existingMedicine != null)
                     {
-                        new MaterialDesignMessageBox("Такой медикамент уже существует", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                        ShowWarningMessage("Такой медикамент уже существует");
                     }
                     else
                     {
@@ -178,7 +176,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                         context.Medicine.Add(newMedicine);
                         context.SaveChanges();
-                        new MaterialDesignMessageBox("Медикамент добавлен", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        ShowSuccessMessage("Медикамент добавлен");
                         ElementsToolsClass.ClearAllControls(this);
                         selectedFileName = string.Empty;
                         ImPhoto.Source = null;
@@ -186,12 +184,78 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 }
                 else
                 {
-                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Не все поля заполнены!");
                 }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage($"{ex}");
+            }
+        }
+
+        private int GetComboBoxItemId<T>(ComboBox comboBox) where T : class
+        {
+            var selectedItem = comboBox.SelectedItem as T;
+            if (selectedItem != null)
+            {
+                return (int)selectedItem.GetType().GetProperty($"Id{typeof(T).Name}").GetValue(selectedItem);
+            }
+            return -1;
+        }
+
+        private bool IsValidName(string input)
+        {
+            return !Regex.IsMatch(input, @"\d");
+        }
+
+        private bool ContainsOnlyLetters(string input)
+        {
+            return input.All(char.IsLetter);
+        }
+
+        private bool ShowConfirmationMessage(string message)
+        {
+            bool? result = new MaterialDesignMessageBox(message, MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+            return result ?? false;
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+        }
+
+        private void ShowWarningMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Warning, MessageButtons.Ok).ShowDialog();
+        }
+
+        private void ShowSuccessMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
+        }
+
+        private void AddComboBoxItem<T>(ComboBox comboBox, string inputText) where T : class
+        {
+            var context = DBEntities.GetContext();
+            var dbSet = context.Set<T>();
+            var propertyName = $"Name{typeof(T).Name}";
+
+            var existingItem = dbSet.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
+
+            if (existingItem != null)
+            {
+                ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
+            }
+            else
+            {
+                var newItem = (T)Activator.CreateInstance(typeof(T));
+                newItem.GetType().GetProperty(propertyName).SetValue(newItem, inputText);
+
+                dbSet.Add(newItem);
+                context.SaveChanges();
+
+                comboBox.ItemsSource = dbSet.ToList();
+                comboBox.SelectedItem = newItem;
             }
         }
 
@@ -203,28 +267,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!IsValidName(inputText))
+                else if (!ContainsOnlyLetters(inputText))
                 {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    var context = DBEntities.GetContext();
-                    if (context.TypeMedicine.Any(tm => tm.NameTypeMedicine == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такой тип медикамента уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newTypeMedicine = new TypeMedicine { NameTypeMedicine = inputText };
-                        context.TypeMedicine.Add(newTypeMedicine);
-                        context.SaveChanges();
-
-                        TypeMedicineCB.ItemsSource = context.TypeMedicine.ToList();
-                        TypeMedicineCB.SelectedItem = newTypeMedicine;
-                    }
+                    AddComboBoxItem<TypeMedicine>(TypeMedicineCB, inputText);
                 }
             }
         }
@@ -237,28 +288,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!IsValidName(inputText))
+                else if (!ContainsOnlyLetters(inputText))
                 {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    var context = DBEntities.GetContext();
-                    if (context.ActiveSubstance.Any(acs => acs.NameActiveSubstance == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такое активное вещество уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newActiveSubstance = new ActiveSubstance { NameActiveSubstance = inputText };
-                        context.ActiveSubstance.Add(newActiveSubstance);
-                        context.SaveChanges();
-
-                        ActiveSubstanceCB.ItemsSource = context.ActiveSubstance.ToList();
-                        ActiveSubstanceCB.SelectedItem = newActiveSubstance;
-                    }
+                    AddComboBoxItem<ActiveSubstance>(ActiveSubstanceCB, inputText);
                 }
             }
         }
@@ -271,28 +309,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!IsValidName(inputText))
+                else if (!ContainsOnlyLetters(inputText))
                 {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    var context = DBEntities.GetContext();
-                    if (context.ReleaseForm.Any(rf => rf.NameReleaseForm == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такая форма выпуска уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newReleaseForm = new ReleaseForm { NameReleaseForm = inputText };
-                        context.ReleaseForm.Add(newReleaseForm);
-                        context.SaveChanges();
-
-                        ReleaseFormCB.ItemsSource = context.ReleaseForm.ToList();
-                        ReleaseFormCB.SelectedItem = newReleaseForm;
-                    }
+                    AddComboBoxItem<ReleaseForm>(ReleaseFormCB, inputText);
                 }
             }
         }
@@ -305,40 +330,17 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!IsValidName(inputText))
+                else if (!ContainsOnlyLetters(inputText))
                 {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    var context = DBEntities.GetContext();
-                    if (context.BestBeforeDate.Any(bb => bb.NameBestBeforeDate == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такой срок годности уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newBestBeforeDate = new BestBeforeDate { NameBestBeforeDate = inputText };
-                        context.BestBeforeDate.Add(newBestBeforeDate);
-                        context.SaveChanges();
-
-                        BestBeforeDateCB.ItemsSource = context.BestBeforeDate.ToList();
-                        BestBeforeDateCB.SelectedItem = newBestBeforeDate;
-                    }
+                    AddComboBoxItem<BestBeforeDate>(BestBeforeDateCB, inputText);
                 }
             }
-        }
-
-        private bool IsValidName(string input)
-        {
-            return !Regex.IsMatch(input, @"\d");
-        }
-
-        private bool ContainsOnlyLetters(string input)
-        {
-            return input.All(char.IsLetter);
         }
     }
 }

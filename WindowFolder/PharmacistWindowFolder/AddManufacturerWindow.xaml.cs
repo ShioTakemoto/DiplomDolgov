@@ -2,19 +2,9 @@
 using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -26,6 +16,11 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         public AddManufacturerWindow()
         {
             InitializeComponent();
+            LoadManufacturerCountries();
+        }
+
+        private void LoadManufacturerCountries()
+        {
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
 
@@ -37,31 +32,37 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 }
                 else if (!IsValidName(inputText))
                 {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    var context = DBEntities.GetContext();
-                    if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такая страна уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
-                        context.ManufacturerCountry.Add(newManufacturerCountry);
-                        context.SaveChanges();
-
-                        ManufacturerCountryCB.ItemsSource = context.ManufacturerCountry.ToList();
-                        ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
-                    }
+                    AddNewManufacturerCountry(inputText);
                 }
             }
         }
+
+        private void AddNewManufacturerCountry(string inputText)
+        {
+            var context = DBEntities.GetContext();
+            if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
+            {
+                ShowErrorMessage("Такая страна уже существует!");
+            }
+            else
+            {
+                var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
+                context.ManufacturerCountry.Add(newManufacturerCountry);
+                context.SaveChanges();
+
+                LoadManufacturerCountries();
+                ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
+            }
+        }
+
         private bool IsValidName(string input)
         {
             return input.All(char.IsLetter);
@@ -69,9 +70,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-            if (Result.Value)
+            if (ShowConfirmationMessage("Вы уверены что хотите выйти?"))
             {
                 this.Close();
             }
@@ -90,18 +89,18 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
                     {
-                        new MaterialDesignMessageBox("Номер телефона должен содержать только цифры", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Номер телефона должен содержать только цифры");
                         return;
                     }
 
                     if (!ContactPersonNameTB.Text.All(char.IsLetter))
                     {
-                        new MaterialDesignMessageBox("Имя контактной персоны должно содержать только буквы", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Имя контактной персоны должно содержать только буквы");
                         return;
                     }
 
                     // Преобразование значений из комбобоксов
-                    int idManufacturerCountry = Convert.ToInt32(ManufacturerCountryCB.SelectedValue);
+                    int idManufacturerCountry = GetSelectedItemId<ManufacturerCountry>(ManufacturerCountryCB);
 
                     var context = DBEntities.GetContext();
 
@@ -115,7 +114,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                     if (existingManufacturer != null)
                     {
-                        new MaterialDesignMessageBox("Такой производитель уже существует", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                        ShowWarningMessage("Такой производитель уже существует");
                     }
                     else
                     {
@@ -131,19 +130,50 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                         context.Manufacturer.Add(newManufacturer);
                         context.SaveChanges();
-                        new MaterialDesignMessageBox("Производитель добавлен", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        ShowSuccessMessage("Производитель добавлен");
                         ElementsToolsClass.ClearAllControls(this);
                     }
                 }
                 else
                 {
-                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Не все поля заполнены!");
                 }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage($"Произошла ошибка: {ex.Message}");
             }
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+        }
+
+        private void ShowWarningMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Warning, MessageButtons.Ok).ShowDialog();
+        }
+
+        private void ShowSuccessMessage(string message)
+        {
+            new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
+        }
+
+        private bool ShowConfirmationMessage(string message)
+        {
+            bool? result = new MaterialDesignMessageBox(message, MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+            return result ?? false;
+        }
+
+        private int GetSelectedItemId<T>(ComboBox comboBox) where T : class
+        {
+            var selectedItem = comboBox.SelectedItem;
+            if (selectedItem != null)
+            {
+                return (int)selectedItem.GetType().GetProperty($"Id{typeof(T).Name}").GetValue(selectedItem);
+            }
+            return -1;
         }
     }
 }

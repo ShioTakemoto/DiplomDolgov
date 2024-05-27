@@ -1,0 +1,206 @@
+﻿<Page x:Class="DiplomDolgov.PageFolder.PharmacistPageFolder.AnotherTablesPharmacistPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiplomDolgov.PageFolder.PharmacistPageFolder"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="Список производителей">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
+
+        <TextBox Name="SearchTB"
+                 VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Left"
+                 FontFamily="Roboto"
+                 Grid.Column="1"
+                 materialDesign:HintAssist.Hint="Поиск"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="1"
+                 Width="580"
+                 Height="50"
+                 FontSize="20"
+                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Foreground="#FF152D51" 
+                 SelectionBrush="#FF152D51" 
+                 CaretBrush="#FF152D51" 
+                 BorderBrush="#FF152D51"
+                 TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
+
+        <DataGrid x:Name="ListTypeMedicineDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding TypeMedicine}" Grid.Row="2" Grid.Column="1"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          Width="170"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить тип медикамента" x:Name="DeleteTypeMedicine"
+                      Click="DeleteTypeMedicine_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать тип медикамента" x:Name="EditTypeMedicine"
+                      Click="EditTypeMedicine_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип медикамента"
+                            Binding="{Binding NameTypeMedicine}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="ListActiveSubstanceDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding ActiveSubstance}" Grid.Row="2" Grid.Column="2"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          Width="170"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить активное вещество" x:Name="DeleteActiveSubstance"
+                      Click="DeleteActiveSubstance_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать активное вещество" x:Name="EditActiveSubstance"
+                      Click="EditActiveSubstance_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Активное вещество"
+                            Binding="{Binding NameActiveSubstance}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="ListReleaseFormDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding ReleaseForm}" Grid.Row="2" Grid.Column="3"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          Width="170"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить форму выпуска" x:Name="DeleteReleaseForm"
+                      Click="DeleteReleaseForm_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать форму выпуска" x:Name="EditReleaseForm"
+                      Click="EditReleaseForm_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Форма выпуска"
+                            Binding="{Binding NameReleaseForm}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="ListBestBeforeDateDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding BestBeforeDate}" Grid.Row="2" Grid.Column="4"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          Width="170"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить срок годности" x:Name="DeleteBestBeforeDate"
+                      Click="DeleteBestBeforeDate_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать срок годности" x:Name="EditBestBeforeDate"
+                      Click="EditBestBeforeDate_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Срок годности"
+                            Binding="{Binding NameBestBeforeDate}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="ListManufacturerCountryDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding ManufacturerCountry}" Grid.Row="2" Grid.Column="5"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          Width="180"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить страну производителя" x:Name="DeleteManufacturerCountry"
+                      Click="DeleteManufacturerCountry_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать страну производителя" x:Name="EditManufacturerCountry"
+                      Click="EditManufacturerCountry_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Страна производителя"
+                            Binding="{Binding NameManufacturerCountry}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

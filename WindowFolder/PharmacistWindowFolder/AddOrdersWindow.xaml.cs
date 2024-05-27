@@ -2,30 +2,22 @@
 using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для AddOrdersWindow.xaml
-    /// </summary>
     public partial class AddOrdersWindow : Window
     {
         public AddOrdersWindow()
         {
             InitializeComponent();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
             MedicineCB.ItemsSource = DBEntities.GetContext().Medicine.ToList();
             OrderStatusCB.ItemsSource = DBEntities.GetContext().OrderStatus.ToList();
         }
@@ -36,67 +28,60 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    var context = DBEntities.GetContext();
-                    DateTime selectedDate = DatePicker.SelectedDate ?? DateTime.Now;
-                    TimeSpan selectedTime;
-
-                    if (!TimeSpan.TryParseExact(TimeTextBox.Text, "hh\\:mm", CultureInfo.InvariantCulture, out selectedTime))
-                    {
-                        new MaterialDesignMessageBox("Неверный формат времени! Введите время в формате ЧЧ:ММ.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    if (!TryGetDateTime(out DateTime dateTimeOrder))
                         return;
-                    }
 
-                    DateTime dateTimeOrder = selectedDate.Date + selectedTime;
-
-                    int idMedicine = Convert.ToInt32(MedicineCB.SelectedValue);
-                    int idOrderStatus = Convert.ToInt32(OrderStatusCB.SelectedValue);
-                    int count;
-
-                    if (!int.TryParse(CountTB.Text, out count))
+                    if (!int.TryParse(CountTB.Text, out int count))
                     {
-                        new MaterialDesignMessageBox("Неверный формат количества! Введите число.", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        ShowErrorMessage("Неверный формат количества! Введите число.");
                         return;
                     }
 
                     var newOrder = new Orders
-                        {
-                            IdMedicine = idMedicine,
-                            OrderDescription = OrderDescriptionTB.Text,
-                            Count = count,
-                            IdOrderStatus = idOrderStatus,
-                            DateTimeOrder = dateTimeOrder
-                        };
+                    {
+                        IdMedicine = Convert.ToInt32(MedicineCB.SelectedValue),
+                        OrderDescription = OrderDescriptionTB.Text,
+                        Count = count,
+                        IdOrderStatus = Convert.ToInt32(OrderStatusCB.SelectedValue),
+                        DateTimeOrder = dateTimeOrder
+                    };
 
-                        context.Orders.Add(newOrder);
-                        context.SaveChanges();
-                        new MaterialDesignMessageBox("Заказ добавлен", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                        ElementsToolsClass.ClearAllControls(this);
-                 
+                    DBEntities.GetContext().Orders.Add(newOrder);
+                    DBEntities.GetContext().SaveChanges();
+                    ShowSuccessMessage("Заказ добавлен");
+                    ElementsToolsClass.ClearAllControls(this);
                 }
                 else
                 {
-                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage("Не все поля заполнены!");
                 }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage(ex.ToString());
             }
         }
+
+        private bool TryGetDateTime(out DateTime dateTime)
+        {
+            if (!DateTime.TryParseExact($"{DatePicker.SelectedDate ?? DateTime.Now} {TimeTextBox.Text}", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
+                ShowErrorMessage("Неверный формат времени! Введите время в формате ДД.ММ.ГГГГ ЧЧ:ММ.");
+                return false;
+            }
+            return true;
+        }
+
+        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-            if (Result.Value)
-            {
-                this.Close();
-            }
+            if (new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
+                Close();
         }
 
-        private void MinusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+        private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     }
 }

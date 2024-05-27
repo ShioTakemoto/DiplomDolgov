@@ -3,30 +3,20 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для PharmacistListMedicinePage.xaml
-    /// </summary>
     public partial class PharmacistListMedicinePage : Page
     {
         private string searchText = string.Empty;
         private string selectedType = string.Empty;
         private string selectedActiveSubstance = string.Empty;
+
         public PharmacistListMedicinePage()
         {
             InitializeComponent();
@@ -51,20 +41,14 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         private void LoadMedicineTypes()
         {
             var types = DBEntities.GetContext().TypeMedicine.ToList();
-
-            // Добавляем пустой вариант в начало списка
-            types.Insert(0, new TypeMedicine { });
-
+            types.Insert(0, new TypeMedicine());
             TypeMedicineCB.ItemsSource = types;
         }
 
         private void LoadActiveSubstance()
         {
             var activeSubstances = DBEntities.GetContext().ActiveSubstance.ToList();
-
-            // Добавляем пустой вариант в начало списка
-            activeSubstances.Insert(0, new ActiveSubstance { });
-
+            activeSubstances.Insert(0, new ActiveSubstance());
             ActiveSubstanceCB.ItemsSource = activeSubstances;
         }
 
@@ -115,43 +99,32 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     return;
                 }
 
-                var medicine = DBEntities.GetContext().Medicine.FirstOrDefault(u => u.NameMedicine == selectedMedicine.NameMedicine);
-
-                if (medicine == null)
+                using (var context = DBEntities.GetContext())
                 {
-                    new MaterialDesignMessageBox("Препарат не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
+                    var medicine = context.Medicine.FirstOrDefault(u => u.NameMedicine == selectedMedicine.NameMedicine);
 
-                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {medicine.NameMedicine}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+                    if (medicine == null)
+                    {
+                        new MaterialDesignMessageBox("Препарат не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
 
-                if (result == true)
-                {
-                    // Удаление связанных записей из Realization
-                    var realizations = DBEntities.GetContext().Realization.Where(r => r.IdMedicine == medicine.IdMedicine).ToList();
-                    DBEntities.GetContext().Realization.RemoveRange(realizations);
+                    bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {medicine.NameMedicine}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
-                    // Удаление связанных записей из Orders
-                    var orders = DBEntities.GetContext().Orders.Where(o => o.IdMedicine == medicine.IdMedicine).ToList();
-                    DBEntities.GetContext().Orders.RemoveRange(orders);
+                    if (result == true)
+                    {
+                        context.Medicine.Remove(medicine);
+                        context.SaveChanges();
 
-                    // Удаление строк из StockUnit
-                    var stockUnits = DBEntities.GetContext().StockUnit.Where(su => su.IdMedicine == medicine.IdMedicine).ToList();
-                    DBEntities.GetContext().StockUnit.RemoveRange(stockUnits);
-
-                    // Удаление лекарства
-                    DBEntities.GetContext().Medicine.Remove(medicine);
-                    DBEntities.GetContext().SaveChanges();
-
-                    new MaterialDesignMessageBox($"{medicine.NameMedicine} успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    // Обновление ListBox
-                    LoadMedicines();
-                    ListMedicineLB.Items.Refresh();
+                        new MaterialDesignMessageBox($"{medicine.NameMedicine} успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        LoadMedicines();
+                        ListMedicineLB.Items.Refresh();
+                    }
                 }
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox($"Ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -218,10 +191,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             var scrollViewer = FindParent<ScrollViewer>((DependencyObject)sender);
             if (scrollViewer != null)
             {
-                if (e.Delta > 0)
-                    scrollViewer.LineUp();
-                else
-                    scrollViewer.LineDown();
+                scrollViewer.LineUp();
                 e.Handled = true;
             }
         }

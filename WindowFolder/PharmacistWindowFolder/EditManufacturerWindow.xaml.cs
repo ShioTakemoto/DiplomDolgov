@@ -2,52 +2,35 @@
 using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для EditManufacturerWindow.xaml
-    /// </summary>
     public partial class EditManufacturerWindow : Window
     {
         private Manufacturer manufacturer;
+
         public EditManufacturerWindow(Manufacturer manufacturer)
         {
             InitializeComponent();
             this.manufacturer = manufacturer;
             DataContext = this.manufacturer;
-            // Загрузка списка стран производителей
+            LoadManufacturerCountries();
+        }
+
+        private void LoadManufacturerCountries()
+        {
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
 
-
-
-        private void MinusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+        private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-            if (Result.Value)
-            {
-                this.Close();
-            }
+            if (new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
+                Close();
         }
 
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
@@ -57,79 +40,69 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
-                {
-                    new MaterialDesignMessageBox("Поле не должно быть пустым!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
+                    ShowMessageBox("Поле не должно быть пустым!");
                 else if (!IsValidName(inputText))
-                {
-                    new MaterialDesignMessageBox("Недопустимые символы! Допускаются только буквы.", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
+                    ShowMessageBox("Недопустимые символы! Допускаются только буквы.");
                 else
-                {
-                    var context = DBEntities.GetContext();
-                    if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
-                    {
-                        new MaterialDesignMessageBox("Такая страна уже существует!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
-                    else
-                    {
-                        var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
-                        DBEntities.GetContext().ManufacturerCountry.Add(newManufacturerCountry);
-                        DBEntities.GetContext().SaveChanges();
-
-                        ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
-                        ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
-                    }
-                }
+                    AddNewManufacturerCountry(inputText);
             }
         }
-        private bool IsValidName(string input)
+
+        private void AddNewManufacturerCountry(string inputText)
         {
-            return input.All(char.IsLetter);
+            var context = DBEntities.GetContext();
+            if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
+                ShowMessageBox("Такая страна уже существует!");
+            else
+            {
+                var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
+                context.ManufacturerCountry.Add(newManufacturerCountry);
+                context.SaveChanges();
+
+                ManufacturerCountryCB.ItemsSource = context.ManufacturerCountry.ToList();
+                ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
+            }
         }
+
+        private bool IsValidName(string input) => input.All(char.IsLetter);
 
         private void SaveButton(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (ElementsToolsClass.AllFieldsFilled(this))
+                if (!ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    // Проверка корректности номера телефона
-                    if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
-                    {
-                        new MaterialDesignMessageBox("Номер телефона должен содержать только цифры", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
-
-                    // Проверка корректности имени контактного лица
-                    if (!ContactPersonNameTB.Text.All(char.IsLetter))
-                    {
-                        new MaterialDesignMessageBox("Имя контактной персоны должно содержать только буквы", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
-
-                    try
-                    {
-
-                        DBEntities.GetContext().SaveChanges();
-
-                        new MaterialDesignMessageBox("Данные успешно сохранены", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    }
+                    ShowMessageBox("Не все поля заполнены!");
+                    return;
                 }
-                else
+
+                if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
                 {
-                    new MaterialDesignMessageBox("Не все поля заполнены!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowMessageBox("Номер телефона должен содержать только цифры");
+                    return;
                 }
+
+                if (!ContactPersonNameTB.Text.All(char.IsLetter))
+                {
+                    ShowMessageBox("Имя контактной персоны должно содержать только буквы");
+                    return;
+                }
+
+                SaveChanges();
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowMessageBox($"Произошла ошибка: {ex.Message}");
             }
         }
+
+        private void SaveChanges()
+        {
+            DBEntities.GetContext().SaveChanges();
+            ShowMessageBox("Данные успешно сохранены");
+            Close();
+        }
+
+        private void ShowMessageBox(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
     }
 }

@@ -2,25 +2,13 @@
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для ListOrderPage.xaml
-    /// </summary>
     public partial class ListOrderPage : Page
     {
         public ListOrderPage()
@@ -31,16 +19,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void LoadData()
         {
-            var orderStatuses = DBEntities.GetContext().OrderStatus.ToList();
-            orderStatuses.Insert(0, new OrderStatus { IdOrderStatus = 0, NameOrderStatus = "" }); // Добавляем пустое значение
+            var context = DBEntities.GetContext();
+            var orderStatuses = context.OrderStatus.ToList();
+            orderStatuses.Insert(0, new OrderStatus { IdOrderStatus = 0, NameOrderStatus = "" });
             OrderStatusCB.ItemsSource = orderStatuses;
-
             FilterOrders();
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            new AddOrdersWindow().ShowDialog();
             LoadData();
+            ListOrderDG.Items.Refresh();
         }
 
         private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
@@ -55,7 +45,8 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void FilterOrders()
         {
-            var orders = DBEntities.GetContext().Orders.AsQueryable();
+            var context = DBEntities.GetContext();
+            var orders = context.Orders.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(SearchTB.Text))
             {
@@ -82,33 +73,30 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     return;
                 }
 
-                using (var context = DBEntities.GetContext())
+                var context = DBEntities.GetContext();
+                var order = context.Orders.FirstOrDefault(u => u.IdOrder == selectedOrder.IdOrder);
+
+                if (order == null)
                 {
-                    var order = context.Orders.FirstOrDefault(u => u.IdOrder == selectedOrder.IdOrder);
+                    new MaterialDesignMessageBox("Заказ не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
 
-                    if (order == null)
-                    {
-                        new MaterialDesignMessageBox("Заказ не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
+                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {order.DateTimeOrder}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
-                    bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {order.DateTimeOrder}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-                    if (result == true)
-                    {
-                        DBEntities.GetContext().Orders.Remove(order);
-                        DBEntities.GetContext().SaveChanges();
-                        new MaterialDesignMessageBox("Заказ успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                        LoadData();
-                        ListOrderDG.Items.Refresh();
-                    }
+                if (result == true)
+                {
+                    context.Orders.Remove(order);
+                    context.SaveChanges();
+                    new MaterialDesignMessageBox("Заказ успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
+                    ListOrderDG.Items.Refresh();
                 }
             }
             catch (Exception ex)
             {
                 new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
-            
         }
 
         private void EditM1_Click(object sender, RoutedEventArgs e)
@@ -121,7 +109,8 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return;
             }
 
-            var order = DBEntities.GetContext().Orders.FirstOrDefault(u => u.IdOrder == selectedOrder.IdOrder);
+            var context = DBEntities.GetContext();
+            var order = context.Orders.FirstOrDefault(u => u.IdOrder == selectedOrder.IdOrder);
 
             if (order == null)
             {

@@ -183,6 +183,9 @@
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml.cs">
       <DependentUpon>MainMedicineWorkerListMedicine.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageFolder\PharmacistPageFolder\AnotherTablesPharmacistPage.xaml.cs">
+      <DependentUpon>AnotherTablesPharmacistPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageFolder\PharmacistPageFolder\ListManufacturerPage.xaml.cs">
       <DependentUpon>ListManufacturerPage.xaml</DependentUpon>
     </Compile>
@@ -231,6 +234,9 @@
     <Compile Include="WindowFolder\PharmacistWindowFolder\InputDialogWindow.xaml.cs">
       <DependentUpon>InputDialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowFolder\PharmacistWindowFolder\LittleTablesEditWindow.xaml.cs">
+      <DependentUpon>LittleTablesEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFolder\PharmacistWindowFolder\PharmacistWindow.xaml.cs">
       <DependentUpon>PharmacistWindow.xaml</DependentUpon>
     </Compile>
@@ -278,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageFolder\PharmacistPageFolder\AnotherTablesPharmacistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -346,6 +356,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowFolder\PharmacistWindowFolder\InputDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowFolder\PharmacistWindowFolder\LittleTablesEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +442,7 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\ListIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -56,5 +56,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             MainFrame.Navigate(new ListOrderPage());
         }
+
+        private void ListLittleTablesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AnotherTablesPharmacistPage());
+        }
     }
 }

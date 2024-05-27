@@ -1,0 +1,32 @@
+﻿<Window x:Class="DiplomDolgov.WindowFolder.PharmacistWindowFolder.LittleTablesEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.PharmacistWindowFolder"
+        mc:Ignorable="d"
+        Title="LittleTablesEditWindow" Height="200" Width="400"
+        WindowStyle="None">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="RecordLabel" Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="Bold" Margin="0,10"/>
+
+        <TextBox x:Name="EditTextBox" Grid.Row="1" Grid.Column="1" Margin="0,10"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="SaveButton" Content="Сохранить" Width="100" Background="#FF8B7249" BorderBrush="#FF8B7249" Margin="10" Click="SaveButton_Click"/>
+            <Button x:Name="CancelButton" Content="Отмена" Width="100" Margin="10" Foreground="Black" BorderBrush="#FF8B7249" Background="White" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

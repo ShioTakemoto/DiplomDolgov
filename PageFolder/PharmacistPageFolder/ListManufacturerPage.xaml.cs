@@ -3,25 +3,13 @@ using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для ListManufacturerPage.xaml
-    /// </summary>
     public partial class ListManufacturerPage : Page
     {
         public ListManufacturerPage()
@@ -33,108 +21,74 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void LoadManufacturerCountries()
         {
-            // Очищаем текущие элементы в ComboBox
-            ManufacturerCountryCB.Items.Clear();
-            // Добавляем пустой элемент
-            ManufacturerCountryCB.Items.Add(""); // Пустой элемент
-            // Загружаем список стран
-            foreach (var country in DBEntities.GetContext().ManufacturerCountry.ToList())
-            {
-                ManufacturerCountryCB.Items.Add(country);
-            }
+            var countries = DBEntities.GetContext().ManufacturerCountry.ToList();
+            countries.Insert(0, new ManufacturerCountry { IdManufacturerCountry = 0, NameManufacturerCountry = "" }); // Добавляем пустой элемент
+            ManufacturerCountryCB.ItemsSource = countries;
         }
+
 
         private void Search()
         {
-            string searchText = SearchTB.Text.Trim().ToLower();
+            var context = DBEntities.GetContext();
+            var searchText = SearchTB.Text.Trim().ToLower();
+            var selectedCountryName = ManufacturerCountryCB.SelectedItem?.ToString();
+            var query = context.Manufacturer.AsQueryable();
 
-            // Проверяем выбран ли пустой элемент
-            if (ManufacturerCountryCB.SelectedItem != null && ManufacturerCountryCB.SelectedItem.ToString() == "")
+            if (!string.IsNullOrWhiteSpace(searchText))
             {
-                // Если выбран пустой элемент, не применяем фильтрацию по стране
-                ListManufacturerDG.ItemsSource = DBEntities.GetContext().Manufacturer
-                                                .Where(m => string.IsNullOrEmpty(searchText) ||
-                                                            (m.NameManufacturer.ToLower().Contains(searchText) ||
-                                                             m.Address.ToLower().Contains(searchText) ||
-                                                             m.PhoneNumberContactPersonManufacturer.ToLower().Contains(searchText) ||
-                                                             m.EmailManufacturer.ToLower().Contains(searchText) ||
-                                                             m.ContactPersonName.ToLower().Contains(searchText)))
-                                                .ToList();
+                query = query.Where(m =>
+                    m.NameManufacturer.ToLower().Contains(searchText) ||
+                    m.Address.ToLower().Contains(searchText) ||
+                    m.PhoneNumberContactPersonManufacturer.ToLower().Contains(searchText) ||
+                    m.EmailManufacturer.ToLower().Contains(searchText) ||
+                    m.ContactPersonName.ToLower().Contains(searchText)
+                );
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(selectedCountryName))
             {
-                int countryId = 0;
+                query = query.Where(m =>
+                    m.ManufacturerCountry.NameManufacturerCountry.Equals(selectedCountryName)
+                );
+            }
 
-                if (ManufacturerCountryCB.SelectedItem != null && ManufacturerCountryCB.SelectedItem is ManufacturerCountry selectedCountry)
-                {
-                    countryId = selectedCountry.IdManufacturerCountry;
-                }
-
-                try
-                {
-                    var context = DBEntities.GetContext();
-                    IQueryable<Manufacturer> query = context.Manufacturer.AsQueryable();
-
-                    if (!string.IsNullOrWhiteSpace(searchText))
-                    {
-                        query = query.Where(m => m.NameManufacturer.ToLower().Contains(searchText) ||
-                                                 m.Address.ToLower().Contains(searchText) ||
-                                                 m.PhoneNumberContactPersonManufacturer.ToLower().Contains(searchText) ||
-                                                 m.EmailManufacturer.ToLower().Contains(searchText) ||
-                                                 m.ContactPersonName.ToLower().Contains(searchText));
-                    }
-
-                    if (countryId != 0)
-                    {
-                        query = query.Where(m => m.IdManufacturerCountry == countryId);
-                    }
-
-                    ListManufacturerDG.ItemsSource = query.ToList();
-                }
-                catch (Exception ex)
-                {
-                    new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
+            try
+            {
+                ListManufacturerDG.ItemsSource = query.ToList();
+            }
+            catch (Exception ex)
+            {
+                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
 
         private void DeleteM1_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var selectedManufacturer = ListManufacturerDG.SelectedItem as Manufacturer;
+
+            if (selectedManufacturer == null)
             {
-                var selectedManufacturer = ListManufacturerDG.SelectedItem as Manufacturer;
-
-                if (selectedManufacturer == null)
-                {
-                    new MaterialDesignMessageBox("Выберите производителя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-
-                using (var context = DBEntities.GetContext())
-                {
-                    var manufacturer = context.Manufacturer.FirstOrDefault(u => u.IdManufacturer == selectedManufacturer.IdManufacturer);
-
-                    if (manufacturer == null)
-                    {
-                        new MaterialDesignMessageBox("Производитель не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        return;
-                    }
-
-                    bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {manufacturer.NameManufacturer}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-                    if (result == true)
-                    {
-                        DBEntities.GetContext().Manufacturer.Remove(manufacturer);
-                        DBEntities.GetContext().SaveChanges();
-                        new MaterialDesignMessageBox("Производитель успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                        RefreshDataGrid(); // Вызываем метод RefreshDataGrid после удаления производителя
-                        ListManufacturerDG.Items.Refresh();
-                    }
-                }
+                new MaterialDesignMessageBox("Выберите производителя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                return;
             }
-            catch (Exception ex)
+
+            var result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {selectedManufacturer.NameManufacturer}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (result == true)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                try
+                {
+                    var context = DBEntities.GetContext();
+                    context.Manufacturer.Remove(selectedManufacturer);
+                    context.SaveChanges();
+                    new MaterialDesignMessageBox("Производитель успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    RefreshDataGrid();
+                    ListManufacturerDG.Items.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                }
             }
         }
 
@@ -148,15 +102,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return;
             }
 
-            var manufacturer = DBEntities.GetContext().Manufacturer.FirstOrDefault(u => u.IdManufacturer == selectedManufacturer.IdManufacturer);
-
-            if (manufacturer == null)
-            {
-                new MaterialDesignMessageBox("Производитель не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                return;
-            }
-
-            new EditManufacturerWindow(manufacturer).ShowDialog();
+            new EditManufacturerWindow(selectedManufacturer).ShowDialog();
             RefreshDataGrid();
             ListManufacturerDG.Items.Refresh();
         }

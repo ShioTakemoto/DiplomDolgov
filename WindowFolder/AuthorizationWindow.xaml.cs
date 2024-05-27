@@ -98,9 +98,6 @@ namespace DiplomDolgov.WindowFolder
                 {
                     new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 }
-
-
-
             }
         }
 
