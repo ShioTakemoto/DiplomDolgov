@@ -31,19 +31,19 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             MainFrame.Navigate(new MainMedicineWorkerListMedicine());
         }
 
-        private void ListEmployeeBtn_Click(object sender, RoutedEventArgs e)
+        private void ListEmployeeBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new MainMedicineWorkerListMedicine());
+            MainFrame.Navigate(new ListEmployeePage());
         }
 
         private void ListGuestsBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new MainMedicineWorkerListMedicine());
+
         }
 
-        private void ListBookBtn_Click(object sender, RoutedEventArgs e)
+        private void AccountingBookBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new MainMedicineWorkerListMedicine());
+
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
@@ -59,6 +59,11 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             {
                 this.Close();
             }
+        }
+
+        private void ListLittleTablesBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

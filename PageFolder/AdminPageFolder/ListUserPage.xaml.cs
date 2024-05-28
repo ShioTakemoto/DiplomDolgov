@@ -169,9 +169,18 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            new AddUserWindow().Show();
+            var addUserWindow = new AddUserWindow();
+
+            // Подписываемся на событие AddedUser, которое будет вызываться после успешного добавления пользователя
+            addUserWindow.AddedUser += AddUserWindow_AddedUser;
+
+            addUserWindow.Show();
+        }
+
+        private void AddUserWindow_AddedUser(object sender, EventArgs e)
+        {
+            // Обновляем DataGrid при получении события об успешном добавлении пользователя
             RefreshDataGrid();
-            ListUserDG.Items.Refresh();
         }
     }
 }

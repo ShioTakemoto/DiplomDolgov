@@ -41,11 +41,13 @@
                FontSize="22" Foreground="#FF152D51"
                FontWeight="Bold"/>
 
-        <TextBox Name="NameMedicineTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+            <TextBlock Text="Название медикамента"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="NameMedicineTB"
                  FontFamily="Roboto"
-                 Grid.Column="0"
-                 Grid.Row="1"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Название"
                  FontSize="20"
@@ -57,12 +59,17 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding NameMedicine}"/>
+        </StackPanel>
 
-        <TextBox Name="DosageTB"
-                 FontFamily="Roboto"
-                 Grid.Column="2"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2"
                  Grid.Row="3"
-                 Grid.ColumnSpan="2"
+                 Grid.ColumnSpan="2">
+            <TextBlock Text="Дозировка"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="DosageTB"
+                 FontFamily="Roboto"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Дозировка"
                  FontSize="20"
@@ -74,8 +81,16 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding Dosage}"/>
+        </StackPanel>
 
-        <TextBox Name="UnitsPerPackageTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2"
+                 Grid.Row="4"
+                 Grid.ColumnSpan="2">
+            <TextBlock Text="Единиц в упаковке"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="UnitsPerPackageTB"
                  FontFamily="Roboto"
                  Grid.Column="2"
                  Grid.Row="4"
@@ -91,13 +106,20 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding UnitsPerPackage}"/>
+        </StackPanel>
 
-        <TextBox Name="InstructionsTB"
-                 FontFamily="Roboto"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                 Width="250" 
+                 Height="160"
                  Grid.Column="2"
                  Grid.Row="5"
                  Grid.ColumnSpan="2"
-                 Grid.RowSpan="2"
+                 Grid.RowSpan="2">
+            <TextBlock Text="Инструкция"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="InstructionsTB"
+                 FontFamily="Roboto"
                  VerticalContentAlignment="Stretch"
                  materialDesign:HintAssist.Hint="Инструкция"
                  TextWrapping="Wrap"
@@ -111,11 +133,16 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding Instructions}"/>
+        </StackPanel>
 
-        <ComboBox Name="TypeMedicineCB"
-                  Grid.Column="2"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2"
                   Grid.ColumnSpan="2"
-                  Grid.Row="1"
+                  Grid.Row="1">
+            <TextBlock Text="Тип медикамента"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="TypeMedicineCB"
                   SelectedValuePath="IdTypeMedicine"
                   materialDesign:HintAssist.Hint="Тип медикамента"
                   SelectedItem="{Binding TypeMedicine}"
@@ -125,6 +152,9 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
+        
+        
         <Button Content="+"
                 Grid.Column="3"
                 Grid.Row="1"
@@ -133,7 +163,14 @@
                 Click="AddTypeMedicine"
                 BorderBrush="#FF87704C" Foreground="#FF87704C" Background="White" Margin="130,25,20,25"/>
 
-        <ComboBox Name="ActiveSubstanceCB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Grid.Row="2">
+            <TextBlock Text="Активное вещество"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="ActiveSubstanceCB"
                   Grid.Column="0"
                   Grid.ColumnSpan="2"
                   Grid.Row="2"
@@ -146,6 +183,9 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
+
+
         <Button Content="+"
                 Grid.Column="1"
                 Grid.Row="2"
@@ -153,10 +193,14 @@
                 Height="40"
                 Click="AddActiveSubstance" BorderBrush="#FF87704C" Foreground="#FF87704C" Background="White" Margin="130,25,20,25"/>
 
-
-        <ComboBox Name="ReleaseFormCB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0"
                   Grid.ColumnSpan="2"
-                  Grid.Row="3"
+                  Grid.Row="3">
+            <TextBlock Text="Форма выпуска"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="ReleaseFormCB"
                   SelectedValuePath="IdReleaseForm"
                   materialDesign:HintAssist.Hint="Форма выпуска"
                   SelectedItem="{Binding ReleaseForm}"
@@ -166,6 +210,9 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
+            
+            
         <Button Content="+"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
@@ -179,10 +226,14 @@
                 Foreground="#FF87704C" 
                 Margin="130,25,20,25"/>
 
-
-        <ComboBox Name="BestBeforeDateCB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0"
                   Grid.ColumnSpan="2"
-                  Grid.Row="4"
+                  Grid.Row="4">
+            <TextBlock Text="Срок годности"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="BestBeforeDateCB"
                   SelectedValuePath="IdBestBeforeDate"
                   materialDesign:HintAssist.Hint="Срок годности"
                   SelectedItem="{Binding BestBeforeDate}"
@@ -192,6 +243,8 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
+            
         <Button Content="+"
                 Grid.Column="1"
                 Grid.Row="4"
@@ -199,7 +252,14 @@
                 Height="40"
                 Click="AddBestBeforeDate" BorderBrush="#FF87704C" Background="White" Foreground="#FF87704C" Margin="130,25,20,25"/>
 
-        <ComboBox Name="PrescriptionDrugStatusCB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Grid.Row="5">
+            <TextBlock Text="Статус"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="PrescriptionDrugStatusCB"
                   Grid.ColumnSpan="2"
                   Grid.Row="5"
                   SelectedValuePath="IdPrescriptionDrugStatus"
@@ -211,8 +271,16 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
 
-        <ComboBox Name="ManufacturerCB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2"
+                  Grid.ColumnSpan="2"
+                  Grid.Row="2">
+            <TextBlock Text="Производитель"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="ManufacturerCB"
                   Grid.Column="2"
                   Grid.ColumnSpan="2"
                   Grid.Row="2"
@@ -225,6 +293,7 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
 
         <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
                 Foreground="#00000000" 

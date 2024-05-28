@@ -3,9 +3,11 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -95,17 +97,14 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
                 if (selectedMedicine == null)
                 {
-                    new MaterialDesignMessageBox("Выберите препарат для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    new MaterialDesignMessageBox("Выберите медикамент для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     return;
                 }
-
-                using (var context = DBEntities.GetContext())
-                {
-                    var medicine = context.Medicine.FirstOrDefault(u => u.NameMedicine == selectedMedicine.NameMedicine);
+                    var medicine = DBEntities.GetContext().Medicine.FirstOrDefault(u => u.IdMedicine == selectedMedicine.IdMedicine);
 
                     if (medicine == null)
                     {
-                        new MaterialDesignMessageBox("Препарат не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        new MaterialDesignMessageBox("Медикамент не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                         return;
                     }
 
@@ -113,14 +112,12 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
                     if (result == true)
                     {
-                        context.Medicine.Remove(medicine);
-                        context.SaveChanges();
-
-                        new MaterialDesignMessageBox($"{medicine.NameMedicine} успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        DBEntities.GetContext().Medicine.Remove(medicine);
+                        DBEntities.GetContext().SaveChanges();
+                        new MaterialDesignMessageBox($"Медикамент успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
                         LoadMedicines();
                         ListMedicineLB.Items.Refresh();
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -175,9 +172,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            new AddMedicineWindow().ShowDialog();
+            var addMedicineWindow = new AddMedicineWindow();
+
+            // Подписываемся на событие AddedMedicine, которое будет вызываться после успешного добавления медикамента
+            addMedicineWindow.AddedMedicine += AddMedicineWindow_AddedMedicine;
+
+            addMedicineWindow.ShowDialog();
+        }
+
+        private void AddMedicineWindow_AddedMedicine(object sender, EventArgs e)
+        {
+            // Обновляем DataGrid при получении события об успешном добавлении медикамента
             LoadMedicines();
-            ListMedicineLB.Items.Refresh();
         }
 
         private void ActiveSubstanceCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

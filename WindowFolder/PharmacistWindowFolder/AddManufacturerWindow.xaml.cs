@@ -13,6 +13,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
     /// </summary>
     public partial class AddManufacturerWindow : Window
     {
+        public event EventHandler AddedManufacturer;
         public AddManufacturerWindow()
         {
             InitializeComponent();
@@ -132,6 +133,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         context.SaveChanges();
                         ShowSuccessMessage("Производитель добавлен");
                         ElementsToolsClass.ClearAllControls(this);
+                        AddedManufacturer?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 else

@@ -61,11 +61,13 @@
                FontSize="22" Foreground="#FF152D51"
                FontWeight="Bold"/>
 
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+            <TextBlock Text="Название поставщика"
+                       Margin="0 0 0 5"/>
         <TextBox Name="NameManufacturerTB"
                  FontFamily="Roboto"
-                 Grid.Column="0"
-                 Grid.Row="1"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Название поставщика"
                  FontSize="20"
@@ -77,12 +79,15 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding NameManufacturer}"/>
+        </StackPanel>
 
-        <TextBox Name="AddressTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" >
+            <TextBlock Text="Адрес"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="AddressTB"
                  FontFamily="Roboto"
-                 Grid.Column="0"
-                 Grid.Row="2"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Адрес"
                  FontSize="20"
@@ -94,12 +99,15 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding Address}"/>
+        </StackPanel>
 
-        <TextBox Name="PhoneNumberContactPersonManufacturerTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" >
+            <TextBlock Text="Номер телефона"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="PhoneNumberContactPersonManufacturerTB"
                  FontFamily="Roboto"
-                 Grid.Column="0"
-                 Grid.Row="3"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Номер телефона"
                  FontSize="20"
@@ -111,12 +119,15 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding PhoneNumberContactPersonManufacturer}"/>
+        </StackPanel>
 
-        <TextBox Name="EmailManufacturerTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" >
+            <TextBlock Text="Почта"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="EmailManufacturerTB"
                  FontFamily="Roboto"
-                 Grid.Column="2"
-                 Grid.Row="1"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Почта"
                  FontSize="20"
@@ -128,12 +139,15 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding EmailManufacturer}"/>
+        </StackPanel>
 
-        <TextBox Name="ContactPersonNameTB"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" >
+            <TextBlock Text="Имя контактного лица"
+                       Margin="0 0 0 5"/>
+            <TextBox Name="ContactPersonNameTB"
                  FontFamily="Roboto"
-                 Grid.Column="2"
-                 Grid.Row="2"
-                 Grid.ColumnSpan="2"
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Имя контактного лица"
                  FontSize="20"
@@ -145,11 +159,14 @@
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
                  Text="{Binding ContactPersonName}"/>
+        </StackPanel>
 
-        <ComboBox Name="ManufacturerCountryCB"
-                  Grid.Column="2"
-                  Grid.ColumnSpan="2"
-                  Grid.Row="3"
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Height="75"
+                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" >
+            <TextBlock Text="Страна производителя"
+                       Margin="0 0 0 5"/>
+            <ComboBox Name="ManufacturerCountryCB"
                   SelectedValuePath="IdManufacturerCountry"
                   materialDesign:HintAssist.Hint="Страна производителя"
                   SelectedItem="{Binding ManufacturerCountry}"
@@ -159,6 +176,7 @@
                   Width="250"
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
+        </StackPanel>
         <Button Content="+"
                 Grid.Column="3"
                 Grid.Row="3"

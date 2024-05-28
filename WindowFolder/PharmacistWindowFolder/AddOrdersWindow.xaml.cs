@@ -4,12 +4,14 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
     public partial class AddOrdersWindow : Window
     {
+        public event EventHandler AddedOrder;
         public AddOrdersWindow()
         {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     DBEntities.GetContext().SaveChanges();
                     ShowSuccessMessage("Заказ добавлен");
                     ElementsToolsClass.ClearAllControls(this);
+                    AddedOrder?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -64,13 +67,25 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private bool TryGetDateTime(out DateTime dateTime)
         {
-            if (!DateTime.TryParseExact($"{DatePicker.SelectedDate ?? DateTime.Now} {TimeTextBox.Text}", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            dateTime = DateTime.MinValue; // Присваиваем начальное значение
+
+            // Получаем выбранную дату из DatePicker
+            DateTime selectedDate = DatePicker.SelectedDate ?? DateTime.Now.Date;
+
+            // Получаем время из текстового поля TimeTextBox
+            string[] timeParts = TimeTextBox.Text.Split(':');
+            if (timeParts.Length != 2 || !int.TryParse(timeParts[0], out int hours) || !int.TryParse(timeParts[1], out int minutes))
             {
-                ShowErrorMessage("Неверный формат времени! Введите время в формате ДД.ММ.ГГГГ ЧЧ:ММ.");
+                ShowErrorMessage("Неверный формат времени! Введите время в формате ЧЧ:ММ.");
                 return false;
             }
+
+            // Собираем дату и время в один объект DateTime
+            dateTime = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, hours, minutes, 0);
+
             return true;
         }
+
 
         private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
 

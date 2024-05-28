@@ -11,8 +11,6 @@ namespace DiplomDolgov.DataFolder
 {
     using System;
     using System.Collections.Generic;
-
-
     
     public partial class Orders
     {

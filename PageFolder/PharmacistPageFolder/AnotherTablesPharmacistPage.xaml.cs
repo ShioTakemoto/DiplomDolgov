@@ -101,6 +101,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().TypeMedicine.Remove(selectedTypeMedicine);
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Тип медикамента успешно удален", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
                     ListTypeMedicineDG.Items.Refresh();
                 }
                 catch (Exception ex)
@@ -129,6 +130,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().ActiveSubstance.Remove(selectedActiveSubstance);
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Активное вещество успешно удалено", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
                     ListActiveSubstanceDG.Items.Refresh();
                 }
                 catch (Exception ex)
@@ -157,6 +159,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().ReleaseForm.Remove(selectedReleaseForm);
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Форма выпуска успешно удалена", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
                     ListReleaseFormDG.Items.Refresh();
                 }
                 catch (Exception ex)
@@ -185,6 +188,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().BestBeforeDate.Remove(selectedBestBeforeDate);
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Срок годности успешно удален", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
                     ListBestBeforeDateDG.Items.Refresh();
                 }
                 catch (Exception ex)
@@ -213,6 +217,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                     DBEntities.GetContext().ManufacturerCountry.Remove(selectedManufacturerCountry);
                     DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Страна производителя успешно удалена", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LoadData();
                     ListManufacturerCountryDG.Items.Refresh();
                 }
                 catch (Exception ex)
@@ -234,6 +239,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             var editWindow = new LittleTablesEditWindow(selectedTypeMedicine, "Тип медикамента");
             editWindow.ShowDialog();
+            LoadData();
             ListTypeMedicineDG.Items.Refresh();
         }
 
@@ -249,6 +255,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             var editWindow = new LittleTablesEditWindow(selectedActiveSubstance, "Активное вещество");
             editWindow.ShowDialog();
+            LoadData();
             ListActiveSubstanceDG.Items.Refresh();
         }
 
@@ -264,6 +271,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             var editWindow = new LittleTablesEditWindow(selectedReleaseForm, "Форма выпуска");
             editWindow.ShowDialog();
+            LoadData();
             ListReleaseFormDG.Items.Refresh();
         }
 
@@ -279,6 +287,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             var editWindow = new LittleTablesEditWindow(selectedBestBeforeDate, "Срок годности");
             editWindow.ShowDialog();
+            LoadData();
             ListBestBeforeDateDG.Items.Refresh();
         }
 
@@ -294,6 +303,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
             var editWindow = new LittleTablesEditWindow(selectedManufacturerCountry, "Страна производителя");
             editWindow.ShowDialog();
+            LoadData();
             ListManufacturerCountryDG.Items.Refresh();
         }
     }

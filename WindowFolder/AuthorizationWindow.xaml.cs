@@ -88,7 +88,7 @@ namespace DiplomDolgov.WindowFolder
                                 var mainmedicine = DBEntities.GetContext()
                                     .User
                                     .FirstOrDefault(c => c.LoginUser == user.LoginUser);
-                                new MaterialDesignMessageBox("Главный медицинский работник, добро пожаловать", MessageType.Info, MessageButtons.Ok).ShowDialog();
+                                new MaterialDesignMessageBox("Главный мед. работник, добро пожаловать", MessageType.Info, MessageButtons.Ok).ShowDialog();
                                 new MainMedicineWorkerMainWindow().Show();
                                 break;
                         }

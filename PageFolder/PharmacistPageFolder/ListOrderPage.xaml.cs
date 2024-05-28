@@ -28,9 +28,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            new AddOrdersWindow().ShowDialog();
+            var addOrdersWindow = new AddOrdersWindow();
+
+            // Подписываемся на событие AddedOrder, которое будет вызываться после успешного добавления заказа
+            addOrdersWindow.AddedOrder += AddOrdersWindow_AddedOrder;
+
+            addOrdersWindow.ShowDialog();
+        }
+
+        private void AddOrdersWindow_AddedOrder(object sender, EventArgs e)
+        {
+            // Обновляем DataGrid при получении события об успешном добавлении заказа
             LoadData();
-            ListOrderDG.Items.Refresh();
         }
 
         private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)

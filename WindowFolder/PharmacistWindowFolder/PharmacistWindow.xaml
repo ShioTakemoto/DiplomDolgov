@@ -101,7 +101,7 @@
                     VerticalContentAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" BorderBrush="#FF8B7249" Click="ListMedicineBtn_Click">
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 15 0">
                         <Image Source="/Resources/Medicine.png" Height="40" Width="40" Margin="0,0,20,0" VerticalAlignment="Center"/>
                         <Label x:Name="ListMedicineLabel" Content="Список медикаментов" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -118,9 +118,9 @@
                     VerticalContentAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" BorderBrush="#FF8B7249" Click="ListManufacturersBtn_Click">
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
                         <Image Source="/Resources/Manufacturer.png" Height="40" Width="40" Margin="0,0,20,0" VerticalAlignment="Center"/>
-                        <Label x:Name="ListManufacturersLabel" Content="Список производителей" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+                        <Label x:Name="ListManufacturersLabel" Content="Список производителей" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     </StackPanel>
                 </Button>
             </Border>
@@ -135,9 +135,9 @@
                     VerticalContentAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" BorderBrush="#FF8B7249" Click="ListOrdersBtn_Click">
 
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/Orders.png" Height="40" Width="40" Margin="0,0,30,0" VerticalAlignment="Center"/>
-                        <Label x:Name="ListOrdersLabel" Content="Список заказов" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 40 0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 80 0">
+                        <Image Source="/Resources/Orders.png" Height="40" Width="40" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                        <Label x:Name="ListOrdersLabel" Content="Список заказов" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     </StackPanel>
                 </Button>
             </Border>
@@ -152,9 +152,9 @@
                     VerticalContentAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" BorderBrush="#FF8B7249" Click="ListLittleTablesBtn_Click">
 
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/Orders.png" Height="40" Width="40" Margin="0,0,30,0" VerticalAlignment="Center"/>
-                        <Label x:Name="ListLittleTablesLabel" Content="Добавочные списки" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 40 0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0 0 40 0">
+                        <Image Source="/Resources/ListIcon.png" Height="40" Width="40" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                        <Label x:Name="ListLittleTablesLabel" Content="Добавочные списки" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     </StackPanel>
                 </Button>
             </Border>

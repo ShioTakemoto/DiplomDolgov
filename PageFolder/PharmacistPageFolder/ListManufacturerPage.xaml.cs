@@ -31,7 +31,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             var context = DBEntities.GetContext();
             var searchText = SearchTB.Text.Trim().ToLower();
-            var selectedCountryName = ManufacturerCountryCB.SelectedItem?.ToString();
+            var selectedCountryName = (ManufacturerCountryCB.SelectedItem as ManufacturerCountry)?.NameManufacturerCountry;
             var query = context.Manufacturer.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText))
@@ -124,9 +124,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            new AddManufacturerWindow().Show();
+            var addManufacturerWindow = new AddManufacturerWindow();
+
+            // Подписываемся на событие AddedManufacturer, которое будет вызываться после успешного добавления производителя
+            addManufacturerWindow.AddedManufacturer += AddManufacturerWindow_AddedManufacturer;
+
+            addManufacturerWindow.Show();
+        }
+
+        private void AddManufacturerWindow_AddedManufacturer(object sender, EventArgs e)
+        {
+            // Обновляем DataGrid при получении события об успешном добавлении производителя
             RefreshDataGrid();
-            ListManufacturerDG.Items.Refresh();
         }
     }
 }

@@ -121,18 +121,6 @@
                   Style="{StaticResource MaterialDesignComboBox}"
                   BorderThickness="0 0 0 1"/>
 
-        <Button Content="Добавить"
-                Background="#FF8B7249" 
-                Foreground="White"
-                FontFamily="Roboto" 
-                Click="AddButton"
-                FontSize="20"
-                Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Width="140"
-                Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
-
         <DatePicker Name="DatePicker"
             Grid.Column="2"
             Grid.ColumnSpan="2"
@@ -153,5 +141,19 @@
          FontSize="20"
          Height="50"
          Width="250"/>
+
+        <Button Content="Добавить"
+                Background="#FF8B7249" 
+                Foreground="White"
+                FontFamily="Roboto" 
+                Click="AddButton"
+                FontSize="20"
+                Grid.Row="4"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Width="140"
+                Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
+
+        
     </Grid>
 </Window>

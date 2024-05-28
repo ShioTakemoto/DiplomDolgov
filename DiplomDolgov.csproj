@@ -97,11 +97,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ClassFolder\ContextClass.cs" />
+    <Compile Include="ClassFolder\DateTimeToStringConverter.cs" />
     <Compile Include="ClassFolder\DisplayUser.cs" />
     <Compile Include="ClassFolder\ElementsToolsClass.cs" />
     <Compile Include="ClassFolder\Helpers.cs" />
     <Compile Include="ClassFolder\ImageClass.cs" />
     <Compile Include="ClassFolder\OpenFileDialogHelper.cs" />
+    <Compile Include="ClassFolder\StockToColorConverter.cs" />
     <Compile Include="DataFolder\ActiveSubstance.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -180,6 +182,9 @@
     <Compile Include="PageFolder\AdminPageFolder\ListUserPage.xaml.cs">
       <DependentUpon>ListUserPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListEmployeePage.xaml.cs">
+      <DependentUpon>ListEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml.cs">
       <DependentUpon>MainMedicineWorkerListMedicine.xaml</DependentUpon>
     </Compile>
@@ -210,8 +215,17 @@
     <Compile Include="WindowFolder\CustomMessageBox\MaterialDesignMessageBox.xaml.cs">
       <DependentUpon>MaterialDesignMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml.cs">
+      <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditStaffWindow.xaml.cs">
+      <DependentUpon>EditStaffWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\MainMedicineWorkerMainWindow.xaml.cs">
       <DependentUpon>MainMedicineWorkerMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\StaffDetailsWindow.xaml.cs">
+      <DependentUpon>StaffDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFolder\PharmacistWindowFolder\AddManufacturerWindow.xaml.cs">
       <DependentUpon>AddManufacturerWindow.xaml</DependentUpon>
@@ -283,6 +297,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PageFolder\MainMedicineWorkerPageFolder\ListEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -327,7 +345,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\EditStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\MainMedicineWorkerMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\StaffDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -442,6 +472,9 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\GuestIcon.png" />
+    <Resource Include="Resources\AccountingBookIcon.png" />
+    <Resource Include="Resources\EmployeeIcon.png" />
     <Resource Include="Resources\ListIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

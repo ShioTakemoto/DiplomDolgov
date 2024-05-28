@@ -42,7 +42,32 @@
                 <TextBlock Text="Статус: " FontWeight="Bold" FontSize="14"/>
                 <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="14"/>
                 <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding TotalStockCount}" />
+                <TextBlock Text="{Binding StockCount}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StockCount}" Value="0">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding StockCount}" Value="1">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding StockCount}" Value="2">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding StockCount}" Value="3">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding StockCount}" Value="4">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding StockCount}" Value="5">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="14"/>
                 <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="14"/>
 

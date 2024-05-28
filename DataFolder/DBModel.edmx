@@ -697,7 +697,7 @@
           <Property Name="Count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Medicine" Relationship="Self.FK_StockUnit_Medicine" FromRole="StockUnit" ToRole="Medicine" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="ФЫВ">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -962,7 +962,7 @@
           <EntitySet Name="Room" EntityType="Self.Room" />
           <EntitySet Name="Staff" EntityType="Self.Staff" />
           <EntitySet Name="StockUnit" EntityType="Self.StockUnit" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="sysdiagrams" EntityType="DBModel.ФЫВ" />
           <EntitySet Name="TypeMedicine" EntityType="Self.TypeMedicine" />
           <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Medicine_ActiveSubstance" Association="Self.FK_Medicine_ActiveSubstance">
@@ -1220,7 +1220,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DBModel.sysdiagrams">
+            <EntityTypeMapping TypeName="DBModel.ФЫВ">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />

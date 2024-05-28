@@ -12,6 +12,7 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
     /// </summary>
     public partial class AddUserWindow : Window
     {
+        public event EventHandler AddedUser;
         public AddUserWindow()
         {
             InitializeComponent();
@@ -64,6 +65,7 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
                     context.SaveChanges();
                     new MaterialDesignMessageBox("Пользователь создан", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     ElementsToolsClass.ClearAllControls(this);
+                    AddedUser?.Invoke(this, EventArgs.Empty);
                 }
             }
             catch (Exception ex)

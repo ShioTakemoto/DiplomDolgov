@@ -3,12 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DiplomDolgov.PageFolder.PharmacistPageFolder"
+      xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
       Title="Список заказов">
-
+    <Page.Resources>
+        <local:DateTimeToStringConverter x:Key="DateTimeConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -110,7 +112,7 @@
                             Width="*"/>
 
                 <DataGridTextColumn Header="Дата создания"
-                            Binding="{Binding DateTimeOrder}"
+                            Binding="{Binding DateTimeOrder, Converter={StaticResource DateTimeConverter}}"
                             Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

@@ -31,6 +31,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
     {
         private string selectedFileName = "";
         private Medicine Medicine = new Medicine();
+        public event EventHandler AddedMedicine;
         public AddMedicineWindow()
         {
             InitializeComponent();
@@ -139,9 +140,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     int idBestBeforeDate = GetComboBoxItemId<BestBeforeDate>(BestBeforeDateCB);
                     int idPrescriptionDrugStatus = GetComboBoxItemId<PrescriptionDrugStatus>(PrescriptionDrugStatusCB);
 
-                    var context = DBEntities.GetContext();
-
-                    var existingMedicine = context.Medicine.FirstOrDefault(m =>
+                    var existingMedicine = DBEntities.GetContext().Medicine.FirstOrDefault(m =>
                             m.NameMedicine == NameMedicineTB.Text &&
                             m.IdTypeMedicine == idTypeMedicine &&
                             m.IdActiveSubstance == idActiveSubstance &&
@@ -174,12 +173,13 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                             MedicinePhoto = !string.IsNullOrEmpty(selectedFileName) ? ImageClass.ConvertImageToByteArray(selectedFileName) : null
                         };
 
-                        context.Medicine.Add(newMedicine);
-                        context.SaveChanges();
+                        DBEntities.GetContext().Medicine.Add(newMedicine);
+                        DBEntities.GetContext().SaveChanges();
                         ShowSuccessMessage("Медикамент добавлен");
                         ElementsToolsClass.ClearAllControls(this);
                         selectedFileName = string.Empty;
                         ImPhoto.Source = null;
+                        AddedMedicine?.Invoke(this, EventArgs.Empty);
                     }
                 }
                 else
