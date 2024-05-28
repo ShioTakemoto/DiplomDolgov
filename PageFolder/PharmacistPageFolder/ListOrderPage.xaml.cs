@@ -30,6 +30,14 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             var addOrdersWindow = new AddOrdersWindow();
 
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                addOrdersWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             // Подписываемся на событие AddedOrder, которое будет вызываться после успешного добавления заказа
             addOrdersWindow.AddedOrder += AddOrdersWindow_AddedOrder;
 
@@ -127,7 +135,17 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return;
             }
 
-            new EditOrdersWindow(order).ShowDialog();
+            var editOrdersWindow = new EditOrdersWindow(order);
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editOrdersWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
+            editOrdersWindow.ShowDialog();
             LoadData();
             ListOrderDG.Items.Refresh();
         }

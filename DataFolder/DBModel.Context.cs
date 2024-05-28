@@ -42,7 +42,7 @@ namespace DiplomDolgov.DataFolder
         public virtual DbSet<Room> Room { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
         public virtual DbSet<StockUnit> StockUnit { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<ФЫВ> sysdiagrams { get; set; }
         public virtual DbSet<TypeMedicine> TypeMedicine { get; set; }
         public virtual DbSet<User> User { get; set; }
     }

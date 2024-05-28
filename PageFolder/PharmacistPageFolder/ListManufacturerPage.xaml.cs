@@ -102,7 +102,26 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return;
             }
 
-            new EditManufacturerWindow(selectedManufacturer).ShowDialog();
+            var context = DBEntities.GetContext();
+            var manufacturer = context.Manufacturer.FirstOrDefault(m => m.IdManufacturer == selectedManufacturer.IdManufacturer);
+
+            if (manufacturer == null)
+            {
+                new MaterialDesignMessageBox("Производитель не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                return;
+            }
+
+            var editManufacturerWindow = new EditManufacturerWindow(manufacturer);
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editManufacturerWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
+            editManufacturerWindow.ShowDialog();
             RefreshDataGrid();
             ListManufacturerDG.Items.Refresh();
         }
@@ -126,10 +145,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             var addManufacturerWindow = new AddManufacturerWindow();
 
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                addManufacturerWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             // Подписываемся на событие AddedManufacturer, которое будет вызываться после успешного добавления производителя
             addManufacturerWindow.AddedManufacturer += AddManufacturerWindow_AddedManufacturer;
 
-            addManufacturerWindow.Show();
+            addManufacturerWindow.ShowDialog();
         }
 
         private void AddManufacturerWindow_AddedManufacturer(object sender, EventArgs e)

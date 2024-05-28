@@ -11,6 +11,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="384"/>
             <ColumnDefinition Width="384"/>
@@ -167,5 +168,11 @@
                x:Name="MainFrame"
                NavigationUIVisibility="Hidden"/>
 
+        <Border x:Name="Overlay1"
+                Background="Black"
+                Opacity="0.5"
+                Visibility="Collapsed"
+                Grid.RowSpan="11"
+                Grid.ColumnSpan="5" />
     </Grid>
 </Window>

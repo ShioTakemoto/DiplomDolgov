@@ -170,13 +170,13 @@
     <Compile Include="DataFolder\StockUnit.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataFolder\sysdiagrams.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataFolder\TypeMedicine.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataFolder\User.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataFolder\ФЫВ.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PageFolder\AdminPageFolder\ListUserPage.xaml.cs">
@@ -472,6 +472,7 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\StaffListIcon.png" />
     <Resource Include="Resources\GuestIcon.png" />
     <Resource Include="Resources\AccountingBookIcon.png" />
     <Resource Include="Resources\EmployeeIcon.png" />

@@ -20,12 +20,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class EditStaffWindow : Window
     {
-        private Manufacturer manufacturer;
+        private Staff staff;
         public EditStaffWindow(Staff staff)
         {
             InitializeComponent();
             this.staff = staff;
             DataContext = this.staff;
         }
-    },
+    }
 }

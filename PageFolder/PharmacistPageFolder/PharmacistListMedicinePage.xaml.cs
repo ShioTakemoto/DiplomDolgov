@@ -1,4 +1,5 @@
 ﻿using DiplomDolgov.DataFolder;
+using DiplomDolgov.WindowFolder.AdminWindowFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using DiplomDolgov.WindowFolder.SharedWindowsFolder;
@@ -143,7 +144,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return;
             }
 
-            new EditMedicineWindow(medicine).ShowDialog();
+            var editMedicineWindow = new EditMedicineWindow(medicine);
+
+            // Получаем ссылку на родительское окно
+            var parentWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (parentWindow != null)
+            {
+                // Показываем затемняющий слой
+                parentWindow.ShowOverlay1();
+                editMedicineWindow.Closed += (s, args) => parentWindow.HideOverlay1();
+            }
+
+            editMedicineWindow.ShowDialog();
             LoadMedicines();
             ListMedicineLB.Items.Refresh();
         }
@@ -174,6 +186,13 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             var addMedicineWindow = new AddMedicineWindow();
 
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                addMedicineWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
             // Подписываемся на событие AddedMedicine, которое будет вызываться после успешного добавления медикамента
             addMedicineWindow.AddedMedicine += AddMedicineWindow_AddedMedicine;
 

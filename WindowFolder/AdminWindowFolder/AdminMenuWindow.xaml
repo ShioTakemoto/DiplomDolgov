@@ -119,5 +119,12 @@
                x:Name="MainFrame"
                NavigationUIVisibility="Hidden"/>
 
+        <Border x:Name="Overlay"
+                Background="Black"
+                Opacity="0.5"
+                Visibility="Collapsed"
+                Grid.RowSpan="11"
+                Grid.ColumnSpan="5" />
+        
     </Grid>
 </Window>

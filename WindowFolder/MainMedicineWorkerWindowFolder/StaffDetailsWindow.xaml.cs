@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DiplomDolgov.ClassFolder;
+using DiplomDolgov.DataFolder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,25 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class StaffDetailsWindow : Window
     {
-        public StaffDetailsWindow()
+        
+        public StaffDetailsWindow(Staff selectedStaff)
         {
             InitializeComponent();
+            DataContext = selectedStaff;
+            if (selectedStaff.StaffPhoto != null)
+            {
+                StaffImage.Source = ImageClass.ConvertByteArrayToImage(selectedStaff.StaffPhoto);
+            }
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

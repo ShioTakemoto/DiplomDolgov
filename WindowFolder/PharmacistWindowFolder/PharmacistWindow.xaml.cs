@@ -61,5 +61,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             MainFrame.Navigate(new AnotherTablesPharmacistPage());
         }
+
+        public void ShowOverlay1()
+        {
+            Overlay1.Visibility = Visibility.Visible;
+        }
+
+        public void HideOverlay1()
+        {
+            Overlay1.Visibility = Visibility.Collapsed;
+        }
     }
 }

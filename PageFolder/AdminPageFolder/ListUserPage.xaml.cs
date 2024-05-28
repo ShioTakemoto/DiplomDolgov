@@ -121,7 +121,18 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
                 return;
             }
 
-            new EditUserWindow(user).ShowDialog();
+            var editUserWindow = new EditUserWindow(user);
+
+            // Получаем ссылку на главное окно
+            var adminWindow = Window.GetWindow(this) as AdminMenuWindow;
+            if (adminWindow != null)
+            {
+                // Показываем затемняющий слой
+                adminWindow.ShowOverlay();
+                editUserWindow.Closed += (s, args) => adminWindow.HideOverlay();
+            }
+
+            editUserWindow.ShowDialog();
             RefreshDataGrid();
             ListUserDG.Items.Refresh();
         }
@@ -171,10 +182,17 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
         {
             var addUserWindow = new AddUserWindow();
 
-            // Подписываемся на событие AddedUser, которое будет вызываться после успешного добавления пользователя
-            addUserWindow.AddedUser += AddUserWindow_AddedUser;
+            // Получаем ссылку на главное окно
+            var adminWindow = Window.GetWindow(this) as AdminMenuWindow;
+            if (adminWindow != null)
+            {
+                // Показываем затемняющий слой
+                adminWindow.ShowOverlay();
+                addUserWindow.Closed += (s, args) => adminWindow.HideOverlay();
+            }
 
-            addUserWindow.Show();
+            addUserWindow.AddedUser += AddUserWindow_AddedUser;
+            addUserWindow.ShowDialog();
         }
 
         private void AddUserWindow_AddedUser(object sender, EventArgs e)

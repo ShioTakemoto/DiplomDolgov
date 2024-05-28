@@ -45,5 +45,15 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
         {
             MainFrame.Navigate(new ListUserPage());
         }
+
+        public void ShowOverlay()
+        {
+            Overlay.Visibility = Visibility.Visible;
+        }
+
+        public void HideOverlay()
+        {
+            Overlay.Visibility = Visibility.Collapsed;
+        }
     }
 }

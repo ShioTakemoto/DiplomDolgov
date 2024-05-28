@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder"
         mc:Ignorable="d"
-        Title="StaffDetailsWindow" Height="450" Width="800">
+        Title="Medicine Details" 
+        WindowStyle="None"
+        Height="450" 
+        Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <StackPanel Margin="20">
+                <Image x:Name="StaffImage" Height="300" Width="300" Margin="0,0,0,20"/>
+                <TextBlock Text="Название: " FontWeight="Bold" FontSize="18"/>
+                <TextBlock Text="{Binding NameMedicine}" FontSize="18"/>
+                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="14"/>
+                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="14"/>
+                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="14"/>
+                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="14"/>
+                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Dosage}" FontSize="14"/>
+                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="14"/>
+                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="14"/>
+                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="14"/>
+                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding StockCount}"/>
+                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="14"/>
+
+            </StackPanel>
+        </ScrollViewer>
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
+                Foreground="#00000000" 
+                Click="MinusBtn_Click"
+                Width="40"
+                Height="40" 
+                Margin="20,15,120,15" 
+                Grid.Column="1">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="\Resources\Minus.png" />
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
+                Foreground="#00000000" 
+                Click="ExitBtn_Click"
+                Width="40" 
+                Height="40"
+                Grid.Column="1">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="\Resources\Close.png" />
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Window>

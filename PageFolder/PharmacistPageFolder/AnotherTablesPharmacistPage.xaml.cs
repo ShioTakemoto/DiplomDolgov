@@ -238,6 +238,15 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             var editWindow = new LittleTablesEditWindow(selectedTypeMedicine, "Тип медикамента");
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             editWindow.ShowDialog();
             LoadData();
             ListTypeMedicineDG.Items.Refresh();
@@ -254,6 +263,15 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             var editWindow = new LittleTablesEditWindow(selectedActiveSubstance, "Активное вещество");
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             editWindow.ShowDialog();
             LoadData();
             ListActiveSubstanceDG.Items.Refresh();
@@ -270,6 +288,15 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             var editWindow = new LittleTablesEditWindow(selectedReleaseForm, "Форма выпуска");
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             editWindow.ShowDialog();
             LoadData();
             ListReleaseFormDG.Items.Refresh();
@@ -286,6 +313,15 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             var editWindow = new LittleTablesEditWindow(selectedBestBeforeDate, "Срок годности");
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             editWindow.ShowDialog();
             LoadData();
             ListBestBeforeDateDG.Items.Refresh();
@@ -302,6 +338,15 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
 
             var editWindow = new LittleTablesEditWindow(selectedManufacturerCountry, "Страна производителя");
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
             editWindow.ShowDialog();
             LoadData();
             ListManufacturerCountryDG.Items.Refresh();

@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -18,6 +19,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             InitializeComboBoxes();
             this.order = order;
             DataContext = this.order;
+
+            Loaded += EditOrdersWindow_Loaded;
+        }
+
+        private void EditOrdersWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Устанавливаем значения DatePicker и TimeTextBox после загрузки окна
+            DatePicker.SelectedDate = order.DateTimeOrder.Date;
+            TimeTextBox.Text = order.DateTimeOrder.ToString("HH:mm");
         }
 
         private void InitializeComboBoxes()
@@ -41,6 +51,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
+                    // Обновляем свойства объекта заказа перед сохранением изменений
+                    order.DateTimeOrder = dateTimeOrder;
+                    order.Count = count;
+
                     DBEntities.GetContext().SaveChanges();
                     ShowSuccessMessage("Данные успешно сохранены");
                     Close();
@@ -61,7 +75,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             result = DateTime.Now;
             if (DatePicker.SelectedDate == null || !TimeSpan.TryParseExact(TimeTextBox.Text, "hh\\:mm", CultureInfo.InvariantCulture, out TimeSpan selectedTime))
             {
-                ShowErrorMessage("Неверный формат времени! Введите время в формате ЧЧ:ММ.");
+                ShowErrorMessage("Неверный формат времени!\nВведите время в формате ЧЧ:ММ.");
                 return false;
             }
 
