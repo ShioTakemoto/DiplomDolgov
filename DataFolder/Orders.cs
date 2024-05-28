@@ -15,7 +15,7 @@ namespace DiplomDolgov.DataFolder
     public partial class Orders
     {
         public int IdOrder { get; set; }
-        public int IdMedicine { get; set; }
+        public Nullable<int> IdMedicine { get; set; }
         public string OrderDescription { get; set; }
         public int Count { get; set; }
         public int IdOrderStatus { get; set; }

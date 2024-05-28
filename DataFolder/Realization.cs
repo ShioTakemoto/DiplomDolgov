@@ -18,7 +18,7 @@ namespace DiplomDolgov.DataFolder
         public Nullable<int> IdStaff { get; set; }
         public Nullable<int> IdGuest { get; set; }
         public System.DateTime DateTimeRealization { get; set; }
-        public int IdMedicine { get; set; }
+        public Nullable<int> IdMedicine { get; set; }
         public string Reason { get; set; }
         public int Count { get; set; }
     

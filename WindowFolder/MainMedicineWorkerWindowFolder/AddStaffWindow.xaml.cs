@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq.Expressions;
 
 namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 {
@@ -24,12 +25,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class AddStaffWindow : Window
     {
+        public int? IdUser { get; set; } // Теперь может принимать null значения
         private string selectedFileName = "";
         private Staff Staff = new Staff();
         public event EventHandler AddedStaff;
         public AddStaffWindow()
         {
             InitializeComponent();
+            UserCB.ItemsSource = DBEntities.GetContext().User.ToList();
+            PostCB.ItemsSource = DBEntities.GetContext().Post.ToList();
+            GenderCB.ItemsSource = DBEntities.GetContext().Gender.ToList();
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
@@ -73,15 +78,9 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             {
 
                 // Проверка на максимальную длину номера телефона
-                if (PhoneNumberStaffTB.Text.Length > 11)
+                if (PhoneNumberStaffTB.Text.Length != 11)
                 {
-                    ShowErrorMessage("Номер телефона не может содержать более 11 символов");
-                    return;
-                }
-
-                if (PhoneNumberStaffTB.Text.Length < 11)
-                {
-                    ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
+                    ShowErrorMessage("Номер телефона должен содержать ровно 11 символов");
                     return;
                 }
 
@@ -120,14 +119,20 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
-                int idUser = -1;
+                int? idUser = null;
                 if (UserCB.SelectedItem != null)
                 {
                     idUser = (int)UserCB.SelectedValue;
                 }
 
-                // Создание нового сотрудника
                 var newStaff = new Staff
+                {
+                    // Остальные свойства Staff...
+                    IdUser = idUser
+                };
+
+                // Создание нового сотрудника
+                var newerStaff = new Staff
                 {
                     LastNameStaff = LastNameStaffTB.Text,
                     FirstNameStaff = FirstNameStaffTB.Text,
@@ -141,37 +146,43 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 };
 
                 // Добавление нового сотрудника в базу данных
-                DBEntities.GetContext().Staff.Add(newStaff);
+                DBEntities.GetContext().Staff.Add(newerStaff);
                 DBEntities.GetContext().SaveChanges();
                 ShowSuccessMessage("Сотрудник добавлен");
                 ElementsToolsClass.ClearAllControls(this);
                 selectedFileName = string.Empty;
                 StaffPhoto.Source = null;
-                // Дополнительные действия после успешного добавления сотрудника
+                AddedStaff?.Invoke(this, EventArgs.Empty);
 
             }
-            catch (Exception ex)
-            {
-                ShowErrorMessage($"Ошибка при добавлении сотрудника: {ex.Message}");
+            catch(Exception ex)
+            { 
+                    ShowErrorMessage($"Ошибка:{ex}");
             }
         }
 
+        // Обработчик события для добавления новой должности
         private void AddPost(object sender, RoutedEventArgs e)
         {
+            // Создание окна для ввода новой должности
             var inputWindow = new InputDialogWindow("Введите новую должность");
             if (inputWindow.ShowDialog() == true)
             {
+                // Получение введенного текста
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
+                    // Показ сообщения об ошибке, если поле пустое
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
                 else if (!ContainsOnlyLetters(inputText))
                 {
-                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
+                    // Показ сообщения об ошибке, если введены недопустимые символы
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
                 else
                 {
+                    // Добавление новой должности в ComboBox и базу данных
                     AddComboBoxItem<Post>(PostCB, inputText);
                 }
             }
@@ -198,31 +209,60 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
         }
 
+        // Метод проверки, содержит ли строка только буквы и пробелы
         private bool ContainsOnlyLetters(string input)
         {
-            return input.All(char.IsLetter);
+            foreach (char c in input)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
+        // Метод для добавления элемента в ComboBox и базу данных
         private void AddComboBoxItem<T>(ComboBox comboBox, string inputText) where T : class
         {
+            // Получение контекста базы данных
             var context = DBEntities.GetContext();
+            // Получение набора данных для типа T
             var dbSet = context.Set<T>();
+            // Формирование имени свойства для поиска
             var propertyName = $"Name{typeof(T).Name}";
 
-            var existingItem = dbSet.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
+            // Создание параметра выражения для типа T
+            var parameter = System.Linq.Expressions.Expression.Parameter(typeof(T), "item");
+            // Создание выражения для доступа к свойству
+            var property = System.Linq.Expressions.Expression.Property(parameter, propertyName);
+            // Создание выражения константы для inputText
+            var constant = System.Linq.Expressions.Expression.Constant(inputText, typeof(string));
+            // Создание выражения равенства для сравнения свойства с inputText
+            var equality = System.Linq.Expressions.Expression.Equal(property, constant);
+            // Создание лямбда-выражения для использования в запросе
+            var lambda = System.Linq.Expressions.Expression.Lambda<Func<T, bool>>(equality, parameter);
+
+            // Выполнение запроса для проверки существования элемента в базе данных
+            var existingItem = dbSet.FirstOrDefault(lambda);
 
             if (existingItem != null)
             {
+                // Показ сообщения об ошибке, если элемент уже существует
                 ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
             }
             else
             {
+                // Создание нового элемента типа T
                 var newItem = (T)Activator.CreateInstance(typeof(T));
+                // Установка значения свойства для нового элемента
                 newItem.GetType().GetProperty(propertyName).SetValue(newItem, inputText);
 
+                // Добавление нового элемента в набор данных и сохранение изменений в базе данных
                 dbSet.Add(newItem);
                 context.SaveChanges();
 
+                // Обновление источника данных для ComboBox и установка нового элемента как выбранного
                 comboBox.ItemsSource = dbSet.ToList();
                 comboBox.SelectedItem = newItem;
             }

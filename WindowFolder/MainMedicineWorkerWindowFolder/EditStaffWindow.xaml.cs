@@ -43,15 +43,9 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             try
             {
                 // Проверка на максимальную длину номера телефона
-                if (PhoneNumberStaffTB.Text.Length > 11)
+                if (PhoneNumberStaffTB.Text.Length != 11)
                 {
-                    ShowErrorMessage("Номер телефона не может содержать более 11 символов");
-                    return;
-                }
-
-                if (PhoneNumberStaffTB.Text.Length < 11)
-                {
-                    ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
+                    ShowErrorMessage("Номер телефона должен содержать ровно 11 символов");
                     return;
                 }
 
@@ -122,7 +116,14 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         }
         private bool ContainsOnlyLetters(string input)
         {
-            return input.All(char.IsLetter);
+            foreach (char c in input)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         private void ShowErrorMessage(string message)
         {
@@ -152,57 +153,74 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 if (op.ShowDialog() == true)
                 {
                     selectedFileName = op.FileName;
-                    Staff.StaffPhoto = ImageClass.ConvertImageToByteArray(selectedFileName);
-                    StaffPhoto.Source = ImageClass.ConvertByteArrayToImage(Staff.StaffPhoto);
+                    staff.StaffPhoto = ImageClass.ConvertImageToByteArray(selectedFileName);
+                    StaffPhoto.Source = ImageClass.ConvertByteArrayToImage(staff.StaffPhoto);
                 }
             }
             catch (Exception ex)
             {
-                ShowErrorMessage($"{ex}");
+                HandleException(ex);
             }
         }
 
+        // Обработчик события для добавления новой должности
         private void AddPost(object sender, RoutedEventArgs e)
         {
+            // Создание окна для ввода новой должности
             var inputWindow = new InputDialogWindow("Введите новую должность");
             if (inputWindow.ShowDialog() == true)
             {
+                // Получение введенного текста
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
+                    // Показ сообщения об ошибке, если поле пустое
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
                 else if (!ContainsOnlyLetters(inputText))
                 {
+                    // Показ сообщения об ошибке, если введены недопустимые символы
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
+                    // Добавление новой должности в ComboBox и базу данных
                     AddComboBoxItem<Post>(PostCB, inputText);
                 }
             }
         }
 
+        // Метод для добавления элемента в ComboBox и базу данных
         private void AddComboBoxItem<T>(ComboBox comboBox, string inputText) where T : class
         {
+            // Получение контекста базы данных
             var context = DBEntities.GetContext();
+            // Получение набора данных для типа T
             var dbSet = context.Set<T>();
+            // Формирование имени свойства для поиска
             var propertyName = $"Name{typeof(T).Name}";
 
-            var existingItem = dbSet.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
+            // Поиск существующего элемента с таким же значением свойства
+            var existingItem = dbSet.FirstOrDefault(item =>
+                (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
 
             if (existingItem != null)
             {
+                // Показ сообщения об ошибке, если элемент уже существует
                 ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
             }
             else
             {
+                // Создание нового элемента типа T
                 var newItem = (T)Activator.CreateInstance(typeof(T));
+                // Установка значения свойства для нового элемента
                 newItem.GetType().GetProperty(propertyName).SetValue(newItem, inputText);
 
+                // Добавление нового элемента в набор данных и сохранение изменений в базе данных
                 dbSet.Add(newItem);
                 context.SaveChanges();
 
+                // Обновление источника данных для ComboBox и установка нового элемента как выбранного
                 comboBox.ItemsSource = dbSet.ToList();
                 comboBox.SelectedItem = newItem;
             }
@@ -226,5 +244,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             bool? result = new MaterialDesignMessageBox(message, MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
             return result ?? false;
         }
+
+        private void HandleException(Exception ex) => new MaterialDesignMessageBox($"Произошла ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
     }
 }

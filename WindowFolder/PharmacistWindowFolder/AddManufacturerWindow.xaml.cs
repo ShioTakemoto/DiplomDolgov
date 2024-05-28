@@ -64,9 +64,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
         }
 
-        private bool IsValidName(string input)
+        private bool IsValidName(string inputText)
         {
-            return input.All(char.IsLetter);
+            // Разрешаем буквы и пробелы
+            return !string.IsNullOrWhiteSpace(inputText) && inputText.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
@@ -88,15 +89,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    if (PhoneNumberContactPersonManufacturerTB.Text.Length > 11)
+                    if (PhoneNumberContactPersonManufacturerTB.Text.Length != 11)
                     {
-                        ShowErrorMessage("Номер телефона не может содержать более 11 символов");
-                        return;
-                    }
-
-                    if (PhoneNumberContactPersonManufacturerTB.Text.Length < 11)
-                    {
-                        ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
+                        ShowErrorMessage("Номер телефона должен содержать ровно 11 символов");
                         return;
                     }
 

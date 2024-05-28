@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.PharmacistWindowFolder"
         mc:Ignorable="d"
         Title="LittleTablesEditWindow" Height="200" Width="400"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>

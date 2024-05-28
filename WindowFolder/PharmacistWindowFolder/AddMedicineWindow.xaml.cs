@@ -5,6 +5,7 @@ using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.Linq;
@@ -197,6 +198,18 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             return input.All(char.IsLetter);
         }
 
+        private bool ContainsOnlyLettersAndSpaces(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private bool ShowConfirmationMessage(string message)
         {
             bool? result = new MaterialDesignMessageBox(message, MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
@@ -224,7 +237,14 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             var dbSet = context.Set<T>();
             var propertyName = $"Name{typeof(T).Name}";
 
-            var existingItem = dbSet.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
+            // Получаем значение свойства за пределами запроса LINQ
+            var propertyValue = inputText;
+
+            // Создаем список для хранения всех элементов
+            var allItems = dbSet.ToList();
+
+            // Проверяем, существует ли элемент с таким же значением свойства
+            var existingItem = allItems.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == propertyValue);
 
             if (existingItem != null)
             {
@@ -233,12 +253,21 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             else
             {
                 var newItem = (T)Activator.CreateInstance(typeof(T));
-                newItem.GetType().GetProperty(propertyName).SetValue(newItem, inputText);
+                newItem.GetType().GetProperty(propertyName).SetValue(newItem, propertyValue);
 
                 dbSet.Add(newItem);
                 context.SaveChanges();
 
-                comboBox.ItemsSource = dbSet.ToList();
+                // Получаем коллекцию, которая автоматически уведомляет о изменениях
+                var observableCollection = new ObservableCollection<T>(allItems);
+
+                // Обновляем ComboBox.ItemsSource, подписывая его на события изменения коллекции
+                comboBox.ItemsSource = observableCollection;
+
+                // Добавляем новый элемент в коллекцию
+                observableCollection.Add(newItem);
+
+                // Устанавливаем новый элемент как выбранный
                 comboBox.SelectedItem = newItem;
             }
         }
@@ -253,9 +282,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLetters(inputText))
+                else if (!ContainsOnlyLettersAndSpaces(inputText))
                 {
-                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
                 else
                 {
@@ -274,9 +303,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLetters(inputText))
+                else if (!ContainsOnlyLettersAndSpaces(inputText))
                 {
-                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
                 else
                 {
@@ -295,9 +324,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLetters(inputText))
+                else if (!ContainsOnlyLettersAndSpaces(inputText))
                 {
-                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
                 else
                 {
@@ -316,9 +345,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLetters(inputText))
+                else if (!ContainsOnlyLettersAndSpaces(inputText))
                 {
-                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
                 else
                 {

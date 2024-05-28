@@ -34,7 +34,7 @@
           <Property Name="LastNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdRoom" Type="int" Nullable="false" />
+          <Property Name="IdRoom" Type="int" />
           <Property Name="PhoneNumberGuest" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="EmailGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdGender" Type="int" Nullable="false" />
@@ -49,7 +49,7 @@
           <Property Name="PhoneNumberContactPersonManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmailManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ContactPersonName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="IdManufacturerCountry" Type="int" Nullable="false" />
+          <Property Name="IdManufacturerCountry" Type="int" />
         </EntityType>
         <EntityType Name="ManufacturerCountry">
           <Key>
@@ -64,15 +64,15 @@
           </Key>
           <Property Name="IdMedicine" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameMedicine" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdTypeMedicine" Type="int" Nullable="false" />
-          <Property Name="IdActiveSubstance" Type="int" Nullable="false" />
-          <Property Name="IdManufacturer" Type="int" Nullable="false" />
-          <Property Name="IdReleaseForm" Type="int" Nullable="false" />
+          <Property Name="IdTypeMedicine" Type="int" />
+          <Property Name="IdActiveSubstance" Type="int" />
+          <Property Name="IdManufacturer" Type="int" />
+          <Property Name="IdReleaseForm" Type="int" />
           <Property Name="Dosage" Type="decimal" Precision="5" Scale="5" Nullable="false" />
-          <Property Name="IdBestBeforeDate" Type="int" Nullable="false" />
+          <Property Name="IdBestBeforeDate" Type="int" />
           <Property Name="UnitsPerPackage" Type="int" Nullable="false" />
           <Property Name="Instructions" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="IdPrescriptionDrugStatus" Type="int" Nullable="false" />
+          <Property Name="IdPrescriptionDrugStatus" Type="int" />
           <Property Name="MedicinePhoto" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Orders">
@@ -80,7 +80,7 @@
             <PropertyRef Name="IdOrder" />
           </Key>
           <Property Name="IdOrder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" />
           <Property Name="OrderDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
           <Property Name="IdOrderStatus" Type="int" Nullable="false" />
@@ -115,7 +115,7 @@
           <Property Name="IdStaff" Type="int" />
           <Property Name="IdGuest" Type="int" />
           <Property Name="DateTimeRealization" Type="datetime" Nullable="false" />
-          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" />
           <Property Name="Reason" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Count" Type="int" Nullable="false" />
         </EntityType>
@@ -148,10 +148,10 @@
           <Property Name="LastNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleNameStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdUser" Type="int" Nullable="false" />
-          <Property Name="IdPost" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" />
+          <Property Name="IdPost" Type="int" />
           <Property Name="EmailStaff" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PhoneNumberStaff" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PhoneNumberStaff" Type="nvarchar" MaxLength="11" Nullable="false" />
           <Property Name="StaffPhoto" Type="varbinary(max)" />
           <Property Name="IdGender" Type="int" Nullable="false" />
         </EntityType>
@@ -160,7 +160,7 @@
             <PropertyRef Name="IdStockUnit" />
           </Key>
           <Property Name="IdStockUnit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdMedicine" Type="int" Nullable="false" />
+          <Property Name="IdMedicine" Type="int" />
           <Property Name="Count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -187,10 +187,10 @@
           <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LoginUser" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PasswordUser" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IdRole" Type="int" />
         </EntityType>
         <Association Name="FK_Guests_Room">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Room">
@@ -202,7 +202,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Manufacturer_ManufacturerCountry">
-          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="1" />
+          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="0..1" />
           <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ManufacturerCountry">
@@ -214,7 +214,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_ActiveSubstance">
-          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="1" />
+          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ActiveSubstance">
@@ -226,7 +226,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_BestBeforeDate">
-          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="1" />
+          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BestBeforeDate">
@@ -238,9 +238,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_Manufacturer">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacturer">
@@ -252,7 +250,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_PrescriptionDrugStatus">
-          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="1" />
+          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrescriptionDrugStatus">
@@ -264,7 +262,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_ReleaseForm">
-          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="1" />
+          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ReleaseForm">
@@ -276,7 +274,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_TypeMedicine">
-          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="1" />
+          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypeMedicine">
@@ -288,7 +286,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -324,7 +324,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Realization_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -360,7 +362,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_Post">
-          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
@@ -372,7 +374,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -384,7 +386,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StockUnit_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
           <End Role="StockUnit" Type="Self.StockUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -396,7 +398,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
@@ -538,7 +540,7 @@
           <Property Name="LastNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FirstNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MiddleNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdRoom" Type="Int32" Nullable="false" />
+          <Property Name="IdRoom" Type="Int32" />
           <Property Name="PhoneNumberGuest" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdGender" Type="Int32" Nullable="false" />
@@ -555,7 +557,7 @@
           <Property Name="PhoneNumberContactPersonManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContactPersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdManufacturerCountry" Type="Int32" Nullable="false" />
+          <Property Name="IdManufacturerCountry" Type="Int32" />
           <NavigationProperty Name="ManufacturerCountry" Relationship="Self.FK_Manufacturer_ManufacturerCountry" FromRole="Manufacturer" ToRole="ManufacturerCountry" />
           <NavigationProperty Name="Medicine" Relationship="Self.FK_Medicine_Manufacturer" FromRole="Manufacturer" ToRole="Medicine" />
         </EntityType>
@@ -573,15 +575,15 @@
           </Key>
           <Property Name="IdMedicine" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameMedicine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdTypeMedicine" Type="Int32" Nullable="false" />
-          <Property Name="IdActiveSubstance" Type="Int32" Nullable="false" />
-          <Property Name="IdManufacturer" Type="Int32" Nullable="false" />
-          <Property Name="IdReleaseForm" Type="Int32" Nullable="false" />
+          <Property Name="IdTypeMedicine" Type="Int32" />
+          <Property Name="IdActiveSubstance" Type="Int32" />
+          <Property Name="IdManufacturer" Type="Int32" />
+          <Property Name="IdReleaseForm" Type="Int32" />
           <Property Name="Dosage" Type="Decimal" Precision="5" Scale="5" Nullable="false" />
-          <Property Name="IdBestBeforeDate" Type="Int32" Nullable="false" />
+          <Property Name="IdBestBeforeDate" Type="Int32" />
           <Property Name="UnitsPerPackage" Type="Int32" Nullable="false" />
           <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdPrescriptionDrugStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdPrescriptionDrugStatus" Type="Int32" />
           <Property Name="MedicinePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="ActiveSubstance" Relationship="Self.FK_Medicine_ActiveSubstance" FromRole="Medicine" ToRole="ActiveSubstance" />
           <NavigationProperty Name="BestBeforeDate" Relationship="Self.FK_Medicine_BestBeforeDate" FromRole="Medicine" ToRole="BestBeforeDate" />
@@ -598,7 +600,7 @@
             <PropertyRef Name="IdOrder" />
           </Key>
           <Property Name="IdOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="IdMedicine" Type="Int32" />
           <Property Name="OrderDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <Property Name="IdOrderStatus" Type="Int32" Nullable="false" />
@@ -638,7 +640,7 @@
           <Property Name="IdStaff" Type="Int32" />
           <Property Name="IdGuest" Type="Int32" />
           <Property Name="DateTimeRealization" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="IdMedicine" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Guests" Relationship="Self.FK_Realization_Guests" FromRole="Realization" ToRole="Guests" />
@@ -677,10 +679,10 @@
           <Property Name="LastNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FirstNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MiddleNameStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="IdPost" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" />
+          <Property Name="IdPost" Type="Int32" />
           <Property Name="EmailStaff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumberStaff" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumberStaff" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="StaffPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="IdGender" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Gender" Relationship="Self.FK_Staff_Gender" FromRole="Staff" ToRole="Gender" />
@@ -693,11 +695,11 @@
             <PropertyRef Name="IdStockUnit" />
           </Key>
           <Property Name="IdStockUnit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdMedicine" Type="Int32" Nullable="false" />
+          <Property Name="IdMedicine" Type="Int32" />
           <Property Name="Count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Medicine" Relationship="Self.FK_StockUnit_Medicine" FromRole="StockUnit" ToRole="Medicine" />
         </EntityType>
-        <EntityType Name="ФЫВ">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -722,12 +724,12 @@
           <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LoginUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PasswordUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_User" FromRole="User" ToRole="Staff" />
         </EntityType>
         <Association Name="FK_Medicine_ActiveSubstance">
-          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="1" />
+          <End Role="ActiveSubstance" Type="Self.ActiveSubstance" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ActiveSubstance">
@@ -739,7 +741,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_BestBeforeDate">
-          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="1" />
+          <End Role="BestBeforeDate" Type="Self.BestBeforeDate" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BestBeforeDate">
@@ -763,7 +765,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Guests_Room">
-          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Room">
@@ -787,7 +789,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Manufacturer_ManufacturerCountry">
-          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="1" />
+          <End Role="ManufacturerCountry" Type="Self.ManufacturerCountry" Multiplicity="0..1" />
           <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ManufacturerCountry">
@@ -799,9 +801,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_Manufacturer">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Manufacturer">
@@ -813,7 +813,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_PrescriptionDrugStatus">
-          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="1" />
+          <End Role="PrescriptionDrugStatus" Type="Self.PrescriptionDrugStatus" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrescriptionDrugStatus">
@@ -825,7 +825,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_ReleaseForm">
-          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="1" />
+          <End Role="ReleaseForm" Type="Self.ReleaseForm" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ReleaseForm">
@@ -837,7 +837,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Medicine_TypeMedicine">
-          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="1" />
+          <End Role="TypeMedicine" Type="Self.TypeMedicine" Multiplicity="0..1" />
           <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypeMedicine">
@@ -849,7 +849,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -861,7 +863,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Realization_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -873,7 +877,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StockUnit_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="1" />
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
           <End Role="StockUnit" Type="Self.StockUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -897,7 +901,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_Post">
-          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
@@ -921,7 +925,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
@@ -933,7 +937,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -962,7 +966,7 @@
           <EntitySet Name="Room" EntityType="Self.Room" />
           <EntitySet Name="Staff" EntityType="Self.Staff" />
           <EntitySet Name="StockUnit" EntityType="Self.StockUnit" />
-          <EntitySet Name="sysdiagrams" EntityType="DBModel.ФЫВ" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TypeMedicine" EntityType="Self.TypeMedicine" />
           <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Medicine_ActiveSubstance" Association="Self.FK_Medicine_ActiveSubstance">
@@ -1220,7 +1224,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DBModel.ФЫВ">
+            <EntityTypeMapping TypeName="DBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />

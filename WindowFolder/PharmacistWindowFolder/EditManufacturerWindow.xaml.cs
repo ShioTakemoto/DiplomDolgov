@@ -22,7 +22,15 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void LoadManufacturerCountries()
         {
-            ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
+            var context = DBEntities.GetContext();
+            var countries = context.ManufacturerCountry.ToList();
+            ManufacturerCountryCB.ItemsSource = countries;
+
+            // Устанавливаем выбранный элемент равным стране производителя
+            if (manufacturer.ManufacturerCountry != null)
+            {
+                ManufacturerCountryCB.SelectedItem = countries.FirstOrDefault(c => c.IdManufacturerCountry == manufacturer.ManufacturerCountry.IdManufacturerCountry);
+            }
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
@@ -42,7 +50,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 if (string.IsNullOrEmpty(inputText))
                     ShowMessageBox("Поле не должно быть пустым!");
                 else if (!IsValidName(inputText))
-                    ShowMessageBox("Недопустимые символы! Допускаются только буквы.");
+                    ShowMessageBox("Недопустимые символы! Допускаются только буквы и пробелы.");
                 else
                     AddNewManufacturerCountry(inputText);
             }
@@ -64,7 +72,17 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
         }
 
-        private bool IsValidName(string input) => input.All(char.IsLetter);
+        private bool IsValidName(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsLetter(c) && c != ' ')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         private void SaveButton(object sender, RoutedEventArgs e)
         {
@@ -76,21 +94,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     return;
                 }
 
-                if (PhoneNumberContactPersonManufacturerTB.Text.Length > 11)
+                if (PhoneNumberContactPersonManufacturerTB.Text.Length != 11)
                 {
-                    ShowErrorMessage("Номер телефона не может содержать более 11 символов");
-                    return;
-                }
-
-                if (PhoneNumberContactPersonManufacturerTB.Text.Length < 11)
-                {
-                    ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
-                    return;
-                }
-
-                if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
-                {
-                    ShowMessageBox("Номер телефона должен содержать только цифры");
+                    ShowErrorMessage("Номер телефона должен содержать ровно 11 символов");
                     return;
                 }
 

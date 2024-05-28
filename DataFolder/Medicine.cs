@@ -24,15 +24,15 @@ namespace DiplomDolgov.DataFolder
     
         public int IdMedicine { get; set; }
         public string NameMedicine { get; set; }
-        public int IdTypeMedicine { get; set; }
-        public int IdActiveSubstance { get; set; }
-        public int IdManufacturer { get; set; }
-        public int IdReleaseForm { get; set; }
+        public Nullable<int> IdTypeMedicine { get; set; }
+        public Nullable<int> IdActiveSubstance { get; set; }
+        public Nullable<int> IdManufacturer { get; set; }
+        public Nullable<int> IdReleaseForm { get; set; }
         public decimal Dosage { get; set; }
-        public int IdBestBeforeDate { get; set; }
+        public Nullable<int> IdBestBeforeDate { get; set; }
         public int UnitsPerPackage { get; set; }
         public string Instructions { get; set; }
-        public int IdPrescriptionDrugStatus { get; set; }
+        public Nullable<int> IdPrescriptionDrugStatus { get; set; }
         public byte[] MedicinePhoto { get; set; }
     
         public virtual ActiveSubstance ActiveSubstance { get; set; }

@@ -24,7 +24,7 @@ namespace DiplomDolgov.DataFolder
         public string LastNameGuest { get; set; }
         public string FirstNameGuest { get; set; }
         public string MiddleNameGuest { get; set; }
-        public int IdRoom { get; set; }
+        public Nullable<int> IdRoom { get; set; }
         public string PhoneNumberGuest { get; set; }
         public string EmailGuest { get; set; }
         public int IdGender { get; set; }

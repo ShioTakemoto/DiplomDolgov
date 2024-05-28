@@ -12,7 +12,7 @@ namespace DiplomDolgov.DataFolder
     using System;
     using System.Collections.Generic;
     
-    public partial class ФЫВ
+    public partial class sysdiagrams
     {
         public string name { get; set; }
         public int principal_id { get; set; }

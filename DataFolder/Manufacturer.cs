@@ -26,7 +26,7 @@ namespace DiplomDolgov.DataFolder
         public string PhoneNumberContactPersonManufacturer { get; set; }
         public string EmailManufacturer { get; set; }
         public string ContactPersonName { get; set; }
-        public int IdManufacturerCountry { get; set; }
+        public Nullable<int> IdManufacturerCountry { get; set; }
     
         public virtual ManufacturerCountry ManufacturerCountry { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

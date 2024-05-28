@@ -24,8 +24,8 @@ namespace DiplomDolgov.DataFolder
         public string LastNameStaff { get; set; }
         public string FirstNameStaff { get; set; }
         public string MiddleNameStaff { get; set; }
-        public int IdUser { get; set; }
-        public int IdPost { get; set; }
+        public Nullable<int> IdUser { get; set; }
+        public Nullable<int> IdPost { get; set; }
         public string EmailStaff { get; set; }
         public string PhoneNumberStaff { get; set; }
         public byte[] StaffPhoto { get; set; }

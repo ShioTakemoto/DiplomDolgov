@@ -15,7 +15,7 @@ namespace DiplomDolgov.DataFolder
     public partial class StockUnit
     {
         public int IdStockUnit { get; set; }
-        public int IdMedicine { get; set; }
+        public Nullable<int> IdMedicine { get; set; }
         public int Count { get; set; }
     
         public virtual Medicine Medicine { get; set; }
