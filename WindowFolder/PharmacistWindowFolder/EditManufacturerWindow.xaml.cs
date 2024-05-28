@@ -76,6 +76,18 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     return;
                 }
 
+                if (PhoneNumberContactPersonManufacturerTB.Text.Length > 11)
+                {
+                    ShowErrorMessage("Номер телефона не может содержать более 11 символов");
+                    return;
+                }
+
+                if (PhoneNumberContactPersonManufacturerTB.Text.Length < 11)
+                {
+                    ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
+                    return;
+                }
+
                 if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
                 {
                     ShowMessageBox("Номер телефона должен содержать только цифры");
@@ -104,5 +116,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         }
 
         private void ShowMessageBox(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
     }
 }

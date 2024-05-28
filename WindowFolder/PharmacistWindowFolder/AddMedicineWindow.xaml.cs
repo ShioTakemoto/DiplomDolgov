@@ -116,22 +116,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
-                    int maxNameLength = 100; // Максимальная длина наименования
-                    int maxInstructionsLength = 1000; // Максимальная длина инструкций
-
-                    // Проверка на длину наименования и инструкций
-                    if (NameMedicineTB.Text.Length > maxNameLength)
-                    {
-                        ShowErrorMessage($"Длина наименования лекарства не должна превышать {maxNameLength} символов.");
-                        return;
-                    }
-
-                    if (InstructionsTB.Text.Length > maxInstructionsLength)
-                    {
-                        ShowErrorMessage($"Длина инструкций не должна превышать {maxInstructionsLength} символов.");
-                        return;
-                    }
-
                     // Преобразование значений из комбобоксов
                     int idTypeMedicine = GetComboBoxItemId<TypeMedicine>(TypeMedicineCB);
                     int idActiveSubstance = GetComboBoxItemId<ActiveSubstance>(ActiveSubstanceCB);

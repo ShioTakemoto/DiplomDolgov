@@ -88,6 +88,18 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 if (ElementsToolsClass.AllFieldsFilled(this))
                 {
+                    if (PhoneNumberContactPersonManufacturerTB.Text.Length > 11)
+                    {
+                        ShowErrorMessage("Номер телефона не может содержать более 11 символов");
+                        return;
+                    }
+
+                    if (PhoneNumberContactPersonManufacturerTB.Text.Length < 11)
+                    {
+                        ShowErrorMessage("Номер телефона не может содержать менее 11 символов");
+                        return;
+                    }
+
                     if (!PhoneNumberContactPersonManufacturerTB.Text.All(char.IsDigit))
                     {
                         ShowErrorMessage("Номер телефона должен содержать только цифры");
@@ -144,6 +156,20 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             catch (Exception ex)
             {
                 ShowErrorMessage($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        private bool StaffExists(string lastName, string firstName, string middleName, string email, string phoneNumber)
+        {
+            using (var context = DBEntities.GetContext())
+            {
+                // Проверка наличия сотрудника с такими же данными
+                return context.Staff.Any(staff =>
+                    staff.LastNameStaff == lastName &&
+                    staff.FirstNameStaff == firstName &&
+                    staff.MiddleNameStaff == middleName &&
+                    staff.EmailStaff == email &&
+                    staff.PhoneNumberStaff == phoneNumber);
             }
         }
 

@@ -37,22 +37,22 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
         private void LoadStaff()
         {
-            var staff = DBEntities.GetContext().Staff.ToList();
-            ListStaffLB.ItemsSource = staff;
+            var staffList = DBEntities.GetContext().Staff.ToList();
+            ListStaffLB.ItemsSource = staffList;
             FilterStaff();
         }
 
         private void LoadGenders()
         {
             var genders = DBEntities.GetContext().Gender.ToList();
-            genders.Insert(0, new Gender { IdGender = 0, NameGender = "" });
+            genders.Insert(0, new Gender { IdGender = 0, NameGender = "Все" });
             GenderCB.ItemsSource = genders;
         }
 
         private void LoadPosts()
         {
             var posts = DBEntities.GetContext().Post.ToList();
-            posts.Insert(0, new Post { IdPost = 0, NamePost = "" });
+            posts.Insert(0, new Post { IdPost = 0, NamePost = "Все" });
             PostCB.ItemsSource = posts;
         }
 
@@ -63,25 +63,25 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             if (!string.IsNullOrWhiteSpace(searchText))
             {
                 filteredStaff = filteredStaff
-                    .Where(emp => emp.LastNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                  emp.FirstNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                  emp.MiddleNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                  emp.EmailStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                  emp.PhoneNumberStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .Where(staff => staff.LastNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                    staff.FirstNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                    staff.MiddleNameStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                    staff.EmailStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                    staff.PhoneNumberStaff.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
                     .ToList();
             }
 
             if (!string.IsNullOrWhiteSpace(selectedGender) && selectedGender != "Все")
             {
                 filteredStaff = filteredStaff
-                    .Where(emp => emp.Gender.NameGender == selectedGender)
+                    .Where(staff => staff.Gender.NameGender == selectedGender)
                     .ToList();
             }
 
             if (!string.IsNullOrWhiteSpace(selectedPost) && selectedPost != "Все")
             {
                 filteredStaff = filteredStaff
-                    .Where(emp => emp.Post.NamePost == selectedPost)
+                    .Where(staff => staff.Post.NamePost == selectedPost)
                     .ToList();
             }
 
@@ -135,15 +135,15 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 return;
             }
 
-            var employee = DBEntities.GetContext().Staff.FirstOrDefault(u => u.IdStaff == selectedStaff.IdStaff);
+            var staff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.IdStaff == selectedStaff.IdStaff);
 
-            if (employee == null)
+            if (staff == null)
             {
                 new MaterialDesignMessageBox("Сотрудник не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 return;
             }
 
-            new EditStaffWindow(employee).ShowDialog();
+            new EditStaffWindow(staff).ShowDialog();
             LoadStaff();
             ListStaffLB.Items.Refresh();
         }
@@ -179,11 +179,11 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var addStaffWindow = new AddStaffWindow();
-            addStaffWindow.AddedStaff += AddEmployeeWindow_AddedEmployee;
+            addStaffWindow.AddedStaff += AddStaffWindow_AddedStaff;
             addStaffWindow.ShowDialog();
         }
 
-        private void AddEmployeeWindow_AddedEmployee(object sender, EventArgs e)
+        private void AddStaffWindow_AddedStaff(object sender, EventArgs e)
         {
             LoadStaff();
         }
