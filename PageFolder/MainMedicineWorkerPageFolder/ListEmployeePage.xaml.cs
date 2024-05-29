@@ -1,6 +1,8 @@
 ﻿using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
+using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
+using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,7 +145,17 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 return;
             }
 
-            new EditStaffWindow(staff).ShowDialog();
+            var editStaffWindow = new EditStaffWindow(staff);
+
+            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWorkerMainWindow != null)
+            {
+                // Показываем затемняющий слой
+                mainMedicineWorkerMainWindow.ShowOverlay2();
+                editStaffWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
+            }
+
+            editStaffWindow.ShowDialog();
             LoadStaff();
             ListStaffLB.Items.Refresh();
         }
@@ -179,7 +191,18 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var addStaffWindow = new AddStaffWindow();
+
+            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWorkerMainWindow != null)
+            {
+                // Показываем затемняющий слой
+                mainMedicineWorkerMainWindow.ShowOverlay2();
+                addStaffWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
+            }
+
+            // Подписываемся на событие AddedManufacturer, которое будет вызываться после успешного добавления производителя
             addStaffWindow.AddedStaff += AddStaffWindow_AddedStaff;
+
             addStaffWindow.ShowDialog();
         }
 

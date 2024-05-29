@@ -143,9 +143,29 @@ namespace DiplomDolgov.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GuestAddIcon {
+            get {
+                object obj = ResourceManager.GetObject("GuestAddIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GuestIcon {
             get {
                 object obj = ResourceManager.GetObject("GuestIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GuestMainIcon {
+            get {
+                object obj = ResourceManager.GetObject("GuestMainIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

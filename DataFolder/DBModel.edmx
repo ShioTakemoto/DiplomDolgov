@@ -35,7 +35,7 @@
           <Property Name="FirstNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MiddleNameGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdRoom" Type="int" />
-          <Property Name="PhoneNumberGuest" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="PhoneNumberGuest" Type="nvarchar" MaxLength="11" Nullable="false" />
           <Property Name="EmailGuest" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdGender" Type="int" Nullable="false" />
         </EntityType>
@@ -138,7 +138,7 @@
             <PropertyRef Name="IdRoom" />
           </Key>
           <Property Name="IdRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoomNumber" Type="int" Nullable="false" />
+          <Property Name="RoomNumber" Type="nvarchar" MaxLength="4" Nullable="false" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -189,6 +189,18 @@
           <Property Name="PasswordUser" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IdRole" Type="int" />
         </EntityType>
+        <Association Name="FK_Guests_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="IdGender" />
+            </Principal>
+            <Dependent Role="Guests">
+              <PropertyRef Name="IdGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Guests_Room">
           <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
           <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
@@ -430,6 +442,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeMedicine" EntityType="Self.TypeMedicine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Guests_Gender" Association="Self.FK_Guests_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Guests" EntitySet="Guests" />
+          </AssociationSet>
           <AssociationSet Name="FK_Guests_Room" Association="Self.FK_Guests_Room">
             <End Role="Room" EntitySet="Room" />
             <End Role="Guests" EntitySet="Guests" />
@@ -530,6 +546,7 @@
           </Key>
           <Property Name="IdGender" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameGender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Guests" Relationship="Self.FK_Guests_Gender" FromRole="Gender" ToRole="Guests" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_Gender" FromRole="Gender" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Guests">
@@ -541,9 +558,10 @@
           <Property Name="FirstNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MiddleNameGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdRoom" Type="Int32" />
-          <Property Name="PhoneNumberGuest" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumberGuest" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailGuest" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdGender" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Guests_Gender" FromRole="Guests" ToRole="Gender" />
           <NavigationProperty Name="Room" Relationship="Self.FK_Guests_Room" FromRole="Guests" ToRole="Room" />
           <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_Guests" FromRole="Guests" ToRole="Realization" />
         </EntityType>
@@ -668,7 +686,7 @@
             <PropertyRef Name="IdRoom" />
           </Key>
           <Property Name="IdRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoomNumber" Type="Int32" Nullable="false" />
+          <Property Name="RoomNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Guests" Relationship="Self.FK_Guests_Room" FromRole="Room" ToRole="Guests" />
         </EntityType>
         <EntityType Name="Staff">
@@ -749,6 +767,18 @@
             </Principal>
             <Dependent Role="Medicine">
               <PropertyRef Name="IdBestBeforeDate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Guests_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Guests" Type="Self.Guests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="IdGender" />
+            </Principal>
+            <Dependent Role="Guests">
+              <PropertyRef Name="IdGender" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -976,6 +1006,10 @@
           <AssociationSet Name="FK_Medicine_BestBeforeDate" Association="Self.FK_Medicine_BestBeforeDate">
             <End Role="BestBeforeDate" EntitySet="BestBeforeDate" />
             <End Role="Medicine" EntitySet="Medicine" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Guests_Gender" Association="Self.FK_Guests_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Guests" EntitySet="Guests" />
           </AssociationSet>
           <AssociationSet Name="FK_Staff_Gender" Association="Self.FK_Staff_Gender">
             <End Role="Gender" EntitySet="Gender" />

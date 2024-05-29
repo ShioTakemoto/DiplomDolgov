@@ -23,28 +23,22 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <StackPanel Margin="20">
                 <Image x:Name="StaffImage" Height="300" Width="300" Margin="0,0,0,20"/>
-                <TextBlock Text="Название: " FontWeight="Bold" FontSize="18"/>
-                <TextBlock Text="{Binding NameMedicine}" FontSize="18"/>
-                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="14"/>
-                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="14"/>
-                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="14"/>
-                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="14"/>
-                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Dosage}" FontSize="14"/>
-                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="14"/>
-                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="14"/>
-                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="14"/>
-                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding StockCount}"/>
-                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="14"/>
+                <TextBlock Text="Фамилия: " FontWeight="Bold" FontSize="18"/>
+                <TextBlock Text="{Binding LastNameStaff}" FontSize="18"/>
+                <TextBlock Text="Имя: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding FirstNameStaff}" FontSize="14"/>
+                <TextBlock Text="Отчество: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding MiddleNameStaff}" FontSize="14"/>
+                <TextBlock Text="Пользователь: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding User.LoginUser}" FontSize="14"/>
+                <TextBlock Text="Должность: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Post.NamePost}" FontSize="14"/>
+                <TextBlock Text="Почта: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding EmailStaff}" FontSize="14"/>
+                <TextBlock Text="Номер телефона: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding PhoneNumberStaff}" FontSize="14"/>
+                <TextBlock Text="Пол: " FontWeight="Bold" FontSize="14"/>
+                <TextBlock Text="{Binding Gender.NameGender}" FontSize="14"/>
 
             </StackPanel>
         </ScrollViewer>

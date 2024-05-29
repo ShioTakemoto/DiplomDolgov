@@ -21,7 +21,7 @@ namespace DiplomDolgov.DataFolder
         }
     
         public int IdRoom { get; set; }
-        public int RoomNumber { get; set; }
+        public string RoomNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Guests> Guests { get; set; }

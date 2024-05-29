@@ -154,20 +154,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
         }
 
-        private bool StaffExists(string lastName, string firstName, string middleName, string email, string phoneNumber)
-        {
-            using (var context = DBEntities.GetContext())
-            {
-                // Проверка наличия сотрудника с такими же данными
-                return context.Staff.Any(staff =>
-                    staff.LastNameStaff == lastName &&
-                    staff.FirstNameStaff == firstName &&
-                    staff.MiddleNameStaff == middleName &&
-                    staff.EmailStaff == email &&
-                    staff.PhoneNumberStaff == phoneNumber);
-            }
-        }
-
         private void ShowErrorMessage(string message)
         {
             new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();

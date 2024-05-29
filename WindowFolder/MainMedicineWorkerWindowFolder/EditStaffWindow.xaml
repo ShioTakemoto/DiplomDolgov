@@ -57,7 +57,8 @@
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51"/>
+                     BorderBrush="#FF152D51"
+                     Text="{Binding LastNameStaff}"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center"
@@ -76,7 +77,8 @@
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51"/>
+                     BorderBrush="#FF152D51"
+                     Text="{Binding FirstNameStaff}"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center"
@@ -95,7 +97,8 @@
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51" VerticalAlignment="Bottom"/>
+                     BorderBrush="#FF152D51" VerticalAlignment="Bottom"
+                     Text="{Binding MiddleNameStaff}"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center"
@@ -114,7 +117,8 @@
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51"/>
+                     BorderBrush="#FF152D51"
+                     Text="{Binding EmailStaff}"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center"
@@ -133,7 +137,8 @@
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51"/>
+                     BorderBrush="#FF152D51"
+                     Text="{Binding PhoneNumberStaff}"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center"

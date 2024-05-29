@@ -34,12 +34,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            WindowState = WindowState.Minimized;
         }
     }
 }

@@ -52,6 +52,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -185,6 +189,9 @@
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListEmployeePage.xaml.cs">
       <DependentUpon>ListEmployeePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListGuestsPage.xaml.cs">
+      <DependentUpon>ListGuestsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml.cs">
       <DependentUpon>MainMedicineWorkerListMedicine.xaml</DependentUpon>
     </Compile>
@@ -215,8 +222,14 @@
     <Compile Include="WindowFolder\CustomMessageBox\MaterialDesignMessageBox.xaml.cs">
       <DependentUpon>MaterialDesignMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddGuestWindow.xaml.cs">
+      <DependentUpon>AddGuestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml.cs">
       <DependentUpon>AddStaffWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditGuestWindow.xaml.cs">
+      <DependentUpon>EditGuestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditStaffWindow.xaml.cs">
       <DependentUpon>EditStaffWindow.xaml</DependentUpon>
@@ -301,6 +314,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PageFolder\MainMedicineWorkerPageFolder\ListGuestsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -345,7 +362,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\AddGuestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\EditGuestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -461,16 +486,8 @@
     <Resource Include="Resources\OrderIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataFolder\DBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataFolder\DBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.cs</LastGenOutput>
-    </Content>
+    <Resource Include="Resources\GuestMainIcon.png" />
+    <Resource Include="Resources\GuestAddIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\StaffListIcon.png" />
@@ -479,15 +496,28 @@
     <Resource Include="Resources\EmployeeIcon.png" />
     <Resource Include="Resources\ListIcon.png" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DataFolder\DBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataFolder\DBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
   </Target>
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
-  <Import Project="packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
 </Project>

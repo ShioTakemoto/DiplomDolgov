@@ -38,7 +38,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void ListGuestsBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Navigate(new ListGuestsPage());
         }
 
         private void AccountingBookBtn_Click(object sender, RoutedEventArgs e)
@@ -64,6 +64,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         private void ListLittleTablesBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void ShowOverlay2()
+        {
+            Overlay2.Visibility = Visibility.Visible;
+        }
+
+        public void HideOverlay2()
+        {
+            Overlay2.Visibility = Visibility.Collapsed;
         }
     }
 }

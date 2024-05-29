@@ -29,6 +29,7 @@ namespace DiplomDolgov.DataFolder
         public string EmailGuest { get; set; }
         public int IdGender { get; set; }
     
+        public virtual Gender Gender { get; set; }
         public virtual Room Room { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Realization> Realization { get; set; }
