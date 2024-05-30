@@ -75,9 +75,24 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
+                int selectedMedicineId = Convert.ToInt32(MedicineCB.SelectedValue);
+                var selectedMedicine = DBEntities.GetContext().Medicine.FirstOrDefault(m => m.IdMedicine == selectedMedicineId);
+
+                if (selectedMedicine == null)
+                {
+                    ShowErrorMessage("Медикамент не найден.");
+                    return;
+                }
+
+                if (count > selectedMedicine.StockCount)
+                {
+                    ShowErrorMessage($"Недостаточное количество медикамента на складе. Доступно: {selectedMedicine.StockCount}");
+                    return;
+                }
+
                 var newRealization = new Realization
                 {
-                    IdMedicine = Convert.ToInt32(MedicineCB.SelectedValue),
+                    IdMedicine = selectedMedicineId,
                     Reason = ReasonTB.Text,
                     DateTimeRealization = dateTimeRealization,
                     Count = count

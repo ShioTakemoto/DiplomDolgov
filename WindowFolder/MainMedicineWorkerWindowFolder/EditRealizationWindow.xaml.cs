@@ -23,12 +23,15 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     public partial class EditRealizationWindow : Window
     {
         private Realization realization;
+        private DBEntities _context;
 
         public EditRealizationWindow(Realization realization)
         {
             InitializeComponent();
             this.realization = realization;
             DataContext = this.realization;
+            _context = DBEntities.GetContext();
+
             Loaded += EditRealizationWindow_Loaded; // Добавляем обработчик события загрузки окна
             Loaded += EditRealization1Window_Loaded;
         }
@@ -42,13 +45,13 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void EditRealizationWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            GuestCB.ItemsSource = DBEntities.GetContext().Guests.ToList();
-            StaffCB.ItemsSource = DBEntities.GetContext().Staff.ToList();
-            MedicineCB.ItemsSource = DBEntities.GetContext().Medicine.ToList();
+            GuestCB.ItemsSource = _context.Guests.ToList();
+            StaffCB.ItemsSource = _context.Staff.ToList();
+            MedicineCB.ItemsSource = _context.Medicine.ToList();
 
-            GuestCB.SelectedItem = DBEntities.GetContext().Guests.FirstOrDefault(guest => guest.IdGuest == realization.IdGuest);
-            StaffCB.SelectedItem = DBEntities.GetContext().Staff.FirstOrDefault(staff => staff.IdStaff == realization.IdStaff);
-            MedicineCB.SelectedItem = DBEntities.GetContext().Medicine.FirstOrDefault(med => med.IdMedicine == realization.IdMedicine);
+            GuestCB.SelectedItem = _context.Guests.FirstOrDefault(guest => guest.IdGuest == realization.IdGuest);
+            StaffCB.SelectedItem = _context.Staff.FirstOrDefault(staff => staff.IdStaff == realization.IdStaff);
+            MedicineCB.SelectedItem = _context.Medicine.FirstOrDefault(med => med.IdMedicine == realization.IdMedicine);
         }
 
         private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
@@ -100,7 +103,39 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
-                DBEntities.GetContext().SaveChanges();
+                int selectedMedicineId = Convert.ToInt32(MedicineCB.SelectedValue);
+                var selectedMedicine = _context.StockUnit.FirstOrDefault(m => m.IdMedicine == selectedMedicineId);
+
+                if (selectedMedicine == null || count > selectedMedicine.Count)
+                {
+                    ShowErrorMessage("Указанное количество превышает доступное на складе.");
+                    return;
+                }
+
+                realization.IdMedicine = selectedMedicineId;
+                realization.Reason = ReasonTB.Text;
+                realization.DateTimeRealization = dateTimeRealization;
+                realization.Count = count;
+
+                if (GuestCB.SelectedIndex >= 0)
+                {
+                    realization.IdGuest = Convert.ToInt32(GuestCB.SelectedValue);
+                }
+                else
+                {
+                    realization.IdGuest = null;
+                }
+
+                if (StaffCB.SelectedIndex >= 0)
+                {
+                    realization.IdStaff = Convert.ToInt32(StaffCB.SelectedValue);
+                }
+                else
+                {
+                    realization.IdStaff = null;
+                }
+
+                _context.SaveChanges();
                 ShowSuccessMessage("Данные успешно сохранены");
                 Close();
             }
@@ -122,6 +157,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             result = DatePicker.SelectedDate.Value.Date + selectedTime;
             return true;
         }
+
         private void ClearGuest(object sender, RoutedEventArgs e)
         {
             GuestCB.SelectedIndex = -1;
