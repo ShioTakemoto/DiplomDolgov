@@ -221,15 +221,24 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             }
         }
 
+        // Метод для поиска родительского объекта типа T в визуальном дереве
         private T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
+            // Получаем родительский объект для данного объекта зависимости
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
-            if (parentObject == null) return null;
+
+            // Проверяем, есть ли у child родительский объект. Если нет, возвращаем null, потому что больше нечего искать.
+            if (parentObject == null)
+                return null;
+
+            // Пытаемся преобразовать parentObject к типу T
             T parent = parentObject as T;
+
+            // Проверяем, удалось ли преобразовать parentObject в объект типа T
             if (parent != null)
-                return parent;
+                return parent; // Если преобразование удалось, возвращаем найденный родительский объект
             else
-                return FindParent<T>(parentObject);
+                return FindParent<T>(parentObject); // Если преобразование не удалось, продолжаем поиск родительских объектов рекурсивно
         }
     }
 }

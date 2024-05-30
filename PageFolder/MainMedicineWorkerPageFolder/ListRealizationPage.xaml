@@ -1,0 +1,136 @@
+﻿<Page x:Class="DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder.ListRealizationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="Учётная книга">
+    <Page.Resources>
+        <local:FIOConverter x:Key="FIOConverter"/>
+        <local:DateTimeToStringConverter x:Key="DateTimeConverter" />
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="\Resources\GuestMainIcon.png" Grid.Row="1" Grid.Column="6"/>
+
+        <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
+
+        <TextBox Name="SearchTB"
+                 VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Left"
+                 FontFamily="Roboto"
+                 Grid.Column="1"
+                 materialDesign:HintAssist.Hint="Поиск"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="1"
+                 Width="580"
+                 Height="50"
+                 FontSize="20"
+                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Foreground="#FF152D51" 
+                 SelectionBrush="#FF152D51" 
+                 CaretBrush="#FF152D51" 
+                 BorderBrush="#FF152D51"
+                 TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
+
+        <DatePicker Name="RealizDatePicker"
+            Grid.Column="4"
+            Grid.Row="1"
+            SelectedDate="{Binding SelectedDate}"
+            FontSize="13"
+            Height="50"
+            Style="{StaticResource MaterialDesignDatePicker}"
+            materialDesign:HintAssist.Hint="Дата"
+            BorderThickness="0 0 0 1"
+            SelectedDateChanged="RealizDatePicker_SelectedDateChanged"/>
+
+        <DataGrid x:Name="ListRealizationDG" AutoGenerateColumns="False"
+          IsReadOnly="True"
+          ItemsSource="{Binding Realization}" Grid.Row="2" Grid.Column="1"
+          Grid.ColumnSpan="6"
+          Grid.RowSpan="8"
+          Foreground="#FF152D51"
+          Background="#FFDFDFE0"
+          BorderBrush="#FF8B7249"
+          Height="700"
+          SelectionMode="Single"
+          BorderThickness="2"
+          FontFamily="Roboto"
+          Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить запись" x:Name="DeleteM1"
+                      Click="DeleteM1_Click"
+                      Background="#FCF5EA"/>
+                    <MenuItem Header="Редактировать запись" x:Name="EditM1"
+                      Click="EditM1_Click"
+                      Background="#FCF5EA"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Staff.FullName}" Width="*" />
+                <DataGridTextColumn Header="ФИО гостя" Binding="{Binding Guests.FullName}" Width="*" />
+
+                <DataGridTextColumn Header="Дата"
+                            Binding="{Binding DateTimeRealization, Converter={StaticResource DateTimeConverter}}"
+                            Width="*"/>
+
+                <DataGridTextColumn Header="Название медикамента"
+                            Binding="{Binding Medicine.NameMedicine}"
+                            Width="*"/>
+
+                <DataGridTextColumn Header="Причина выдачи"
+                            Binding="{Binding Reason}"
+                            Width="*"/>
+                <DataGridTextColumn Header="Количество"
+                            Binding="{Binding Count}"
+                            Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="AddRealiz"
+                Text="Добавить"
+                Foreground="#FF152D51"
+                Grid.Column="5"
+                Grid.Row="1"
+                Height="25"
+                Width="100"
+                FontSize="15"
+                FontFamily="Roboto"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                TextDecorations="Underline"
+                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+                Cursor="Hand" Margin="70,41,0,0"/>
+
+        <Image Source="\Resources\GuestAddIcon.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
+
+    </Grid>
+</Page>

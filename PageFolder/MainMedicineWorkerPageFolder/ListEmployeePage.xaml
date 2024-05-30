@@ -145,11 +145,11 @@
                         <Run Text="Фамилия: " FontWeight="Bold" FontSize="18"/>
                         <Run Text="{Binding LastNameStaff}" FontSize="18"/>
                                     </TextBlock>
-                                    <TextBlock Grid.Column="2" Grid.Row="6">
+                                    <TextBlock Grid.Column="2" Grid.Row="3">
                         <Run Text="Имя: " FontWeight="Bold" FontSize="18"/>
                         <Run Text="{Binding FirstNameStaff}" FontSize="18"/>
                                     </TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="2">
+                                    <TextBlock Grid.Row="4" Grid.Column="2">
                         <Run Text="Отчество: " FontWeight="Bold" FontSize="18"/>
                         <Run Text="{Binding MiddleNameStaff}" FontSize="18"/>
                                     </TextBlock>
@@ -169,7 +169,7 @@
                         <Run Text="Номер телефона: " FontWeight="Bold" FontSize="18"/>
                         <Run Text="{Binding PhoneNumberStaff}" FontSize="18"/>
                                     </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="5">
+                                    <TextBlock Grid.Column="4" Grid.Row="4">
                         <Run Text="Пол: " FontWeight="Bold" FontSize="18"/>
                         <Run Text="{Binding Gender.NameGender}" FontSize="18"/>
                                     </TextBlock>

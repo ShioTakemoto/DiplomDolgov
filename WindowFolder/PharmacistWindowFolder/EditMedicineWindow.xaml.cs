@@ -177,12 +177,23 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     return;
                 }
 
+                EditMedicineMethod();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void EditMedicineMethod()
+        {
+            try
+            {
                 var context = DBEntities.GetContext();
                 var existingMedicine = context.Medicine.FirstOrDefault(m => m.IdMedicine == medicine.IdMedicine);
+
                 if (existingMedicine != null)
                 {
-                    
-
                     // Обновляем фото только если была выбрана новая фотография
                     if (!string.IsNullOrEmpty(selectedFileName))
                     {

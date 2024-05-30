@@ -43,7 +43,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void AccountingBookBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Navigate(new ListRealizationPage());
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)

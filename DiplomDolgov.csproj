@@ -69,9 +69,6 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.9.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignThemes.4.9.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -104,6 +101,7 @@
     <Compile Include="ClassFolder\DateTimeToStringConverter.cs" />
     <Compile Include="ClassFolder\DisplayUser.cs" />
     <Compile Include="ClassFolder\ElementsToolsClass.cs" />
+    <Compile Include="ClassFolder\FIOConverter.cs" />
     <Compile Include="ClassFolder\Helpers.cs" />
     <Compile Include="ClassFolder\ImageClass.cs" />
     <Compile Include="ClassFolder\OpenFileDialogHelper.cs" />
@@ -192,6 +190,9 @@
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListGuestsPage.xaml.cs">
       <DependentUpon>ListGuestsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListRealizationPage.xaml.cs">
+      <DependentUpon>ListRealizationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml.cs">
       <DependentUpon>MainMedicineWorkerListMedicine.xaml</DependentUpon>
     </Compile>
@@ -225,11 +226,17 @@
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddGuestWindow.xaml.cs">
       <DependentUpon>AddGuestWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddRealizationWindow.xaml.cs">
+      <DependentUpon>AddRealizationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml.cs">
       <DependentUpon>AddStaffWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditGuestWindow.xaml.cs">
       <DependentUpon>EditGuestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditRealizationWindow.xaml.cs">
+      <DependentUpon>EditRealizationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFolder\MainMedicineWorkerWindowFolder\EditStaffWindow.xaml.cs">
       <DependentUpon>EditStaffWindow.xaml</DependentUpon>
@@ -318,6 +325,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PageFolder\MainMedicineWorkerPageFolder\ListRealizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -366,11 +377,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\AddRealizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\AddStaffWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\EditGuestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowFolder\MainMedicineWorkerWindowFolder\EditRealizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -510,14 +529,14 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets'))" />
   </Target>
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />
 </Project>

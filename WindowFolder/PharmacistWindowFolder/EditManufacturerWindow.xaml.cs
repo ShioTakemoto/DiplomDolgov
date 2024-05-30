@@ -2,6 +2,7 @@
 using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -10,13 +11,24 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
     public partial class EditManufacturerWindow : Window
     {
-        private Manufacturer manufacturer;
+        private Manufacturer originalManufacturer;
+        private Manufacturer editedManufacturer;
 
         public EditManufacturerWindow(Manufacturer manufacturer)
         {
             InitializeComponent();
-            this.manufacturer = manufacturer;
-            DataContext = this.manufacturer;
+            originalManufacturer = manufacturer;
+            editedManufacturer = new Manufacturer
+            {
+                IdManufacturer = manufacturer.IdManufacturer,
+                NameManufacturer = manufacturer.NameManufacturer,
+                Address = manufacturer.Address,
+                PhoneNumberContactPersonManufacturer = manufacturer.PhoneNumberContactPersonManufacturer,
+                EmailManufacturer = manufacturer.EmailManufacturer,
+                ContactPersonName = manufacturer.ContactPersonName,
+                ManufacturerCountry = manufacturer.ManufacturerCountry
+            };
+            DataContext = editedManufacturer;
             LoadManufacturerCountries();
         }
 
@@ -27,9 +39,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             ManufacturerCountryCB.ItemsSource = countries;
 
             // Устанавливаем выбранный элемент равным стране производителя
-            if (manufacturer.ManufacturerCountry != null)
+            if (originalManufacturer.ManufacturerCountry != null)
             {
-                ManufacturerCountryCB.SelectedItem = countries.FirstOrDefault(c => c.IdManufacturerCountry == manufacturer.ManufacturerCountry.IdManufacturerCountry);
+                ManufacturerCountryCB.SelectedItem = countries.FirstOrDefault(c => c.IdManufacturerCountry == originalManufacturer.ManufacturerCountry.IdManufacturerCountry);
             }
         }
 
@@ -48,9 +60,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
-                    ShowMessageBox("Поле не должно быть пустым!");
+                    ShowErrorMessage("Поле не должно быть пустым!");
                 else if (!IsValidName(inputText))
-                    ShowMessageBox("Недопустимые символы! Допускаются только буквы и пробелы.");
+                    ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 else
                     AddNewManufacturerCountry(inputText);
             }
@@ -60,7 +72,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             var context = DBEntities.GetContext();
             if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
-                ShowMessageBox("Такая страна уже существует!");
+                ShowErrorMessage("Такая страна уже существует!");
             else
             {
                 var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
@@ -90,7 +102,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             {
                 if (!ElementsToolsClass.AllFieldsFilled(this))
                 {
-                    ShowMessageBox("Не все поля заполнены!");
+                    ShowErrorMessage("Не все поля заполнены!");
                     return;
                 }
 
@@ -102,7 +114,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                 if (!ContactPersonNameTB.Text.All(char.IsLetter))
                 {
-                    ShowMessageBox("Имя контактной персоны должно содержать только буквы");
+                    ShowErrorMessage("Имя контактной персоны должно содержать только буквы");
                     return;
                 }
 
@@ -110,18 +122,31 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
             catch (Exception ex)
             {
-                ShowMessageBox($"Произошла ошибка: {ex.Message}");
+                ShowErrorMessage($"Произошла ошибка: {ex.Message}");
             }
         }
 
         private void SaveChanges()
         {
-            DBEntities.GetContext().SaveChanges();
+            var context = DBEntities.GetContext();
+
+            // Присваиваем новые значения из editedManufacturer в originalManufacturer
+            originalManufacturer.NameManufacturer = editedManufacturer.NameManufacturer;
+            originalManufacturer.Address = editedManufacturer.Address;
+            originalManufacturer.PhoneNumberContactPersonManufacturer = editedManufacturer.PhoneNumberContactPersonManufacturer;
+            originalManufacturer.EmailManufacturer = editedManufacturer.EmailManufacturer;
+            originalManufacturer.ContactPersonName = editedManufacturer.ContactPersonName;
+            originalManufacturer.ManufacturerCountry = editedManufacturer.ManufacturerCountry;
+
+            // Применяем изменения к originalManufacturer
+            context.Entry(originalManufacturer).State = EntityState.Modified;
+
+            context.SaveChanges();
             ShowMessageBox("Данные успешно сохранены");
             Close();
         }
 
-        private void ShowMessageBox(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+        private void ShowMessageBox(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
 
         private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
     }
