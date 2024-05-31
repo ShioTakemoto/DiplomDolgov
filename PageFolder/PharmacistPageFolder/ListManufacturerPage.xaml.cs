@@ -4,9 +4,11 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
@@ -17,6 +19,12 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             InitializeComponent();
             LoadManufacturerCountries();
             Search();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["PageFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadManufacturerCountries()

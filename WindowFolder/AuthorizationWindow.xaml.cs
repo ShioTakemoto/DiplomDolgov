@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder
 {
@@ -30,13 +31,19 @@ namespace DiplomDolgov.WindowFolder
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
+        }
+
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
             if (Result.Value)
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

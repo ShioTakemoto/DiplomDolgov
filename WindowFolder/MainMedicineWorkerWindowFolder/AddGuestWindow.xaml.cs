@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -31,6 +32,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             InitializeComponent();
             LoadRooms();
             LoadGenders();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadRooms()
@@ -132,7 +139,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         {
             if (ShowConfirmationMessage("Вы уверены что хотите выйти?"))
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

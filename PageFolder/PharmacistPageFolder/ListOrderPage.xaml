@@ -7,9 +7,17 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
-      Title="Список заказов">
+      Title="Список заказов"
+      Opacity="0"
+      Loaded="Page_Loaded">
     <Page.Resources>
-        <local:DateTimeToStringConverter x:Key="DateTimeConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:DateTimeToStringConverter x:Key="DateTimeConverter"/>
+            <SolidColorBrush x:Key="CustomColorBrush" Color="#152D51"/>
+        </ResourceDictionary>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -84,6 +92,13 @@
           BorderThickness="2"
           FontFamily="Roboto"
           Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </DataGrid.Resources>
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Удалить заказ" x:Name="DeleteM1"

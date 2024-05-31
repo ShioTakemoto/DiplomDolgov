@@ -1,9 +1,9 @@
-﻿<Page x:Class="DiplomDolgov.PageFolder.PharmacistPageFolder.ListManufacturerPage"
+﻿<Page x:Class="DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder.ListRoomPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DiplomDolgov.PageFolder.PharmacistPageFolder"
+      xmlns:local="clr-namespace:DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
@@ -17,15 +17,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="280"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -41,8 +41,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-
-        <Image Source="\Resources\ManufacturerCard.png" Grid.Row="1" Grid.Column="6"/>
+        <Image Source="\Resources\ListsBackgrround.png" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="7" Grid.RowSpan="7"/>
 
         <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
 
@@ -64,28 +63,15 @@
                  BorderBrush="#FF152D51"
                  TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
 
-        <ComboBox Name="ManufacturerCountryCB"
-          Grid.Column="4"
-          Grid.Row="1"
-          SelectedValuePath="IdManufacturer"
-          SelectedItem="{Binding Manufacturer}"
-          DisplayMemberPath="NameManufacturerCountry"
-          FontSize="13"
-          Height="50"
-          Style="{StaticResource MaterialDesignComboBox}"
-          materialDesign:HintAssist.Hint="Страна"
-          BorderThickness="0 0 0 1"
-          SelectionChanged="ManufacturerCountryCB_SelectionChanged"/>
-
-        <DataGrid x:Name="ListManufacturerDG" AutoGenerateColumns="False"
+        <DataGrid x:Name="ListRoomDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding Manufacturer}" Grid.Row="2" Grid.Column="1"
-          Grid.ColumnSpan="6"
+          ItemsSource="{Binding Room}" Grid.Row="2" Grid.Column="1"
           Grid.RowSpan="8"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
+          Width="170"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -99,56 +85,19 @@
             </DataGrid.Resources>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Удалить производителя" x:Name="DeleteM1"
-                      Click="DeleteM1_Click"
+                    <MenuItem Header="Удалить комнату" x:Name="DeleteRoom"
+                      Click="DeleteRoom_Click"
                       Background="#FCF5EA"/>
-                    <MenuItem Header="Редактировать производителя" x:Name="EditM1"
-                      Click="EditM1_Click"
+                    <MenuItem Header="Редактировать комнату" x:Name="EditRoom"
+                      Click="EditRoom_Click"
                       Background="#FCF5EA"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название производителя"
-                            Binding="{Binding NameManufacturer}"
-                            Width="*"/>
-
-                <DataGridTextColumn Header="Адрес"
-                            Binding="{Binding Address}"
-                            Width="*"/>
-
-                <DataGridTextColumn Header="Номер телефона"
-                            Binding="{Binding PhoneNumberContactPersonManufacturer}"
-                            Width="*"/>
-
-                <DataGridTextColumn Header="Почта"
-                            Binding="{Binding EmailManufacturer}"
-                            Width="*"/>
-
-                <DataGridTextColumn Header="Контактное имя"
-                            Binding="{Binding ContactPersonName}"
-                            Width="*"/>
-                <DataGridTextColumn Header="Страна производителя"
-                            Binding="{Binding ManufacturerCountry.NameManufacturerCountry}"
+                <DataGridTextColumn Header="Номер комнаты"
+                            Binding="{Binding RoomNumber}"
                             Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <TextBlock x:Name="AddManufacturer"
-                Text="Добавить"
-                Foreground="#FF152D51"
-                Grid.Column="5"
-                Grid.Row="1"
-                Height="25"
-                Width="100"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                TextDecorations="Underline"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="70,41,0,0"/>
-
-        <Image Source="\Resources\ManufacturerAdd.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
-
     </Grid>
 </Page>

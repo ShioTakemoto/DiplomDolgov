@@ -3,8 +3,10 @@ using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -18,6 +20,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             InitializeComponent();
             LoadManufacturerCountries();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadManufacturerCountries()
@@ -74,7 +82,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             if (ShowConfirmationMessage("Вы уверены что хотите выйти?"))
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

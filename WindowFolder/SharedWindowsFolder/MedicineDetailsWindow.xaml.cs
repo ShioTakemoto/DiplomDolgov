@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -29,6 +30,12 @@ namespace DiplomDolgov.WindowFolder.SharedWindowsFolder
             {
                 MedicineImage.Source = ImageClass.ConvertByteArrayToImage(selectedMedicine.MedicinePhoto);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)

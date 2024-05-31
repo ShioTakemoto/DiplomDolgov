@@ -3,7 +3,9 @@ using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.AdminWindowFolder
 {
@@ -19,11 +21,17 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
             RoleCB.ItemsSource = DBEntities.GetContext().Role.ToList();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
+        }
+
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

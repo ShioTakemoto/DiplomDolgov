@@ -4,8 +4,10 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -21,6 +23,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             DataContext = this.order;
 
             Loaded += EditOrdersWindow_Loaded;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void EditOrdersWindow_Loaded(object sender, RoutedEventArgs e)
@@ -95,7 +103,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (result == true)
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)

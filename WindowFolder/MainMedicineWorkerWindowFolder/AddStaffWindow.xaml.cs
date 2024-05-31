@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq.Expressions;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 {
@@ -37,6 +38,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             GenderCB.ItemsSource = DBEntities.GetContext().Gender.ToList();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
+        }
+
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -46,7 +53,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         {
             if (ShowConfirmationMessage("Вы уверены что хотите выйти?"))
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

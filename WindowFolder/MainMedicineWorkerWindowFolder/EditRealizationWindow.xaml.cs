@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -34,6 +35,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
             Loaded += EditRealizationWindow_Loaded; // Добавляем обработчик события загрузки окна
             Loaded += EditRealization1Window_Loaded;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void EditRealization1Window_Loaded(object sender, RoutedEventArgs e)
@@ -61,7 +68,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (new MaterialDesignMessageBox("Вы уверены, что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
-                Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;

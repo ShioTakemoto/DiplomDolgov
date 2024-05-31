@@ -5,7 +5,9 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -16,6 +18,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         {
             InitializeComponent();
             LoadData();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadData()
@@ -94,7 +102,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
-                Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;

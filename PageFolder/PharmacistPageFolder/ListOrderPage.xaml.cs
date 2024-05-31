@@ -3,9 +3,11 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
@@ -24,6 +26,12 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             orderStatuses.Insert(0, new OrderStatus { IdOrderStatus = 0, NameOrderStatus = "" });
             OrderStatusCB.ItemsSource = orderStatuses;
             FilterOrders();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["PageFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

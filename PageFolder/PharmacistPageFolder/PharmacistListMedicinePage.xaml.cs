@@ -6,11 +6,13 @@ using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 {
@@ -26,6 +28,12 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             LoadMedicines();
             LoadMedicineTypes();
             LoadActiveSubstance();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["PageFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadMedicines()

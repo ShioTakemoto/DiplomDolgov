@@ -3,13 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.SharedWindowsFolder"
+        xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
         mc:Ignorable="d"
         Title="Medicine Details" 
         WindowStyle="None"
         Height="450" 
         Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Opacity="0"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:StockToColorConverter x:Key="StockToColorConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
@@ -23,53 +33,28 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <StackPanel Margin="20">
                 <Image x:Name="MedicineImage" Height="300" Width="300" Margin="0,0,0,20"/>
-                <TextBlock Text="Название: " FontWeight="Bold" FontSize="18"/>
-                <TextBlock Text="{Binding NameMedicine}" FontSize="18"/>
-                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="14"/>
-                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="14"/>
-                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="14"/>
-                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="14"/>
-                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Dosage}" FontSize="14"/>
-                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="14"/>
-                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="14"/>
-                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="14"/>
-                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding StockCount}">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding StockCount}" Value="0">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding StockCount}" Value="1">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding StockCount}" Value="2">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding StockCount}" Value="3">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding StockCount}" Value="4">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding StockCount}" Value="5">
-                                    <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="14"/>
-                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="14"/>
+                <TextBlock Text="Название: " FontWeight="Bold" FontSize="24"/>
+                <TextBlock Text="{Binding NameMedicine}" FontSize="22"/>
+                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="20"/>
+                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="20"/>
+                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="20"/>
+                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="20"/>
+                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding Dosage}" FontSize="20"/>
+                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="20"/>
+                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="20"/>
+                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="20"/>
+                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="22" Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}"/>
+                <TextBlock Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}" Text="{Binding StockCount}"  FontSize="20" />
+                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="22"/>
+                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="20"/>
 
             </StackPanel>
         </ScrollViewer>

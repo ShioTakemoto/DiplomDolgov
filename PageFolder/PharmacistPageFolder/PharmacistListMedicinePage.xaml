@@ -9,10 +9,16 @@
       Background="Transparent"
       Title="Список медикаментов"
       d:DesignHeight="1000"
-      d:DesignWidth="1536">
-
+      d:DesignWidth="1536"
+      Opacity="0"
+      Loaded="Page_Loaded">
     <Page.Resources>
-        <local:StockToColorConverter x:Key="StockToColorConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:StockToColorConverter x:Key="StockToColorConverter"/>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid x:Name="Dark">
@@ -90,106 +96,111 @@
                 Grid.Column="6"
                 Height="25"
                 Width="100"
-                FontSize="15"
+                FontSize="20"
                 FontFamily="Roboto"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 TextDecorations="Underline"
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="78,86,0,0"/>
-                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto" >
-                    <ListBox x:Name="ListMedicineLB"
+                Cursor="Hand" Margin="78,95,0,0"/>
+                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
+    <ListBox x:Name="ListMedicineLB"
              BorderBrush="#8B7249"
              Foreground="#FF152D51"
              Background="#FFDFDFE0"
              BorderThickness="2"
-             Margin="10,10,10,0"
+             Padding="0"
              MouseDoubleClick="ListMedicineLB_MouseDoubleClick"
-                             PreviewMouseWheel="ListBox_PreviewMouseWheel">
-                        <ListBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Удалить медикамент"
+             PreviewMouseWheel="ListBox_PreviewMouseWheel">
+        <ListBox.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Удалить медикамент"
                           x:Name="DeleteM1"
                           Click="DeleteM1_Click" />
-                                <MenuItem Header="Изменить медикамент"
+                <MenuItem Header="Изменить медикамент"
                           x:Name="EditM1"
                           Click="EditM1_Click" />
-                            </ContextMenu>
-                        </ListBox.ContextMenu>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="220" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="400" />
-                                        <ColumnDefinition Width="5" />
-                                        <ColumnDefinition Width="280" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Border Background="Transparent"
-                            BorderBrush="Black" BorderThickness="1"
-                            Height="120"
-                            x:Name="MedicineEllipse"
-                            Width="80"
-                            Grid.RowSpan="8">
-                                        <Image Source="{Binding MedicinePhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
-                                    </Border>
-                                    <TextBlock Grid.Column="2" Grid.Row="1">
-                        <Run Text="Название: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding NameMedicine}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="2" Grid.Row="6">
-                        <Run Text="Тип: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="3" Grid.Column="2">
-                        <Run Text="Активное вещество: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="5" Grid.Column="2">
-                        <Run Text="Производитель: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding Manufacturer.NameManufacturer}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="7" Grid.Column="2" Margin="0 2 0 0">
-                        <Run Text="Форма выпуска: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="3">
-                        <Run Text="Дозировка: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding Dosage}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="1">
-                        <Run Text="Срок годности: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="5">
-                        <Run Text="Единиц в упаковке: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding UnitsPerPackage}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="6">
-                        <Run Text="Статус: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="7" Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}">
-    <Run Text="Количество на складе: " FontWeight="Bold" FontSize="18"/>
-    <Run Text="{Binding StockCount}" FontSize="18"/>
-                                    </TextBlock>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>
+            </ContextMenu>
+        </ListBox.ContextMenu>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                                <Border BorderBrush="#8B7249" BorderThickness="0,0,0,1" Padding="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="500" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="800" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="5" />
+                        </Grid.RowDefinitions>
+                        <Border Background="Transparent"
+                                BorderBrush="Black" BorderThickness="1"
+                                Height="200"
+                                x:Name="MedicineEllipse"
+                                Width="130"
+                                Grid.Row="1"
+                                Grid.RowSpan="9">
+                            <Image Source="{Binding MedicinePhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
+                        </Border>
+                        <TextBlock Grid.Column="2" Grid.Row="1">
+                            <Run Text="Название: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding NameMedicine}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="2" Grid.Row="3">
+                            <Run Text="Тип: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="2">
+                            <Run Text="Активное вещество: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Row="7" Grid.Column="2">
+                            <Run Text="Производитель: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding Manufacturer.NameManufacturer}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Row="9" Grid.Column="2">
+                            <Run Text="Форма выпуска: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="4" Grid.Row="1">
+                            <Run Text="Дозировка: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding Dosage}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="4" Grid.Row="3">
+                            <Run Text="Срок годности: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="4" Grid.Row="5">
+                            <Run Text="Единиц в упаковке: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding UnitsPerPackage}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="4" Grid.Row="7">
+                            <Run Text="Статус: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="20"/>
+                        </TextBlock>
+                        <TextBlock Grid.Column="4" Grid.Row="9" Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}">
+                            <Run Text="Количество на складе: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding StockCount}" FontSize="20"/>
+                        </TextBlock>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

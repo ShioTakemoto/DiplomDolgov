@@ -1,4 +1,5 @@
-﻿using DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder;
+﻿using DiplomDolgov.ClassFolder;
+using DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -24,6 +26,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         public MainMedicineWorkerMainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void ListMedicineBtn_Click(object sender, RoutedEventArgs e)
@@ -57,13 +65,13 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
             if (Result.Value)
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 
         private void ListLittleTablesBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MainFrame.Navigate(new ListRoomPage());
         }
 
         public void ShowOverlay2()

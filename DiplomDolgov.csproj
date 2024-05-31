@@ -105,7 +105,9 @@
     <Compile Include="ClassFolder\Helpers.cs" />
     <Compile Include="ClassFolder\ImageClass.cs" />
     <Compile Include="ClassFolder\OpenFileDialogHelper.cs" />
+    <Compile Include="ClassFolder\PageAnimationHelper.cs" />
     <Compile Include="ClassFolder\StockToColorConverter.cs" />
+    <Compile Include="ClassFolder\WindowAnimationHelper.cs" />
     <Compile Include="DataFolder\ActiveSubstance.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -192,6 +194,9 @@
     </Compile>
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListRealizationPage.xaml.cs">
       <DependentUpon>ListRealizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageFolder\MainMedicineWorkerPageFolder\ListRoomPage.xaml.cs">
+      <DependentUpon>ListRoomPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageFolder\MainMedicineWorkerPageFolder\MainMedicineWorkerListMedicine.xaml.cs">
       <DependentUpon>MainMedicineWorkerListMedicine.xaml</DependentUpon>
@@ -326,6 +331,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PageFolder\MainMedicineWorkerPageFolder\ListRealizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageFolder\MainMedicineWorkerPageFolder\ListRoomPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -527,6 +536,9 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\MinBookUcheta.png" />
+    <Resource Include="Resources\BookUcheta.png" />
+    <Resource Include="Resources\ListsBackgrround.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

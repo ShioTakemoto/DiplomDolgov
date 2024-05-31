@@ -9,8 +9,16 @@
       Background="Transparent"
       Title="Список сотрудников"
       d:DesignHeight="1000"
-      d:DesignWidth="1536">
-
+      d:DesignWidth="1536"
+      Opacity="0"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid x:Name="Dark">
         <Grid>
             <Grid>
@@ -86,22 +94,22 @@
                 Grid.Column="6"
                 Height="25"
                 Width="100"
-                FontSize="15"
+                FontSize="20"
                 FontFamily="Roboto"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 TextDecorations="Underline"
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
                 Cursor="Hand" Margin="78,86,0,0"/>
-                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
                     <ListBox x:Name="ListStaffLB"
              BorderBrush="#8B7249"
              Foreground="#FF152D51"
              Background="#FFDFDFE0"
              BorderThickness="2"
-             Margin="10,10,10,0"
+             Padding="0"
              MouseDoubleClick="ListStaffLB_MouseDoubleClick"
-                             PreviewMouseWheel="ListBox_PreviewMouseWheel">
+             PreviewMouseWheel="ListBox_PreviewMouseWheel">
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Удалить сотрудника"
@@ -114,66 +122,70 @@
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="220" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="400" />
-                                        <ColumnDefinition Width="5" />
-                                        <ColumnDefinition Width="280" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="30" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Border Background="Transparent"
-                            BorderBrush="Black" BorderThickness="1"
-                            Height="120"
-                            x:Name="MedicineEllipse"
-                            Width="80"
-                            Grid.RowSpan="8">
-                                        <Image Source="{Binding StaffPhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
-                                    </Border>
-                                    <TextBlock Grid.Column="2" Grid.Row="1">
-                        <Run Text="Фамилия: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding LastNameStaff}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="2" Grid.Row="3">
-                        <Run Text="Имя: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding FirstNameStaff}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="4" Grid.Column="2">
-                        <Run Text="Отчество: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding MiddleNameStaff}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="5" Grid.Column="2">
-                        <Run Text="Пользователь: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding User.LoginUser}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Row="7" Grid.Column="2" Margin="0 2 0 0">
-                        <Run Text="Должность: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding Post.NamePost}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="3">
-                        <Run Text="Почта: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding EmailStaff}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="1">
-                        <Run Text="Номер телефона: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding PhoneNumberStaff}" FontSize="18"/>
-                                    </TextBlock>
-                                    <TextBlock Grid.Column="4" Grid.Row="4">
-                        <Run Text="Пол: " FontWeight="Bold" FontSize="18"/>
-                        <Run Text="{Binding Gender.NameGender}" FontSize="18"/>
-                                    </TextBlock>
-                                </Grid>
+                                <Border BorderBrush="#8B7249" BorderThickness="0,0,0,1" Padding="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="220" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="500" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="700" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="5"/>
+                                        </Grid.RowDefinitions>
+                                        <Border Background="Transparent"
+                                BorderBrush="Black" BorderThickness="1"
+                                Height="200"
+                                x:Name="StaffEllipse"
+                                Width="130"
+                                Grid.RowSpan="9">
+                                            <Image Source="{Binding StaffPhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
+                                        </Border>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">
+                            <Run Text="Фамилия: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding LastNameStaff}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="2" Grid.Row="3">
+                            <Run Text="Имя: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding FirstNameStaff}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="5" Grid.Column="2">
+                            <Run Text="Отчество: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding MiddleNameStaff}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="7" Grid.Column="2">
+                            <Run Text="Пользователь: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding User.LoginUser}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="9" Grid.Column="2">
+                            <Run Text="Должность: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding Post.NamePost}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="4" Grid.Row="1">
+                            <Run Text="Почта: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding EmailStaff}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="4" Grid.Row="3">
+                            <Run Text="Номер телефона: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding PhoneNumberStaff}" FontSize="20"/>
+                                        </TextBlock>
+                                        <TextBlock Grid.Column="4" Grid.Row="5">
+                            <Run Text="Пол: " FontWeight="Bold" FontSize="20"/>
+                            <Run Text="{Binding Gender.NameGender}" FontSize="20"/>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

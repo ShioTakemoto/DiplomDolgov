@@ -1,4 +1,5 @@
-﻿using DiplomDolgov.PageFolder.AdminPageFolder;
+﻿using DiplomDolgov.ClassFolder;
+using DiplomDolgov.PageFolder.AdminPageFolder;
 using DiplomDolgov.PageFolder.PharmacistPageFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
@@ -12,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -27,6 +29,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             InitializeComponent();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
+        }
+
         private void ListMedicineBtn_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new PharmacistListMedicinePage());
@@ -38,7 +46,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
             if (Result.Value)
             {
-                this.Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
             }
         }
 

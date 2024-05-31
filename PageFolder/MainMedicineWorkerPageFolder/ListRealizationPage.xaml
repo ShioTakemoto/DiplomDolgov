@@ -7,10 +7,17 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
-      Title="Учётная книга">
+      Title="Учётная книга"
+      Opacity="0"
+      Loaded="Page_Loaded">
     <Page.Resources>
-        <local:FIOConverter x:Key="FIOConverter"/>
-        <local:DateTimeToStringConverter x:Key="DateTimeConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:FIOConverter x:Key="FIOConverter"/>
+            <local:DateTimeToStringConverter x:Key="DateTimeConverter" />
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid>
@@ -38,7 +45,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Image Source="\Resources\GuestMainIcon.png" Grid.Row="1" Grid.Column="6"/>
+        <Image Source="\Resources\BookUcheta.png" Grid.Row="1" Grid.Column="6"/>
 
         <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
 
@@ -84,6 +91,13 @@
           BorderThickness="2"
           FontFamily="Roboto"
           Style="{StaticResource MaterialDesignDataGrid}">
+            <DataGrid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </DataGrid.Resources>
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Удалить запись" x:Name="DeleteM1"
@@ -130,7 +144,7 @@
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
                 Cursor="Hand" Margin="70,41,0,0"/>
 
-        <Image Source="\Resources\GuestAddIcon.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
+        <Image Source="\Resources\MinBookUcheta.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
 
     </Grid>
 </Page>

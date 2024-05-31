@@ -9,9 +9,11 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
@@ -28,6 +30,12 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             DataContext = this.medicine;
             context = DBEntities.GetContext(); // Создание контекста данных
             LoadData();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadData()
@@ -48,7 +56,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
             if (result == true)
-                Close();
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
         }
 
         private void AddPhoto(object sender, RoutedEventArgs e)

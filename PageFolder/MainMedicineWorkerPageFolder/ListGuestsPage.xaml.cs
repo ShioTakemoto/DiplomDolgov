@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 {
@@ -31,6 +32,12 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             InitializeComponent();
             LoadRooms();
             Search();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = (Storyboard)this.Resources["PageFadeIn"];
+            fadeInAnimation.Begin(this);
         }
 
         private void LoadRooms()
