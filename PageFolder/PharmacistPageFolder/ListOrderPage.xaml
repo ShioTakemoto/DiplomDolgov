@@ -31,7 +31,7 @@
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -41,12 +41,12 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <Image Source="\Resources\OrderIcon.png" Grid.Row="1" Grid.Column="6"/>
 
-        <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
+        <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
 
         <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
@@ -57,14 +57,14 @@
                  Grid.ColumnSpan="3"
                  Grid.Row="1"
                  Width="580"
-                 Height="50"
+                 Height="60"
                  FontSize="20"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
+                 TextChanged="SearchTB_TextChanged" Margin="0,0,110,0"/>
 
         <ComboBox Name="OrderStatusCB"
           Grid.Column="4"
@@ -72,9 +72,9 @@
           SelectedValuePath="IdOrderStatus"
           SelectedItem="{Binding OrderStatus}"
           DisplayMemberPath="NameOrderStatus"
-          FontSize="13"
-          Height="50"
-          Style="{StaticResource MaterialDesignComboBox}"
+          FontSize="20"
+          Height="60"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Статус заказа"
           BorderThickness="0 0 0 1"
           SelectionChanged="OrderStatusCB_SelectionChanged"/>

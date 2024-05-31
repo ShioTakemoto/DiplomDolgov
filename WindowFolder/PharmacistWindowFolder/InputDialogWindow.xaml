@@ -24,7 +24,7 @@
         <TextBox x:Name="InputTextBox"
                  Margin="10"
                  VerticalAlignment="Center"
-                 FontSize="16"
+                 FontSize="20"
                  MinWidth="300"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">

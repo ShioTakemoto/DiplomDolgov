@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.PharmacistWindowFolder"
         mc:Ignorable="d"
-        Title="LittleTablesEditWindow" Height="200" Width="400"
+        Title="LittleTablesEditWindow" Height="200" Width="450"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None">
     <Window.Resources>
@@ -28,9 +28,9 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="RecordLabel" Grid.Row="0" Grid.Column="1" FontSize="16" FontWeight="Bold" Margin="0,10"/>
+        <Label x:Name="RecordLabel" Grid.Row="0" Grid.Column="1" FontSize="14" FontWeight="Bold" Margin="0,10" HorizontalContentAlignment="Center"/>
 
-        <TextBox x:Name="EditTextBox" Grid.Row="1" Grid.Column="1" Margin="0,10"/>
+        <TextBox x:Name="EditTextBox" Grid.Row="1" Grid.Column="1" Margin="0,10" FontSize="14" Height="30" Width="250" HorizontalContentAlignment="Center"/>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="SaveButton" Content="Сохранить" Width="100" Background="#FF8B7249" BorderBrush="#FF8B7249" Margin="10" Click="SaveButton_Click"/>

@@ -1,28 +1,15 @@
 ﻿using DiplomDolgov.DataFolder;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для LittleTablesEditWindow.xaml
-    /// </summary>
     public partial class LittleTablesEditWindow : Window
     {
         private object _record;
         private string _recordType;
+
         public LittleTablesEditWindow(object record, string recordType)
         {
             InitializeComponent();
@@ -32,8 +19,6 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             RecordLabel.Content = $"Редактирование записи: {_recordType}";
             EditTextBox.Text = GetRecordName(record);
         }
-
-
 
         private string GetRecordName(object record)
         {
@@ -49,6 +34,8 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     return ((BestBeforeDate)record).NameBestBeforeDate;
                 case "Страна производителя":
                     return ((ManufacturerCountry)record).NameManufacturerCountry;
+                case "Комната":
+                    return ((Room)record).RoomNumber;
                 default:
                     return string.Empty;
             }
@@ -73,6 +60,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 case "Страна производителя":
                     ((ManufacturerCountry)_record).NameManufacturerCountry = newName;
                     break;
+                case "Комната":
+                    ((Room)_record).RoomNumber = newName;
+                    break;
             }
         }
 
@@ -84,6 +74,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             context.SaveChanges();
             DialogResult = true;
         }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

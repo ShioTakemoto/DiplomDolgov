@@ -7,7 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
-      Title="Список производителей"
+      Title="Добавочные списки"
       Opacity="0"
       Loaded="Page_Loaded">
     <Page.Resources>
@@ -28,7 +28,8 @@
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="130"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -37,17 +38,12 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <Image Source="/Resources/ListsBackgrround.png" Grid.Column="1" Grid.Row="3" Grid.RowSpan="7" Grid.ColumnSpan="5">
-            <Image.Effect>
-                <BlurEffect Radius="10"/>
-            </Image.Effect>
-        </Image>
+        <Image Source="/Resources/ListsBackgrround.png" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Height="120"/>
 
-        <Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>
+        <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
 
         <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
@@ -58,14 +54,14 @@
                  Grid.ColumnSpan="3"
                  Grid.Row="1"
                  Width="580"
-                 Height="50"
+                 Height="60"
                  FontSize="20"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTB_TextChanged" Margin="0,25,120,25"/>
+                 TextChanged="SearchTB_TextChanged" Margin="0,0,110,0"/>
 
         <DataGrid x:Name="ListTypeMedicineDG" AutoGenerateColumns="False"
           IsReadOnly="True"
@@ -75,7 +71,7 @@
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
-          Width="170"
+          Width="220"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -112,7 +108,7 @@
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
-          Width="170"
+          Width="220"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -149,7 +145,7 @@
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
-          Width="170"
+          Width="220"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -186,7 +182,7 @@
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
-          Width="170"
+          Width="220"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -223,7 +219,7 @@
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
           Height="700"
-          Width="180"
+          Width="220"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"

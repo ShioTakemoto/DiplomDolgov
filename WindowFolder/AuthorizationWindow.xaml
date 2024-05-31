@@ -6,8 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder"
         mc:Ignorable="d"
-        MaxHeight="650" MaxWidth="500"
-        MinHeight="650" MinWidth="500"
+        MaxHeight="670" MaxWidth="500"
+        MinHeight="670" MinWidth="500"
         WindowStartupLocation="CenterScreen"
         Background="#FFFFFF"
         WindowStyle="None"
@@ -24,15 +24,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="250"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="15"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="15"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="15"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -67,34 +67,48 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        
+        <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="60" Width="30"  Margin="0" Foreground="#FF152D51"/>
+                <TextBox Name="LoginTB"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Left"
+                     FontFamily="Roboto"
+                     Width="320"
+                     FontSize="20"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     materialDesign:HintAssist.Hint="Логин"
+                     Foreground="#FF152D51" 
+                     SelectionBrush="#FF152D51" 
+                     CaretBrush="#FF152D51" 
+                     BorderBrush="#FF152D51"
+                     Padding="40,0,0,0"/>
+            </Grid>
 
-        <TextBox Name="LoginTB"
-                 HorizontalAlignment="Center" 
-                 VerticalContentAlignment="Center"
-                 HorizontalContentAlignment="Center"
-                 FontFamily="Roboto"
-                 Grid.Column="1"
-                 Grid.Row="2"
-                 Width="320"
-                 FontSize="20"
-                 Style="{StaticResource MaterialDesignTextBox}"
-                 materialDesign:HintAssist.Hint="Логин"
-                 Foreground="#FF152D51" 
-                 SelectionBrush="#FF152D51" 
-                 CaretBrush="#FF152D51" 
-                 BorderBrush="#FF152D51"/>
-
-        <PasswordBox x:Name="PasswordPB"
-                 HorizontalAlignment="Center" 
-                 VerticalContentAlignment="Center"
-                 HorizontalContentAlignment="Center"
-                 FontSize="20"
-                 materialDesign:HintAssist.Hint="Пароль"
-                 Width="320"
-                 FontFamily="Roboto"
-                 Grid.Column="1"
-                 Grid.Row="4"
-                 Style="{StaticResource MaterialDesignPasswordBox}" Foreground="#FF152D51" CaretBrush="#FF152D51" SelectionBrush="#FF152D51" BorderBrush="#FF152D51"/>
+        <Grid Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center" Height="60" Width="30" Margin="0" Foreground="#FF152D51"/>
+            <PasswordBox x:Name="PasswordPB"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Left"
+                         FontSize="20"
+                         materialDesign:HintAssist.Hint="Пароль"
+                         Width="320"
+                         FontFamily="Roboto"
+                         Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" 
+                         Foreground="#FF152D51" 
+                         CaretBrush="#FF152D51" 
+                         SelectionBrush="#FF152D51" 
+                         BorderBrush="#FF152D51"
+                         Padding="40,0,0,0"/>
+        </Grid>
 
         <Button Content="Войти"
                 Background="#FF8B7249" 
@@ -120,7 +134,7 @@
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
                 Cursor="Hand"/>
 
-        <Image x:Name="Account"
+        <!--<Image x:Name="Account"
                Grid.Row="2"
                Grid.Column="1"
                Height="25"
@@ -132,7 +146,7 @@
                Grid.Column="1"
                Height="25"
                Width="25" Margin="40,15,320,10"
-               Source="\Resources\Lock.png"/>
+               Source="\Resources\Lock.png"/>-->
 
     </Grid>
 </Window>

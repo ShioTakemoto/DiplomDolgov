@@ -81,9 +81,9 @@
       SelectedValuePath="IdGuest"
       materialDesign:HintAssist.Hint="Гость"
       FontSize="20"
-      Height="50"
+      Height="60"
       Width="250"
-      Style="{StaticResource MaterialDesignComboBox}"
+      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
       BorderThickness="0 0 0 1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -99,9 +99,9 @@
   SelectedValuePath="IdStaff"
   materialDesign:HintAssist.Hint="Сотрудник"
   FontSize="20"
-  Height="50"
+  Height="60"
   Width="250"
-  Style="{StaticResource MaterialDesignComboBox}"
+  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
   BorderThickness="0 0 0 1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -121,9 +121,9 @@
                   SelectedItem="{Binding Medicine}"
                   DisplayMemberPath="NameMedicine"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
 
 
@@ -169,7 +169,7 @@
             VerticalContentAlignment="Center"
             materialDesign:HintAssist.Hint="Дата реализации"
             FontSize="20"
-            Height="50"
+            Height="60"
             Width="250"/>
 
         <TextBox Name="CountTB"
@@ -179,7 +179,7 @@
          VerticalContentAlignment="Center"
          materialDesign:HintAssist.Hint="Количество"
          FontSize="20"
-         Height="50"
+         Height="60"
          Width="250"/>
 
         <TextBox Name="TimeTextBox"
@@ -190,7 +190,7 @@
          VerticalContentAlignment="Center"
          materialDesign:HintAssist.Hint="Время реализации"
          FontSize="20"
-         Height="50"
+         Height="60"
          Width="250"/>
 
         <Button Content="X"

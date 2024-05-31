@@ -1,5 +1,6 @@
 ﻿using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
+using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Collections.Generic;
@@ -49,18 +50,18 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
             if (selectedRoom == null)
             {
-                new MaterialDesignMessageBox("Выберите тип медикамента для редактирования!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox("Выберите комнату для редактирования!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 return;
             }
 
-            var editWindow = new LittleTablesEditWindow(selectedRoom, "Тип медикамента");
+            var editWindow = new LittleTablesEditWindow(selectedRoom, "Комната");
 
-            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
-            if (pharmacistWindow != null)
+            var mainMedicineWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWindow != null)
             {
                 // Показываем затемняющий слой
-                pharmacistWindow.ShowOverlay1();
-                editWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+                mainMedicineWindow.ShowOverlay2();
+                editWindow.Closed += (s, args) => mainMedicineWindow.HideOverlay2();
             }
 
             editWindow.ShowDialog();
@@ -74,11 +75,11 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
             if (selectedRoom == null)
             {
-                new MaterialDesignMessageBox("Выберите страну производителя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox("Выберите комнату для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 return;
             }
 
-            var result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {selectedRoom.RoomNumber}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+            var result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить комнату {selectedRoom.RoomNumber}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
             if (result == true)
             {
@@ -86,7 +87,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 {
                     DBEntities.GetContext().Room.Remove(selectedRoom);
                     DBEntities.GetContext().SaveChanges();
-                    new MaterialDesignMessageBox("Страна производителя успешно удалена", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    new MaterialDesignMessageBox("Комната успешно удалена", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     LoadData();
                     ListRoomDG.Items.Refresh();
                 }

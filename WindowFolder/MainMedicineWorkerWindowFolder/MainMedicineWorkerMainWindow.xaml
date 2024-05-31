@@ -107,7 +107,7 @@
         <StackPanel Grid.Row="3" Grid.RowSpan="8" Margin="0,-1,0,0" VerticalAlignment="Top">
             <Border x:Name="ListMedicine" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
                 <Button x:Name="ListMedicineBtn"
-                    Height="50"
+                    Height="60"
                     Margin="10,10,10,10"
                     Background="#FF8B7249"
                     Foreground="White"
@@ -126,7 +126,7 @@
             
             <Border x:Name="ListEmployee" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
                 <Button x:Name="ListEmployeeBtn"
-                    Height="50"
+                    Height="60"
                     Margin="10,10,10,10"
                     Background="#FF8B7249"
                     Foreground="White"
@@ -145,7 +145,7 @@
             
             <Border x:Name="ListGuests" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
                 <Button x:Name="ListGuestsBtn"
-                    Height="50"
+                    Height="60"
                     Margin="10,10,10,10"
                     Background="#FF8B7249"
                     Foreground="White"
@@ -164,7 +164,7 @@
 
             <Border x:Name="AccountingBook" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
                 <Button x:Name="AccountingBookBtn"
-                    Height="50"
+                    Height="60"
                     Margin="10,10,10,10"
                     Background="#FF8B7249"
                     Foreground="White"
@@ -183,7 +183,7 @@
 
             <Border x:Name="ListLittleTables" CornerRadius="10,0,0,10" VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
                 <Button x:Name="ListLittleTablesBtn"
-                    Height="50"
+                    Height="60"
                     Margin="10,10,10,10"
                     Background="#FF8B7249"
                     Foreground="White"

@@ -50,111 +50,102 @@
                FontSize="22" Foreground="#FF152D51"
                FontWeight="Bold"/>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock Text="Фамилия"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="LastNameStaffTB"
                      FontFamily="Roboto"
                      VerticalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Фамилия"
                      FontSize="20"
-                     Height="50"
+                     Height="60"
                      Width="250"
-                     Style="{StaticResource MaterialDesignTextBox}" 
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="1"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
                      Text="{Binding LastNameStaff}"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="2" Grid.ColumnSpan="2">
-            <TextBlock Text="Имя"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="FirstNameStaffTB"
                      FontFamily="Roboto"
                      VerticalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Имя"
                      FontSize="20"
-                     Height="50"
+                     Height="60"
                      Width="250"
-                     Style="{StaticResource MaterialDesignTextBox}" 
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="2"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
                      Text="{Binding FirstNameStaff}"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="3" Grid.ColumnSpan="2">
-            <TextBlock Text="Отчество"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="MiddleNameStaffTB"
                      FontFamily="Roboto"
                      VerticalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Отчество"
                      FontSize="20"
-                     Height="50"
+                     Height="60"
                      Width="250"
-                     Style="{StaticResource MaterialDesignTextBox}" 
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="3"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
-                     BorderBrush="#FF152D51" VerticalAlignment="Bottom"
+                     BorderBrush="#FF152D51"
                      Text="{Binding MiddleNameStaff}"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock Text="Почта"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="EmailStaffTB"
                      FontFamily="Roboto"
                      VerticalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Почта"
                      FontSize="20"
-                     Height="50"
+                     Height="60"
                      Width="250"
-                     Style="{StaticResource MaterialDesignTextBox}" 
+                     Grid.Column="2"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="2"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
                      Text="{Binding EmailStaff}"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock Text="Номер телефона"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="PhoneNumberStaffTB"
                      FontFamily="Roboto"
                      VerticalContentAlignment="Center"
                      materialDesign:HintAssist.Hint="Номер телефона"
                      FontSize="20"
-                     Height="50"
+                     Height="60"
                      Width="250"
-                     Style="{StaticResource MaterialDesignTextBox}" 
+                     Grid.Column="2"
+                     Grid.ColumnSpan="2"
+                     Grid.Row="1"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                      Foreground="#FF152D51" 
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
                      Text="{Binding PhoneNumberStaff}"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="4" Grid.ColumnSpan="2">
-            <TextBlock Text="Пользователь"
-                       Margin="0 0 0 5"/>
+        
             <ComboBox Name="UserCB"
                   Grid.ColumnSpan="2"
                   Grid.Row="4"
@@ -163,18 +154,14 @@
                   SelectedItem="{Binding User}"
                   DisplayMemberPath="LoginUser"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
-        </StackPanel>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="5" Grid.ColumnSpan="2">
-            <TextBlock Text="Должность"
-                       Margin="0 0 0 5"/>
-            <ComboBox Name="PostCB"
+
+
+        <ComboBox Name="PostCB"
                   Grid.ColumnSpan="2"
                   Grid.Row="5"
                   SelectedValuePath="IdPost"
@@ -182,12 +169,11 @@
                   SelectedItem="{Binding Post}"
                   DisplayMemberPath="NamePost"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
-        </StackPanel>
-        
+
         <Button Content="+"
                 Grid.Column="1"
                 Grid.Row="5"
@@ -195,11 +181,7 @@
                 Height="40"
                 BorderBrush="#FF87704C" Foreground="#FF87704C" Background="White" Margin="130,25,20,25" Click="AddPost"/>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                    Width="250" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock Text="Пол"
-                       Margin="0 0 0 5"/>
+        
             <ComboBox Name="GenderCB"
                   Grid.Column="2"
                   Grid.ColumnSpan="2"
@@ -209,11 +191,11 @@
                   SelectedItem="{Binding Gender}"
                   DisplayMemberPath="NameGender"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
-        </StackPanel>
+
 
         <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
                 Foreground="#00000000" 

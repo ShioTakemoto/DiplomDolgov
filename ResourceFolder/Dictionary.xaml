@@ -11,12 +11,74 @@
     <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource CustomPrimaryHueMidColor}"/>
     <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="White"/>
 
-    <!-- Custom TextBox Style -->
-    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+    <!-- Custom TextBox Style with Floating Hint -->
+    <Style x:Key="CustomMaterialDesignFloatingHintTextBox" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
         <Setter Property="Foreground" Value="{StaticResource CustomColorBrush}"/>
         <Setter Property="SelectionBrush" Value="{StaticResource CustomColorBrush}"/>
         <Setter Property="CaretBrush" Value="{StaticResource CustomColorBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.HintOpacity" Value="0.5"/>
+        <Setter Property="TextElement.FontSize" Value="16"/>
+        <!-- Размер шрифта текста -->
+        <Setter Property="TextElement.FontWeight" Value="Bold"/>
+        <!-- Вес шрифта текста -->
+        <Setter Property="Padding" Value="40,10,10,10"/>
+        <!-- Внутренние отступы -->
+    </Style>
+
+    <Style x:Key="CustomMaterialDesignFloatingHintComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+        <Setter Property="Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.HintOpacity" Value="0.5"/>
+        <Setter Property="FontSize" Value="16"/>
+        <!-- Размер шрифта текста -->
+        <Setter Property="FontWeight" Value="Bold"/>
+        <!-- Вес шрифта текста -->
+        <Setter Property="Padding" Value="40,10,10,10"/>
+        <!-- Внутренние отступы -->
+    </Style>
+
+     <!--Custom TextBox Style without Floating Hint--> 
+    <Style x:Key="CustomMaterialDesignTextBox" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="Padding" Value="40,10,10,10"/>
+         <!--Внутренние отступы--> 
+    </Style>
+
+     <!--Custom PasswordBox Style with Floating Hint--> 
+    <Style x:Key="CustomMaterialDesignFloatingHintPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+        <Setter Property="Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.HintOpacity" Value="0.5"/>
+        <Setter Property="TextElement.FontSize" Value="16"/>
+         <!--Размер шрифта текста--> 
+        <Setter Property="TextElement.FontWeight" Value="Bold"/>
+         <!--Вес шрифта текста--> 
+        <Setter Property="Padding" Value="40,10,10,10"/>
+         <!--Внутренние отступы--> 
+    </Style>
+
+    <Style x:Key="CustomMaterialDesignFloatingHintRevealPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}">
+        <Setter Property="Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource CustomColorBrush}"/>
+        <Setter Property="materialDesign:HintAssist.HintOpacity" Value="0.5"/>
+        <Setter Property="TextElement.FontSize" Value="16"/>
+         <!--Размер шрифта текста--> 
+        <Setter Property="TextElement.FontWeight" Value="Bold"/>
+         <!--Вес шрифта текста--> 
+        <Setter Property="Padding" Value="40,10,10,10"/>
+         <!--Внутренние отступы--> 
     </Style>
 
     <!-- Custom ComboBox Style -->
@@ -51,5 +113,24 @@
     <Storyboard x:Key="WindowFadeOut">
         <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:1"/>
     </Storyboard>
+
+    <!-- Стиль для TextBlock с оборачиванием текста -->
+    <Style x:Key="WrapTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- Глобальный стиль для DataGrid -->
+    <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
+        <Setter Property="Background" Value="#FFDFDFE0"/>
+        <Setter Property="Foreground" Value="#FF152D51"/>
+        <Setter Property="BorderBrush" Value="#FF8B7249"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Style.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}"/>
+        </Style.Resources>
+    </Style>
 
 </ResourceDictionary>

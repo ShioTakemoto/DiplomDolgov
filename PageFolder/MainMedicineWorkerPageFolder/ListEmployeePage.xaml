@@ -43,7 +43,7 @@
 
                 <Image Source="\Resources\StaffListIcon.png" Grid.Column="7" Width="120"/>
 
-                <Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>
+                <!--<Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>-->
 
                 <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
@@ -53,24 +53,24 @@
                  materialDesign:HintAssist.Hint="Поиск"
                  Grid.ColumnSpan="3"
                  Width="500"
-                 Height="50"
+                 Height="60"
                  FontSize="20"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTb_TextChanged" Margin="0,25,120,25"/>
+                 TextChanged="SearchTb_TextChanged" Margin="0,0,110,0"/>
 
                 <ComboBox Name="GenderCB"
           Grid.Column="4"
           SelectedValuePath="IdGender"
           SelectedItem="{Binding Gender}"
           DisplayMemberPath="NameGender"
-          FontSize="15"
-          Height="50"
+          FontSize="20"
+          Height="60"
           Width="200"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Гендер"
           BorderThickness="0 0 0 1"
           SelectionChanged="GenderCB_SelectionChanged"/>
@@ -80,10 +80,10 @@
           SelectedValuePath="IdPost"
           SelectedItem="{Binding Post}"
           DisplayMemberPath="NamePost"
-          FontSize="15"
-          Height="50"
+          FontSize="20"
+          Height="60"
           Width="200"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Должность"
           BorderThickness="0 0 0 1"
           SelectionChanged="PostCB_SelectionChanged"/>

@@ -79,9 +79,9 @@
                   SelectedItem="{Binding Medicine}"
                   DisplayMemberPath="NameMedicine"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
 
         <TextBox Name="OrderDescriptionTB"
@@ -92,9 +92,9 @@
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Описание заказа"
                  FontSize="20"
-                 Height="50"
+                 Height="60"
                  Width="250"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
@@ -108,9 +108,9 @@
                  VerticalContentAlignment="Center"
                  materialDesign:HintAssist.Hint="Кол-во"
                  FontSize="20"
-                 Height="50"
+                 Height="60"
                  Width="250"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
@@ -125,9 +125,9 @@
                   SelectedItem="{Binding ManufacturerCountry}"
                   DisplayMemberPath="NameOrderStatus"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
 
         <DatePicker Name="DatePicker"
@@ -137,7 +137,7 @@
             Margin="0,10,0,0"
             materialDesign:HintAssist.Hint="Дата заказа"
             FontSize="20"
-            Height="50"
+            Height="60"
             Width="250"/>
 
         <TextBox Name="TimeTextBox"
@@ -148,7 +148,7 @@
          VerticalContentAlignment="Center"
          materialDesign:HintAssist.Hint="Время заказа"
          FontSize="20"
-         Height="50"
+         Height="60"
          Width="250"/>
 
         <Button Content="Добавить"

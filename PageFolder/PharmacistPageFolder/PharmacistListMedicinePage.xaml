@@ -45,7 +45,7 @@
 
                 <Image Source="\Resources\BankaTabletki.png" Grid.Column="7" Width="120"/>
 
-                <Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>
+                <!--<Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>-->
 
                 <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
@@ -55,9 +55,9 @@
                  materialDesign:HintAssist.Hint="Поиск"
                  Grid.ColumnSpan="3"
                  Width="500"
-                 Height="50"
+                 Height="60"
                  FontSize="20"
-                 Style="{StaticResource MaterialDesignTextBox}" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
@@ -69,10 +69,10 @@
           SelectedValuePath="IdTypeMedicine"
           SelectedItem="{Binding TypeMedicine}"
           DisplayMemberPath="NameTypeMedicine"
-          FontSize="15"
-          Height="50"
+          FontSize="20"
+          Height="60"
           Width="200"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Тип"
           BorderThickness="0 0 0 1"
           SelectionChanged="TypeMedicineCB_SelectionChanged"/>
@@ -82,10 +82,10 @@
           SelectedValuePath="IdActiveSubstance"
           SelectedItem="{Binding ActiveSubstance}"
           DisplayMemberPath="NameActiveSubstance"
-          FontSize="15"
-          Height="50"
+          FontSize="20"
+          Height="60"
           Width="200"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Активное вещ-во"
           BorderThickness="0 0 0 1"
           SelectionChanged="ActiveSubstanceCB_SelectionChanged"/>

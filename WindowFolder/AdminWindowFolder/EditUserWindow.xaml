@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/win/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
         mc:Ignorable="d"
         Title="AddUserWindow" Height="800" Width="600"
@@ -74,53 +74,72 @@
                HorizontalContentAlignment="Center"
                FontSize="22" Foreground="#FF152D51"
                FontWeight="Bold"/>
+        
+            <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="60" Width="30" Margin="5 20 0 0" Foreground="#FF152D51"/>
+                <TextBox Name="LoginTB"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Left"
+                     FontFamily="Roboto"
+                     Width="320"
+                     Height="60"
+                     FontSize="20"
+                     Text="{Binding LoginUser}"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Foreground="#FF152D51" 
+                     SelectionBrush="#FF152D51" 
+                     CaretBrush="#FF152D51" 
+                     BorderBrush="#FF152D51"
+                     Padding="40,0,0,0"/>
+            </Grid>
 
-        <TextBox Name="LoginTB"
-                 FontFamily="Roboto"
-                 Grid.Column="1"
-                 Grid.Row="2"
-                 Grid.ColumnSpan="4"
-                 VerticalContentAlignment="Center"
-                 FontSize="20"
-                 Text="{Binding LoginUser}"
-                 Height="50"
-                 Width="320"
-                 Style="{StaticResource MaterialDesignTextBox}" 
-                 Foreground="#FF152D51" 
-                 SelectionBrush="#FF152D51" 
-                 CaretBrush="#FF152D51" 
-                 BorderBrush="#FF152D51" Margin="60,25,20,25"/>
+            <Grid Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Center" Margin="5 20 0 0" Height="60" Width="30" Foreground="#FF152D51"/>
+                <PasswordBox Name="PasswordPB"
+                         VerticalContentAlignment="Center"
+                         HorizontalContentAlignment="Left"
+                         FontFamily="Roboto"
+                         Width="320"
+                         Height="60"
+                         FontSize="20"
+                         local:PasswordBoxHelper.BoundPassword="{Binding PasswordUser, Mode=TwoWay}"
+                         Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}"
+                         Foreground="#FF152D51" 
+                         SelectionBrush="#FF152D51" 
+                         CaretBrush="#FF152D51" 
+                         BorderBrush="#FF152D51"
+                         Padding="40,0,0,0"/>
+            </Grid>
 
-        <PasswordBox Name="PasswordPB"
-                 FontFamily="Roboto"
-                 Grid.Column="1"
-                 Grid.Row="3"
-                 Grid.ColumnSpan="4"
-                 VerticalContentAlignment="Center"
-                 FontSize="20"
-                 Height="50"
-                 Width="320"
-                 local:PasswordBoxHelper.BoundPassword="{Binding PasswordUser, Mode=TwoWay}"
-                 Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" 
-                 Foreground="#FF152D51" 
-                 SelectionBrush="#FF152D51" 
-                 CaretBrush="#FF152D51" 
-                 BorderBrush="#FF152D51" Margin="60,25,20,25"/>
+            <Grid Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4" HorizontalAlignment="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="AccountTie" VerticalAlignment="Center" Height="60" Width="30" Margin="5 20 0 0" Foreground="#FF152D51"/>
+                <ComboBox Name="RoleCB"
+                      SelectedValuePath="IdRole"
+                      SelectedItem="{Binding Role}"
+                      DisplayMemberPath="NameRole"
+                          VerticalContentAlignment="Center"
+                      materialDesign:HintAssist.Hint="Роль"
+                      FontSize="20"
+                      Width="320"
+                      Height="60"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      BorderThickness="0 0 0 1"
+                      Padding="40,0,0,0"/>
+            </Grid>
 
-        <ComboBox Name="RoleCB"
-                  Grid.Column="1"
-                  Grid.ColumnSpan="4"
-                  Grid.Row="4"
-                  SelectedValuePath="IdRole"
-                  SelectedItem="{Binding Role}"
-                  DisplayMemberPath="NameRole"
-                  FontSize="20"
-                  Height="50"
-                  Width="320"
-                  Style="{StaticResource MaterialDesignComboBox}"
-                  BorderThickness="0 0 0 1" Margin="60,0,20,0"/>
-
-        <Button Content="Сохранить"
+            <Button Content="Сохранить"
                 Background="#FF8B7249" 
                 Foreground="White"
                 FontFamily="Roboto" 
@@ -132,11 +151,11 @@
                 Width="140"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
 
-        <Image Source="\Resources\Account.png" Grid.Column="1" Grid.Row="2" Height="30" Width="30" Margin="20,35,50,35"/>
+        <!--<Image Source="\Resources\Account.png" Grid.Column="1" Grid.Row="2" Height="30" Width="30" Margin="20,35,50,35"/>
 
         <Image Source="\Resources\Lock.png" Grid.Column="1" Grid.Row="3" Height="30" Width="30" Margin="20,35,50,35"/>
 
-        <Image Source="\Resources\Role.png" Grid.Column="1" Grid.Row="4" Height="30" Width="30" Margin="20,35,50,35"/>
+        <Image Source="\Resources\Role.png" Grid.Column="1" Grid.Row="4" Height="30" Width="30" Margin="20,35,50,35"/>-->
 
     </Grid>
 </Window>

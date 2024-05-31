@@ -73,11 +73,7 @@
                FontSize="22" Foreground="#FF152D51"
                FontWeight="Bold"/>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-            <TextBlock Text="Гость"
-                       Margin="0 0 0 5"/>
+        
             <ComboBox Name="GuestCB"
           Grid.Column="0"
           Grid.ColumnSpan="2"
@@ -86,9 +82,9 @@
           materialDesign:HintAssist.Hint="Гость"
           SelectedItem="{Binding Guest}"
           FontSize="20"
-          Height="50"
+          Height="60"
           Width="250"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           BorderThickness="0 0 0 1">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -96,13 +92,9 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">
-            <TextBlock Text="Сотрудник"
-                       Margin="0 0 0 5"/>
+        
             <ComboBox Name="StaffCB"
           Grid.Column="0"
           Grid.ColumnSpan="2"
@@ -111,9 +103,9 @@
           materialDesign:HintAssist.Hint="Сотрудник"
           SelectedItem="{Binding Staff}"
           FontSize="20"
-          Height="50"
+          Height="60"
           Width="250"
-          Style="{StaticResource MaterialDesignComboBox}"
+          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           BorderThickness="0 0 0 1">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -121,33 +113,25 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-        </StackPanel>
+       
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
-            <TextBlock Text="Медикамент"
-                       Margin="0 0 0 5"/>
+        
             <ComboBox Name="MedicineCB"
-                  Grid.Column="0"
+                  Grid.Column="2"
                   Grid.ColumnSpan="2"
-                  Grid.Row="2"
+                  Grid.Row="1"
                   SelectedValuePath="IdMedicine"
                   materialDesign:HintAssist.Hint="Медикамент"
                   SelectedItem="{Binding Medicine}"
                   DisplayMemberPath="NameMedicine"
                   FontSize="20"
-                  Height="50"
+                  Height="60"
                   Width="250"
-                  Style="{StaticResource MaterialDesignComboBox}"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   BorderThickness="0 0 0 1"/>
-        </StackPanel>
+       
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="160"
-                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2">
-            <TextBlock Text="Причина отпуска"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="ReasonTB"
                  FontFamily="Roboto"
                  Grid.Column="2"
@@ -167,7 +151,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"/>
-        </StackPanel>
+       
 
         <Button Content="Сохранить"
                 Background="#FF8B7249" 
@@ -181,11 +165,7 @@
                 Width="140"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3">
-            <TextBlock Text="Дата реализации"
-                       Margin="0 0 0 0"/>
+       
             <DatePicker Name="DatePicker"
             Grid.Column="0"
             Grid.ColumnSpan="2"
@@ -194,56 +174,48 @@
             materialDesign:HintAssist.Hint="Дата реализации"
             SelectedDate="{Binding DateTimeRealization, Mode=TwoWay}"
             FontSize="20"
-            Height="50"
+            Height="60"
             Width="250"/>
-        </StackPanel>
+       
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4">
-            <TextBlock Text="Время реализации"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="TimeTextBox"
-         Grid.Column="2"
+         Grid.Column="0"
          Grid.ColumnSpan="2"
-         Grid.Row="3"
+         Grid.Row="4"
          VerticalContentAlignment="Center"
          Margin="0,0,0,0"
          materialDesign:HintAssist.Hint="Время реализации"
          Text="{Binding DateTimeRealization, StringFormat=HH:mm}"
+         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          FontSize="20"
-         Height="50"
+         Height="60"
          Width="250"/>
-        </StackPanel>
+        
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Height="75"
-                 Width="250" Grid.ColumnSpan="2" Grid.Row="4">
-            <TextBlock Text="Количество"
-                       Margin="0 0 0 5"/>
+        
             <TextBox Name="CountTB"
          Grid.Column="2"
          Grid.ColumnSpan="2"
-         Grid.Row="3"
+         Grid.Row="4"
          Margin="0,0,0,0"
          VerticalContentAlignment="Center"
          materialDesign:HintAssist.Hint="Количество"
          FontSize="20"
-         Height="50"
+         Height="60"
          Text="{Binding Count}"
          Width="250"/>
-        </StackPanel>
+        
 
         <Button Content="X"
                 Background="White" 
                 Foreground="#FF8B7249"
                 FontFamily="Roboto" 
                 Click="ClearGuest"
-                FontSize="20"
                 Grid.Row="1"
                 Grid.Column="1"
-                Width="50"
-                Height="50"
+                Width="40"
+                Height="40"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249" Margin="135,26,15,24"/>
 
         <Button Content="X"
@@ -251,11 +223,10 @@
             Foreground="#FF8B7249"
             FontFamily="Roboto" 
             Click="ClearStaff"
-            FontSize="20"
             Grid.Row="2"
             Grid.Column="1"
-            Width="50"
-            Height="50"
+            Width="40"
+            Height="40"
             Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249" Margin="135,26,15,24"/>
     </Grid>
 </Window>
