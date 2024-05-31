@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
                 <!-- Подключение кастомного словаря ресурсов -->
                 <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
+                <!-- Add more MahApps.Metro resources here if needed -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

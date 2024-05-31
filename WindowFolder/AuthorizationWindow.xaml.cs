@@ -112,5 +112,10 @@ namespace DiplomDolgov.WindowFolder
         {
             new MaterialDesignMessageBox("Обратитесь к администратору", MessageType.Info, MessageButtons.Ok).ShowDialog();
         }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

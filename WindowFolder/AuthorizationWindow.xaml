@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder"
         mc:Ignorable="d"
         MaxHeight="670" MaxWidth="500"
@@ -21,6 +22,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="250"/>
@@ -41,6 +43,8 @@
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
 
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+
         <Image Source="\Resources\LogoPill.png" Height="25" Width="25" Grid.Column="0" Grid.Row="0" Margin="12,8,12,48"/>
 
         <Label Content="Авторизация" 
@@ -50,7 +54,10 @@
                VerticalContentAlignment="Center"
                Grid.Row="0"
                Grid.Column="1" Margin="0,-20,0,20"/>
+        
+        <Grid Grid.Row="0" Grid.ColumnSpan="3" Height="35" Margin="0 0 0 40" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
 
+        
         <Image Source="\Resources\Logo1.png" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                Height="200"/>
 
@@ -148,5 +155,6 @@
                Width="25" Margin="40,15,320,10"
                Source="\Resources\Lock.png"/>-->
 
+        
     </Grid>
 </Window>

@@ -21,6 +21,8 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
+        <Label Content="Введите новое значение для добавления" FontFamily="Roboto" Margin="28 10 0 0" FontWeight="Bold" FontSize="16"/>
+
         <TextBox x:Name="InputTextBox"
                  Margin="10"
                  VerticalAlignment="Center"
