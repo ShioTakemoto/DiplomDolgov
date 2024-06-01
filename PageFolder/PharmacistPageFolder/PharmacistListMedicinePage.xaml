@@ -47,14 +47,23 @@
 
                 <!--<Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>-->
 
-                <TextBox Name="SearchTB"
+                <Grid Grid.Column="2"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="0" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-30 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
+                    <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
-                 Grid.Column="1"
                  materialDesign:HintAssist.Hint="Поиск"
-                 Grid.ColumnSpan="3"
-                 Width="500"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="1"
+                 Grid.Row="1"
+                 Width="580"
                  Height="60"
                  FontSize="20"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -62,7 +71,8 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTb_TextChanged" Margin="0,25,120,25"/>
+                 TextChanged="SearchTb_TextChanged" Margin="-450 0 0 0"/>
+                </Grid>
 
                 <ComboBox Name="TypeMedicineCB"
           Grid.Column="4"
@@ -85,6 +95,7 @@
           FontSize="20"
           Height="60"
           Width="200"
+          Margin="40 0 -40 0"
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Активное вещ-во"
           BorderThickness="0 0 0 1"
@@ -102,7 +113,7 @@
                 HorizontalAlignment="Left"
                 TextDecorations="Underline"
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="78,95,0,0"/>
+                Cursor="Hand" Margin="78,105,0,0"/>
                 <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
     <ListBox x:Name="ListMedicineLB"
              BorderBrush="#8B7249"

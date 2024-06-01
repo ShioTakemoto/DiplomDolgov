@@ -49,13 +49,21 @@
 
         <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
 
-        <TextBox Name="SearchTB"
+        <Grid Grid.Column="2"
+                 Grid.ColumnSpan="3"
+                 Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-30 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
+            <TextBox Name="SearchTB"
                  VerticalContentAlignment="Center"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
-                 Grid.Column="1"
                  materialDesign:HintAssist.Hint="Поиск"
-                 Grid.ColumnSpan="3"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="1"
                  Grid.Row="1"
                  Width="580"
                  Height="60"
@@ -65,7 +73,8 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTB_TextChanged" Margin="0,0,110,0"/>
+                 TextChanged="SearchTB_TextChanged" Margin="-560 0 0 0"/>
+        </Grid>
 
         <DatePicker Name="RealizDatePicker"
             Grid.Column="4"
@@ -142,9 +151,9 @@
                 HorizontalAlignment="Left"
                 TextDecorations="Underline"
                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="70,41,0,0"/>
+                Cursor="Hand" Margin="70,50,0,0"/>
 
-        <Image Source="\Resources\MinBookUcheta.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,35"/>
+        <Image Source="\Resources\MinBookUcheta.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="40,20,185,0"/>
 
     </Grid>
 </Page>
