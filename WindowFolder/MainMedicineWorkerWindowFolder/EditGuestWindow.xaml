@@ -86,7 +86,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                     Text="{Binding LastNameGuest}"/>
+                     Text="{Binding LastNameGuest, UpdateSourceTrigger=Explicit}"/>
 
         
             <TextBox Name="FirstNameGuestTB"
@@ -104,7 +104,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                     Text="{Binding FirstNameGuest}"/>
+                     Text="{Binding FirstNameGuest, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -123,7 +123,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                     Text="{Binding MiddleNameGuest}"/>
+                     Text="{Binding MiddleNameGuest, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -132,7 +132,7 @@
                   Grid.Row="4"
                   SelectedValuePath="IdRoom"
                   materialDesign:HintAssist.Hint="Номер комнаты"
-                  SelectedItem="{Binding Room}"
+                  SelectedItem="{Binding Room, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="RoomNumber"
                   FontSize="20"
                   Height="60"
@@ -164,7 +164,7 @@
                  Foreground="#FF152D51" 
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
-                 BorderBrush="#FF152D51" Text="{Binding PhoneNumberGuest}"/>
+                 BorderBrush="#FF152D51" Text="{Binding PhoneNumberGuest, UpdateSourceTrigger=Explicit}"/>
 
 
 
@@ -183,7 +183,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                     Text="{Binding EmailGuest}"/>
+                     Text="{Binding EmailGuest, UpdateSourceTrigger=Explicit}"/>
 
        
             <ComboBox Name="GenderCB"
@@ -192,7 +192,7 @@
                   Grid.Row="3"
                   SelectedValuePath="IdGender"
                   materialDesign:HintAssist.Hint="Пол"
-                  SelectedItem="{Binding Gender}"
+                  SelectedItem="{Binding Gender, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameGender"
                   FontSize="20"
                   Height="60"

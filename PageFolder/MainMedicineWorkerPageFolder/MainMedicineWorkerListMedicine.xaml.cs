@@ -5,18 +5,12 @@ using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 {
@@ -28,6 +22,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         private string searchText = string.Empty;
         private string selectedType = string.Empty;
         private string selectedActiveSubstance = string.Empty;
+
         public MainMedicineWorkerListMedicine()
         {
             InitializeComponent();
@@ -45,33 +40,20 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         private void LoadMedicines()
         {
             var medicines = DBEntities.GetContext().Medicine.ToList();
-            foreach (var medicine in medicines)
-            {
-                medicine.StockCount = DBEntities.GetContext().StockUnit
-                    .Where(su => su.IdMedicine == medicine.IdMedicine)
-                    .Sum(su => (int?)su.Count) ?? 0;
-            }
-            ListMedicineLB.ItemsSource = medicines;
-            FilterMedicines();
+            UpdateMedicinesList(medicines);
         }
 
         private void LoadMedicineTypes()
         {
             var types = DBEntities.GetContext().TypeMedicine.ToList();
-
-            // Добавляем пустой вариант в начало списка
-            types.Insert(0, new TypeMedicine { });
-
+            types.Insert(0, new TypeMedicine { }); // Добавляем пустой вариант в начало списка
             TypeMedicineCB.ItemsSource = types;
         }
 
         private void LoadActiveSubstance()
         {
             var activeSubstances = DBEntities.GetContext().ActiveSubstance.ToList();
-
-            // Добавляем пустой вариант в начало списка
-            activeSubstances.Insert(0, new ActiveSubstance { });
-
+            activeSubstances.Insert(0, new ActiveSubstance { }); // Добавляем пустой вариант в начало списка
             ActiveSubstanceCB.ItemsSource = activeSubstances;
         }
 
@@ -80,34 +62,24 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             var filteredMedicines = DBEntities.GetContext().Medicine.ToList();
 
             if (!string.IsNullOrWhiteSpace(searchText))
-            {
-                filteredMedicines = filteredMedicines
-                    .Where(m => m.NameMedicine.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                    .ToList();
-            }
+                filteredMedicines = filteredMedicines.Where(m => m.NameMedicine.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 
             if (!string.IsNullOrWhiteSpace(selectedType))
-            {
-                filteredMedicines = filteredMedicines
-                    .Where(m => m.TypeMedicine.NameTypeMedicine == selectedType)
-                    .ToList();
-            }
+                filteredMedicines = filteredMedicines.Where(m => m.TypeMedicine.NameTypeMedicine == selectedType).ToList();
 
             if (!string.IsNullOrWhiteSpace(selectedActiveSubstance))
-            {
-                filteredMedicines = filteredMedicines
-                    .Where(m => m.ActiveSubstance.NameActiveSubstance == selectedActiveSubstance)
-                    .ToList();
-            }
+                filteredMedicines = filteredMedicines.Where(m => m.ActiveSubstance.NameActiveSubstance == selectedActiveSubstance).ToList();
 
-            foreach (var medicine in filteredMedicines)
-            {
-                medicine.StockCount = DBEntities.GetContext().StockUnit
-                    .Where(su => su.IdMedicine == medicine.IdMedicine)
-                    .Sum(su => (int?)su.Count) ?? 0;
-            }
+            UpdateMedicinesList(filteredMedicines);
+        }
 
-            ListMedicineLB.ItemsSource = filteredMedicines;
+        private void UpdateMedicinesList(IEnumerable<Medicine> medicines)
+        {
+            foreach (var medicine in medicines)
+            {
+                medicine.StockCount = DBEntities.GetContext().StockUnit.Where(su => su.IdMedicine == medicine.IdMedicine).Sum(su => (int?)su.Count) ?? 0;
+            }
+            ListMedicineLB.ItemsSource = medicines;
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
@@ -169,4 +141,3 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         }
     }
 }
-

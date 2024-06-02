@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.WindowFolder.AdminWindowFolder
@@ -61,6 +62,9 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
                 }
                 else
                 {
+                    LoginTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    PasswordPB.GetBindingExpression(PasswordBoxHelper.BoundPasswordProperty)?.UpdateSource();
+                    RoleCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                     UpdateUser();
                 }
             }

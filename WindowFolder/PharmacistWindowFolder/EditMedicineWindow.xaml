@@ -66,7 +66,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding NameMedicine}"/>
+                 Text="{Binding NameMedicine, UpdateSourceTrigger=Explicit}"/>
        
 
         
@@ -85,7 +85,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding Dosage}"/>
+                 Text="{Binding Dosage, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -104,7 +104,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding UnitsPerPackage}"/>
+                 Text="{Binding UnitsPerPackage, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -126,14 +126,14 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding Instructions}"/>
+                 Text="{Binding Instructions, UpdateSourceTrigger=Explicit}"/>
         
 
         
             <ComboBox Name="TypeMedicineCB"
                   SelectedValuePath="IdTypeMedicine"
                   materialDesign:HintAssist.Hint="Тип медикамента"
-                  SelectedItem="{Binding TypeMedicine}"
+                  SelectedItem="{Binding TypeMedicine, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameTypeMedicine"
                   FontSize="20"
                   Height="60"
@@ -161,7 +161,7 @@
                   Grid.Row="2"
                   SelectedValuePath="IdActiveSubstance"
                   materialDesign:HintAssist.Hint="Активное вещество"
-                  SelectedItem="{Binding ActiveSubstance}"
+                  SelectedItem="{Binding ActiveSubstance, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameActiveSubstance"
                   FontSize="20"
                   Height="60"
@@ -182,7 +182,7 @@
             <ComboBox Name="ReleaseFormCB"
                   SelectedValuePath="IdReleaseForm"
                   materialDesign:HintAssist.Hint="Форма выпуска"
-                  SelectedItem="{Binding ReleaseForm}"
+                  SelectedItem="{Binding ReleaseForm, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameReleaseForm"
                   FontSize="20"
                       Grid.Column="0"
@@ -212,7 +212,7 @@
             <ComboBox Name="BestBeforeDateCB"
                   SelectedValuePath="IdBestBeforeDate"
                   materialDesign:HintAssist.Hint="Срок годности"
-                  SelectedItem="{Binding BestBeforeDate}"
+                  SelectedItem="{Binding BestBeforeDate, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameBestBeforeDate"
                   FontSize="20"
                       Grid.ColumnSpan="2"
@@ -236,7 +236,7 @@
                   Grid.Row="5"
                   SelectedValuePath="IdPrescriptionDrugStatus"
                   materialDesign:HintAssist.Hint="Статус"
-                  SelectedItem="{Binding PrescriptionDrugStatus}"
+                  SelectedItem="{Binding PrescriptionDrugStatus, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NamePrescriptionDrugStatus"
                   FontSize="20"
                   Height="60"
@@ -252,7 +252,7 @@
                   Grid.Row="2"
                   SelectedValuePath="IdManufacturer"
                   materialDesign:HintAssist.Hint="Производитель"
-                  SelectedItem="{Binding Manufacturer}"
+                  SelectedItem="{Binding Manufacturer, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameManufacturer"
                   FontSize="20"
                   Height="60"
@@ -297,7 +297,7 @@
             <Border BorderBrush="#312F2F"
             BorderThickness="2"
         ClipToBounds="True">
-                <Image x:Name="ImPhoto" Stretch="UniformToFill" Source="{Binding MedicinePhoto, Mode=OneTime}" />
+                <Image x:Name="ImPhoto" Stretch="UniformToFill" Source="{Binding MedicinePhoto, Mode=OneTime, UpdateSourceTrigger=Explicit}" />
             </Border>
         </Border>
 

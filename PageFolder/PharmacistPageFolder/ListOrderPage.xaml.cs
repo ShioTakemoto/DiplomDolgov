@@ -23,7 +23,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         {
             var context = DBEntities.GetContext();
             var orderStatuses = context.OrderStatus.ToList();
-            orderStatuses.Insert(0, new OrderStatus { IdOrderStatus = 0, NameOrderStatus = "" });
+            orderStatuses.Insert(0, new OrderStatus { IdOrderStatus = 0, NameOrderStatus = "Все" });
             OrderStatusCB.ItemsSource = orderStatuses;
             FilterOrders();
         }

@@ -142,6 +142,17 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     realization.IdStaff = null;
                 }
 
+                // Обновление привязок данных для ComboBox
+                GuestCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                StaffCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                MedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
+                // Обновление привязок данных для TextBox
+                ReasonTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                CountTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                DatePicker.GetBindingExpression(DatePicker.SelectedDateProperty)?.UpdateSource();
+                TimeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
                 _context.SaveChanges();
                 ShowSuccessMessage("Данные успешно сохранены");
                 Close();

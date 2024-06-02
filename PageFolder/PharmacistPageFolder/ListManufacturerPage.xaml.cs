@@ -30,7 +30,7 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
         private void LoadManufacturerCountries()
         {
             var countries = DBEntities.GetContext().ManufacturerCountry.ToList();
-            countries.Insert(0, new ManufacturerCountry { IdManufacturerCountry = 0, NameManufacturerCountry = "" }); // Добавляем пустой элемент
+            countries.Insert(0, new ManufacturerCountry { IdManufacturerCountry = 0, NameManufacturerCountry = "Все" }); // Добавляем пустой элемент
             ManufacturerCountryCB.ItemsSource = countries;
         }
 

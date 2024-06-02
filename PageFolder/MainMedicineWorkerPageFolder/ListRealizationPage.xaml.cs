@@ -5,26 +5,18 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 {
     /// <summary>
     /// Логика взаимодействия для ListRealizationPage.xaml
     /// </summary>
-        public partial class ListRealizationPage : Page
-        {
+    public partial class ListRealizationPage : Page
+    {
         private List<Realization> allRealizations;
         private readonly DBEntities context;
 
@@ -43,8 +35,8 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
         private void LoadData()
         {
-                allRealizations = context.Realization.Include("Staff").Include("Guests").ToList();
-                UpdateDataGrid();
+            allRealizations = context.Realization.Include("Staff").Include("Guests").ToList();
+            UpdateDataGrid();
         }
 
         private void UpdateDataGrid()
@@ -70,8 +62,8 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             var filteredData = allRealizations.Where(r =>
                 (selectedDate == null || r.DateTimeRealization.Date == selectedDate.Value.Date) &&
                 (string.IsNullOrEmpty(searchText) ||
-                 r.Staff.LastNameStaff.ToLower().Contains(searchText) ||
-                 r.Guests.LastNameGuest.ToLower().Contains(searchText))
+                 (r.Staff != null && r.Staff.LastNameStaff.ToLower().Contains(searchText)) ||
+                 (r.Guests != null && r.Guests.LastNameGuest.ToLower().Contains(searchText)))
             ).ToList();
 
             ListRealizationDG.ItemsSource = filteredData;
@@ -150,6 +142,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
         {
             LoadData();
         }
+
         private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
 
         private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();

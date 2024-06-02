@@ -66,7 +66,7 @@
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
-                     Text="{Binding LastNameStaff}"/>
+                     Text="{Binding LastNameStaff, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -85,7 +85,7 @@
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
-                     Text="{Binding FirstNameStaff}"/>
+                     Text="{Binding FirstNameStaff, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -104,7 +104,7 @@
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
-                     Text="{Binding MiddleNameStaff}"/>
+                     Text="{Binding MiddleNameStaff, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -123,7 +123,7 @@
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
-                     Text="{Binding EmailStaff}"/>
+                     Text="{Binding EmailStaff, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -142,7 +142,7 @@
                      SelectionBrush="#FF152D51" 
                      CaretBrush="#FF152D51" 
                      BorderBrush="#FF152D51"
-                     Text="{Binding PhoneNumberStaff}"/>
+                     Text="{Binding PhoneNumberStaff, UpdateSourceTrigger=Explicit}"/>
         
 
         
@@ -151,7 +151,7 @@
                   Grid.Row="4"
                   SelectedValuePath="IdUser"
                   materialDesign:HintAssist.Hint="Пользователь"
-                  SelectedItem="{Binding User}"
+                  SelectedItem="{Binding User, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="LoginUser"
                   FontSize="20"
                   Height="60"
@@ -166,7 +166,7 @@
                   Grid.Row="5"
                   SelectedValuePath="IdPost"
                   materialDesign:HintAssist.Hint="Должность"
-                  SelectedItem="{Binding Post}"
+                  SelectedItem="{Binding Post, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NamePost"
                   FontSize="20"
                   Height="60"
@@ -188,7 +188,7 @@
                   Grid.Row="3"
                   SelectedValuePath="IdGender"
                   materialDesign:HintAssist.Hint="Пол"
-                  SelectedItem="{Binding Gender}"
+                  SelectedItem="{Binding Gender, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameGender"
                   FontSize="20"
                   Height="60"
@@ -232,7 +232,7 @@
             <Border BorderBrush="#312F2F"
                     BorderThickness="2"
                     ClipToBounds="True">
-                <Image x:Name="StaffPhoto" Stretch="UniformToFill" Source="{Binding StaffPhoto, Mode=OneTime}"/>
+                <Image x:Name="StaffPhoto" Stretch="UniformToFill" Source="{Binding StaffPhoto, Mode=OneTime, UpdateSourceTrigger=Explicit}"/>
             </Border>
         </Border>
 

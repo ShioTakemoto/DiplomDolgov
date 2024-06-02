@@ -215,6 +215,15 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
                     var context = DBEntities.GetContext();
 
+                    LastNameGuestTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    FirstNameGuestTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    MiddleNameGuestTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    PhoneNumberGuestTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    EmailGuestTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+                    RoomCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    GenderCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
                     // Поиск существующего гостя по ID
                     var existingGuest = context.Guests.FirstOrDefault(g => g.IdGuest == guest.IdGuest);
                     if (existingGuest != null)

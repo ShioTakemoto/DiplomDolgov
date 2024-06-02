@@ -63,6 +63,14 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     order.DateTimeOrder = dateTimeOrder;
                     order.Count = count;
 
+                    // Обновляем привязки данных для всех полей
+                    OrderDescriptionTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    CountTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    MedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    OrderStatusCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    DatePicker.GetBindingExpression(DatePicker.SelectedDateProperty)?.UpdateSource();
+                    TimeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
                     DBEntities.GetContext().SaveChanges();
                     ShowSuccessMessage("Данные успешно сохранены");
                     Close();

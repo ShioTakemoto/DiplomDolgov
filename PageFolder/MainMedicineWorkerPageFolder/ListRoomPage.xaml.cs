@@ -3,20 +3,12 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 {
@@ -50,23 +42,15 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
             if (selectedRoom == null)
             {
-                new MaterialDesignMessageBox("Выберите комнату для редактирования!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage("Выберите комнату для редактирования!");
                 return;
             }
 
             var editWindow = new LittleTablesEditWindow(selectedRoom, "Комната");
-
-            var mainMedicineWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
-            if (mainMedicineWindow != null)
-            {
-                // Показываем затемняющий слой
-                mainMedicineWindow.ShowOverlay2();
-                editWindow.Closed += (s, args) => mainMedicineWindow.HideOverlay2();
-            }
+            HandleOverlay(editWindow);
 
             editWindow.ShowDialog();
             LoadData();
-            ListRoomDG.Items.Refresh();
         }
 
         private void DeleteRoom_Click(object sender, RoutedEventArgs e)
@@ -75,7 +59,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
             if (selectedRoom == null)
             {
-                new MaterialDesignMessageBox("Выберите комнату для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                ShowErrorMessage("Выберите комнату для удаления!");
                 return;
             }
 
@@ -87,13 +71,12 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 {
                     DBEntities.GetContext().Room.Remove(selectedRoom);
                     DBEntities.GetContext().SaveChanges();
-                    new MaterialDesignMessageBox("Комната успешно удалена", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    ShowSuccessMessage("Комната успешно удалена");
                     LoadData();
-                    ListRoomDG.Items.Refresh();
                 }
                 catch (Exception ex)
                 {
-                    new MaterialDesignMessageBox($"{ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    ShowErrorMessage(ex.Message);
                 }
             }
         }
@@ -108,6 +91,20 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 var room = item as Room;
                 return room.RoomNumber.ToLower().Contains(searchText);
             };
+        }
+
+        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+        private void HandleOverlay(Window window)
+        {
+            var mainMedicineWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWindow != null)
+            {
+                mainMedicineWindow.ShowOverlay2();
+                window.Closed += (s, args) => mainMedicineWindow.HideOverlay2();
+            }
         }
     }
 }

@@ -3,21 +3,11 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Data.Entity;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
 namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
@@ -27,11 +17,14 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
     /// </summary>
     public partial class ListGuestsPage : Page
     {
+        private string searchText = string.Empty;
+        private string selectedRoomNumber = string.Empty;
+
         public ListGuestsPage()
         {
             InitializeComponent();
             LoadRooms();
-            Search();
+            LoadGuests();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -47,16 +40,21 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             RoomCB.ItemsSource = rooms;
         }
 
-        private void Search()
+        private void LoadGuests()
+        {
+            var guestsList = DBEntities.GetContext().Guests.Include(g => g.Gender).Include(g => g.Room).ToList();
+            ListGuestsDG.ItemsSource = guestsList;
+            FilterGuests();
+        }
+
+        private void FilterGuests()
         {
             var context = DBEntities.GetContext();
-            var searchText = SearchTB.Text.Trim().ToLower();
-            var selectedRoomNumber = (RoomCB.SelectedItem as Room)?.RoomNumber;
-            var query = context.Guests.Include(g => g.Gender).Include(g => g.Room).AsQueryable(); // Включение связанных данных
+            var filteredGuests = context.Guests.Include(g => g.Gender).Include(g => g.Room).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                query = query.Where(g =>
+                filteredGuests = filteredGuests.Where(g =>
                     g.LastNameGuest.ToLower().Contains(searchText) ||
                     g.FirstNameGuest.ToLower().Contains(searchText) ||
                     g.MiddleNameGuest.ToLower().Contains(searchText) ||
@@ -64,50 +62,55 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 );
             }
 
-            if (!string.IsNullOrEmpty(selectedRoomNumber) && selectedRoomNumber != "Все")
+            if (!string.IsNullOrWhiteSpace(selectedRoomNumber) && selectedRoomNumber != "Все")
             {
-                query = query.Where(g =>
-                    g.Room.RoomNumber.Equals(selectedRoomNumber)
-                );
+                filteredGuests = filteredGuests.Where(g => g.Room.RoomNumber == selectedRoomNumber);
             }
 
             try
             {
-                ListGuestsDG.ItemsSource = query.ToList();
+                ListGuestsDG.ItemsSource = filteredGuests.ToList();
             }
             catch (Exception ex)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox($"Ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
 
         private void DeleteM1_Click(object sender, RoutedEventArgs e)
         {
-            var selectedGuest = ListGuestsDG.SelectedItem as Guests;
-
-            if (selectedGuest == null)
+            try
             {
-                new MaterialDesignMessageBox("Выберите гостя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                return;
-            }
+                var selectedGuest = ListGuestsDG.SelectedItem as Guests;
 
-            var result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {selectedGuest.LastNameGuest} {selectedGuest.FirstNameGuest}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-            if (result == true)
-            {
-                try
+                if (selectedGuest == null)
                 {
-                    var context = DBEntities.GetContext();
-                    context.Guests.Remove(selectedGuest);
-                    context.SaveChanges();
+                    new MaterialDesignMessageBox("Выберите гостя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                var guest = DBEntities.GetContext().Guests.FirstOrDefault(g => g.IdGuest == selectedGuest.IdGuest);
+
+                if (guest == null)
+                {
+                    new MaterialDesignMessageBox("Гость не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {guest.LastNameGuest} {guest.FirstNameGuest}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+                if (result == true)
+                {
+                    DBEntities.GetContext().Guests.Remove(guest);
+                    DBEntities.GetContext().SaveChanges();
                     new MaterialDesignMessageBox("Гость успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    RefreshDataGrid();
+                    LoadGuests();
                     ListGuestsDG.Items.Refresh();
                 }
-                catch (Exception ex)
-                {
-                    new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                }
+            }
+            catch (Exception ex)
+            {
+                new MaterialDesignMessageBox($"Ошибка: {ex.Message}", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
         }
 
@@ -121,8 +124,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 return;
             }
 
-            var context = DBEntities.GetContext();
-            var guest = context.Guests.FirstOrDefault(g => g.IdGuest == selectedGuest.IdGuest);
+            var guest = DBEntities.GetContext().Guests.FirstOrDefault(g => g.IdGuest == selectedGuest.IdGuest);
 
             if (guest == null)
             {
@@ -140,24 +142,20 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             }
 
             editGuestWindow.ShowDialog();
-
-            if (mainMedicineWorkerWindow != null)
-            {
-                mainMedicineWorkerWindow.HideOverlay2();
-            }
-
-            RefreshDataGrid();
+            LoadGuests();
             ListGuestsDG.Items.Refresh();
         }
 
         private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Search();
+            searchText = SearchTB.Text.Trim().ToLower();
+            FilterGuests();
         }
 
         private void RoomCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Search();
+            selectedRoomNumber = (RoomCB.SelectedItem as Room)?.RoomNumber ?? string.Empty;
+            FilterGuests();
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -177,13 +175,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
         private void AddGuestWindow_AddedGuest(object sender, EventArgs e)
         {
-            RefreshDataGrid();
-        }
-
-        private void RefreshDataGrid()
-        {
-            var context = DBEntities.GetContext();
-            ListGuestsDG.ItemsSource = context.Guests.Include(g => g.Gender).Include(g => g.Room).ToList();
+            LoadGuests();
         }
     }
 }

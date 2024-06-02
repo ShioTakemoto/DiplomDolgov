@@ -3,9 +3,7 @@ using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -175,7 +173,6 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 }
             }
         }
-
         private void DeleteBestBeforeDate_Click(object sender, RoutedEventArgs e)
         {
             var selectedBestBeforeDate = ListBestBeforeDateDG.SelectedItem as BestBeforeDate;

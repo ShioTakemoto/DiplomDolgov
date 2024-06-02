@@ -336,9 +336,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Realization_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
           <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">
@@ -893,9 +891,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Realization_Medicine">
-          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="Medicine" Type="Self.Medicine" Multiplicity="0..1" />
           <End Role="Realization" Type="Self.Realization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medicine">

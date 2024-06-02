@@ -107,6 +107,15 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                         existingStaff.StaffPhoto = staff.StaffPhoto;
                     }
 
+                    LastNameStaffTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    FirstNameStaffTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    MiddleNameStaffTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    EmailStaffTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    PhoneNumberStaffTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    UserCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    PostCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    GenderCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
                     context.SaveChanges();
                     ShowSuccessMessage("Данные сотрудника обновлены");
                     Close();

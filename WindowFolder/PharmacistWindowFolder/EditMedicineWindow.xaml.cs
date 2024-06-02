@@ -208,6 +208,20 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         existingMedicine.MedicinePhoto = medicine.MedicinePhoto;
                     }
 
+                    // Обновление привязок данных для TextBox
+                    NameMedicineTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    DosageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    UnitsPerPackageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    InstructionsTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+                    // Обновление привязок данных для ComboBox
+                    TypeMedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    ActiveSubstanceCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    ReleaseFormCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    BestBeforeDateCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    PrescriptionDrugStatusCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    ManufacturerCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
                     context.SaveChanges();
                     new MaterialDesignMessageBox("Изменения успешно сохранены!", MessageType.Success, MessageButtons.Ok).ShowDialog();
                     Close();

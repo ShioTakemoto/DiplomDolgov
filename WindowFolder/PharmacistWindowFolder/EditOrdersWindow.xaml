@@ -78,7 +78,7 @@
                   Grid.Row="1"
                   SelectedValuePath="IdMedicine"
                   materialDesign:HintAssist.Hint="Медикамент"
-                  SelectedItem="{Binding Medicine}"
+                  SelectedItem="{Binding Medicine, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameMedicine"
                   FontSize="20"
                   Height="60"
@@ -101,7 +101,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding OrderDescription}"/>
+                 Text="{Binding OrderDescription, UpdateSourceTrigger=Explicit}"/>
         
             <TextBox Name="CountTB"
                  FontFamily="Roboto"
@@ -118,7 +118,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 Text="{Binding Count}"/>
+                 Text="{Binding Count, UpdateSourceTrigger=Explicit}"/>
         
             <ComboBox Name="OrderStatusCB"
                   Grid.Column="2"
@@ -126,7 +126,7 @@
                   Grid.Row="2"
                   SelectedValuePath="IdOrderStatus"
                   materialDesign:HintAssist.Hint="Статус заказа"
-                  SelectedItem="{Binding OrderStatus}"
+                  SelectedItem="{Binding OrderStatus, UpdateSourceTrigger=Explicit}"
                   DisplayMemberPath="NameOrderStatus"
                   FontSize="20"
                   Height="60"
@@ -154,7 +154,7 @@
             Grid.Row="3"
             Margin="0,0,0,0"
             materialDesign:HintAssist.Hint="Дата заказа"
-            SelectedDate="{Binding DateOrder, Mode=TwoWay}"
+            SelectedDate="{Binding DateOrder, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
             FontSize="20"
             Height="60"
             Width="250"/>
@@ -165,7 +165,7 @@
          Grid.Row="3"
          Margin="0,0,0,0"
          materialDesign:HintAssist.Hint="Время заказа"
-         Text="{Binding TimeOrder, StringFormat=hh\\:mm}"
+         Text="{Binding TimeOrder, StringFormat=hh\\:mm, UpdateSourceTrigger=Explicit}"
          FontSize="20"
          Height="60"
          Width="250"/>

@@ -28,8 +28,7 @@ namespace DiplomDolgov.DataFolder
         public string PhoneNumberGuest { get; set; }
         public string EmailGuest { get; set; }
         public int IdGender { get; set; }
-        public string FullName => $"{LastNameGuest} {FirstNameGuest[0]}. {MiddleNameGuest[0]}.";
-
+    
         public virtual Gender Gender { get; set; }
         public virtual Room Room { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

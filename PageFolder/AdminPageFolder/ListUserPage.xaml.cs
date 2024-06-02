@@ -75,38 +75,31 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
 
         private void DeleteM1_Click(object sender, RoutedEventArgs e)
         {
-            try
+            var selectedUser = ListUserDG.SelectedItem as DisplayUser;
+
+            if (selectedUser == null)
             {
-                var selectedUser = ListUserDG.SelectedItem as DisplayUser;
-
-                if (selectedUser == null)
-                {
-                    new MaterialDesignMessageBox("Выберите пользователя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-
-                var user = DBEntities.GetContext().User.FirstOrDefault(u => u.LoginUser == selectedUser.LoginUser);
-
-                if (user == null)
-                {
-                    new MaterialDesignMessageBox("Пользователь не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                    return;
-                }
-
-                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {user.LoginUser}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-                if (result == true)
-                {
-                    DBEntities.GetContext().User.Remove(user);
-                    DBEntities.GetContext().SaveChanges();
-                    new MaterialDesignMessageBox("Пользователь успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    RefreshDataGrid();
-                    ListUserDG.Items.Refresh();
-                }
+                new MaterialDesignMessageBox("Выберите пользователя для удаления!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                return;
             }
-            catch (Exception ex)
+
+            var user = DBEntities.GetContext().User.FirstOrDefault(u => u.LoginUser == selectedUser.LoginUser);
+
+            if (user == null)
             {
-                new MaterialDesignMessageBox($"{ex}", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MaterialDesignMessageBox("Пользователь не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                return;
+            }
+
+            bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {user.LoginUser}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (result == true)
+            {
+                DBEntities.GetContext().User.Remove(user);
+                DBEntities.GetContext().SaveChanges();
+                new MaterialDesignMessageBox("Пользователь успешно удалён", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                RefreshDataGrid();
+                ListUserDG.Items.Refresh();
             }
         }
 
