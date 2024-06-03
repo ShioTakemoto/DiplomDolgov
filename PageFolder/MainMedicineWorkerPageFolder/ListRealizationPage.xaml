@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
+      
       d:DesignHeight="1000" d:DesignWidth="1500"
       Title="Учётная книга"
       Opacity="0"
@@ -118,8 +119,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Staff.FullName}" Width="*" />
-                <DataGridTextColumn Header="ФИО гостя" Binding="{Binding Guests.FullName}" Width="*" />
+                <DataGridTextColumn Header="ФИО сотрудника" Binding="{Binding Staff, Converter={StaticResource FIOConverter}}" Width="*" />
+                <DataGridTextColumn Header="ФИО гостя" Binding="{Binding Guests, Converter={StaticResource FIOConverter}}" Width="*" />
 
                 <DataGridTextColumn Header="Дата"
                             Binding="{Binding DateTimeRealization, Converter={StaticResource DateTimeConverter}}"

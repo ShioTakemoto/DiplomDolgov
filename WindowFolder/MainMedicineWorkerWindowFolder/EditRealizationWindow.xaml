@@ -88,8 +88,8 @@
           BorderThickness="0 0 0 1">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding FullName}" />
-                    </DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource FIOConverter}}" />
+                </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
         
@@ -109,8 +109,8 @@
           BorderThickness="0 0 0 1">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding FullName}" />
-                    </DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource FIOConverter}}" />
+                </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
        

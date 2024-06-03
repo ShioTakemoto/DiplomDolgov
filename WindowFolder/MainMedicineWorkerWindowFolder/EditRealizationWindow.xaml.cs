@@ -119,6 +119,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
+                // Получаем разницу между новым и старым количеством медикамента
+                int quantityDifference = count - realization.Count;
+
+                // Обновляем количество медикамента в StockUnit
+                selectedMedicine.Count -= quantityDifference;
+
                 realization.IdMedicine = selectedMedicineId;
                 realization.Reason = ReasonTB.Text;
                 realization.DateTimeRealization = dateTimeRealization;
@@ -142,18 +148,17 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     realization.IdStaff = null;
                 }
 
-                // Обновление привязок данных для ComboBox
+                _context.SaveChanges();
+
+                // Обновляем привязки данных
                 GuestCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 StaffCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 MedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-
-                // Обновление привязок данных для TextBox
                 ReasonTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 CountTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 DatePicker.GetBindingExpression(DatePicker.SelectedDateProperty)?.UpdateSource();
                 TimeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
 
-                _context.SaveChanges();
                 ShowSuccessMessage("Данные успешно сохранены");
                 Close();
             }

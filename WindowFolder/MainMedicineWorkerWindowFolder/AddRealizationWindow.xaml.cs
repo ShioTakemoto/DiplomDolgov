@@ -3,6 +3,7 @@ using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,17 +24,21 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class AddRealizationWindow : Window
     {
-        public Guests SelectedGuest { get; private set; }
-        public Staff SelectedStaff { get; private set; }
+        public List<Guests> Guests { get; set; }
+        public List<Staff> Staff { get; set; }
         public event EventHandler AddedRealizationSuccess;
         public AddRealizationWindow()
         {
             InitializeComponent();
             LoadMedicines();
+            Guests = DBEntities.GetContext().Guests.ToList();
+            Staff = DBEntities.GetContext().Staff.ToList();
+            DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadMedicines();
             var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
             fadeInAnimation.Begin(this);
         }
@@ -41,8 +46,8 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         private void LoadMedicines()
         {
             MedicineCB.ItemsSource = DBEntities.GetContext().Medicine.ToList();
-            GuestCB.ItemsSource = DBEntities.GetContext().Guests.ToList();
-            StaffCB.ItemsSource = DBEntities.GetContext().Staff.ToList();
+            Guests = DBEntities.GetContext().Guests.ToList(); // Инициализация списка гостей
+            Staff = DBEntities.GetContext().Staff.ToList(); // Инициализация списка сотрудников
         }
 
         private void AddButton(object sender, RoutedEventArgs e)
@@ -91,9 +96,20 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
-                if (count > selectedMedicine.StockCount)
+                // Поиск записи в таблице StockUnit по IdMedicine
+                var stockUnit = selectedMedicine.StockUnit.FirstOrDefault(su => su.IdMedicine == selectedMedicineId);
+
+                if (stockUnit == null)
                 {
-                    ShowErrorMessage($"Недостаточное количество медикамента на складе. Доступно: {selectedMedicine.StockCount}");
+                    // Если запись не найдена, обработать эту ситуацию
+                    ShowErrorMessage("Данные о запасах для выбранного медикамента отсутствуют.");
+                    return;
+                }
+
+                // Проверка доступного количества
+                if (count > stockUnit.Count)
+                {
+                    ShowErrorMessage($"Недостаточное количество медикамента на складе. Доступно: {stockUnit.Count}");
                     return;
                 }
 
