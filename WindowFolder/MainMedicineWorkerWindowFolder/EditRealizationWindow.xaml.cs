@@ -148,7 +148,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     realization.IdStaff = null;
                 }
 
-                _context.SaveChanges();
+                
 
                 // Обновляем привязки данных
                 GuestCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
@@ -158,7 +158,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 CountTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 DatePicker.GetBindingExpression(DatePicker.SelectedDateProperty)?.UpdateSource();
                 TimeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-
+                _context.SaveChanges();
                 ShowSuccessMessage("Данные успешно сохранены");
                 Close();
             }
