@@ -536,17 +536,22 @@
     <Resource Include="Resources\EmployeeIcon.png" />
     <Resource Include="Resources\ListIcon.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\MinBookUcheta.png" />
     <Resource Include="Resources\BookUcheta.png" />
     <Resource Include="Resources\ListsBackgrround.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\AddMedicineIcon.png" />
+    <Resource Include="Resources\AddStaffWhite.png" />
+    <Resource Include="Resources\WhiteAddUser.png" />
+    <Resource Include="Resources\RectangleButton.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="DataFolder\DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
       <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="DataFolder\DBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

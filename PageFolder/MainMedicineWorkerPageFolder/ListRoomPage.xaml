@@ -47,14 +47,15 @@
 
         <Grid Grid.Column="2"
                  Grid.ColumnSpan="3"
-                 Grid.Row="1" HorizontalAlignment="Center">
+                 Grid.Row="0" HorizontalAlignment="Center"
+              Grid.RowSpan="2" Margin="0 0 0 40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-85 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
             <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  materialDesign:HintAssist.Hint="Поиск"
@@ -74,12 +75,12 @@
 
         <DataGrid x:Name="ListRoomDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding Room}" Grid.Row="2" Grid.Column="1"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding Room}" Grid.Row="1" Grid.Column="1"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
+          Height="790"
           Width="170"
           SelectionMode="Single"
           BorderThickness="2"

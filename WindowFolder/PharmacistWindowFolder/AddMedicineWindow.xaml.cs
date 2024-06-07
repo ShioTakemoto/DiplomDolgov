@@ -118,7 +118,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                     }
 
                     // Проверка на допустимость символов в наименовании лекарства
-                    if (!ContainsOnlyLetters(NameMedicineTB.Text))
+                    if (!ContainsOnlyLettersOrSpaces(NameMedicineTB.Text))
                     {
                         ShowErrorMessage("Некорректное наименование лекарства! Используйте только буквы.");
                         return;
@@ -200,21 +200,9 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             return !Regex.IsMatch(input, @"\d");
         }
 
-        private bool ContainsOnlyLetters(string input)
+        private bool ContainsOnlyLettersOrSpaces(string input)
         {
-            return input.All(char.IsLetter);
-        }
-
-        private bool ContainsOnlyLettersAndSpaces(string input)
-        {
-            foreach (char c in input)
-            {
-                if (!char.IsLetter(c) && c != ' ')
-                {
-                    return false;
-                }
-            }
-            return true;
+            return input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c));
         }
 
         private bool ShowConfirmationMessage(string message)
@@ -281,7 +269,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddTypeMedicine(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новый тип медикамента");
+            var inputWindow = new InputDialogWindow("Введите новый тип медикамента")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
@@ -289,7 +280,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLettersAndSpaces(inputText))
+                else if (!ContainsOnlyLettersOrSpaces(inputText))
                 {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
@@ -302,7 +293,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddActiveSubstance(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новое активное вещество");
+            var inputWindow = new InputDialogWindow("Введите новое активное вещество")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
@@ -310,7 +304,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLettersAndSpaces(inputText))
+                else if (!ContainsOnlyLettersOrSpaces(inputText))
                 {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
@@ -323,7 +317,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddReleaseForm(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новую форму выпуска");
+            var inputWindow = new InputDialogWindow("Введите новую форму выпуска")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
@@ -331,7 +328,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLettersAndSpaces(inputText))
+                else if (!ContainsOnlyLettersOrSpaces(inputText))
                 {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }
@@ -344,7 +341,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddBestBeforeDate(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новый срок годности");
+            var inputWindow = new InputDialogWindow("Введите новый срок годности")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
@@ -352,7 +352,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
-                else if (!ContainsOnlyLettersAndSpaces(inputText))
+                else if (!ContainsOnlyLettersOrSpaces(inputText))
                 {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 }

@@ -34,7 +34,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
+                    <RowDefinition Height="150" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
@@ -47,14 +47,14 @@
 
                 <Grid Grid.Column="2"
                  Grid.ColumnSpan="3"
-                 Grid.Row="0" HorizontalAlignment="Center">
+                 Grid.Row="0" HorizontalAlignment="Center" Margin="0 0 0 30">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-30 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
                     <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  materialDesign:HintAssist.Hint="Поиск"
@@ -69,7 +69,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTb_TextChanged" Margin="-450 0 0 0"/>
+                 TextChanged="SearchTb_TextChanged" Margin="-450 0 0 0" Cursor="IBeam"/>
                 </Grid>
 
                 <ComboBox Name="GenderCB"
@@ -81,9 +81,9 @@
           Height="60"
           Width="200"
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-          materialDesign:HintAssist.Hint="Гендер"
+          materialDesign:HintAssist.Hint="Пол"
           BorderThickness="0 0 0 1"
-          SelectionChanged="GenderCB_SelectionChanged"/>
+          SelectionChanged="GenderCB_SelectionChanged" Cursor="Hand" Margin="0 0 0 30" IsEditable="True"/>
 
                 <ComboBox Name="PostCB"
           Grid.Column="5"
@@ -97,22 +97,38 @@
           materialDesign:HintAssist.Hint="Должность"
           BorderThickness="0 0 0 1"
           SelectionChanged="PostCB_SelectionChanged"
-          Margin="50 0 -50 0"/>
+          Margin="35 0 -35 30" Cursor="Hand" IsEditable="True"/>
 
-                <TextBlock x:Name="AddStaff"
-                Text="Добавить"
-                Foreground="#FF152D51"
-                Grid.Column="6"
-                Height="25"
-                Width="100"
-                FontSize="20"
-                FontFamily="Roboto"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                TextDecorations="Underline"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="120,105,-90,-120"/>
-                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
+                <Button x:Name="AddStaffBtn"
+        Height="50"
+        Width="160"
+        Grid.Row="0"
+        Grid.Column="5"
+        Margin="300 0 -300 10"
+        Background="#FF8B7249"
+        Foreground="White"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Left"
+        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+        Click="AddStaffBtn_Click"
+        BorderBrush="#FF8B7249">
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="AddStaffImage" Width="25" Height="25" Margin="0 0 10 0" Source="\Resources\AddStaffWhite.png"/>
+                        <TextBlock x:Name="AddStaff" 
+                   Text="Добавить"
+                   Foreground="White"
+                   Height="25"
+                   Width="100"
+                   FontSize="20"
+                   FontFamily="Roboto"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Cursor="Hand"/>
+                    </StackPanel>
+                </Button>
+
+
+                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto" Margin="0 0 5 -28">
                     <ListBox x:Name="ListStaffLB"
              BorderBrush="#8B7249"
              Foreground="#FF152D51"
@@ -120,15 +136,17 @@
              BorderThickness="2"
              Padding="0"
              MouseDoubleClick="ListStaffLB_MouseDoubleClick"
-             PreviewMouseWheel="ListBox_PreviewMouseWheel">
+             PreviewMouseWheel="ListBox_PreviewMouseWheel" Cursor="Hand">
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Удалить сотрудника"
                           x:Name="DeleteM1"
-                          Click="DeleteM1_Click" />
+                          Click="DeleteM1_Click" 
+                                          Cursor="Hand"/>
                                 <MenuItem Header="Изменить сотрудника"
                           x:Name="EditM1"
-                          Click="EditM1_Click" />
+                          Click="EditM1_Click" 
+                                          Cursor="Hand"/>
                             </ContextMenu>
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
@@ -157,10 +175,10 @@
                                         </Grid.RowDefinitions>
                                         <Border Background="Transparent"
                                 BorderBrush="Black" BorderThickness="1"
-                                Height="200"
+                                Height="160"
                                 x:Name="StaffEllipse"
                                 Width="130"
-                                Grid.RowSpan="9">
+                                Grid.RowSpan="10">
                                             <Image Source="{Binding StaffPhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill" />
                                         </Border>
                                         <TextBlock Grid.Column="2" Grid.Row="1">

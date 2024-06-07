@@ -36,28 +36,23 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="40" 
-                Height="40"
-                Grid.Column="3" Margin="135,10,25,50">
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="20" Height="20" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-35 10 60 0">
             <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!--Увелечение области нажатия-->
+                        <Rectangle Fill="Transparent" Width="20" Height="20"/>
+                        <!-- Изображение -->
+                        <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="40"
-                Height="40"
-                Grid.Column="3" Margin="80,10,80,50">
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="20" Height="20" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 30 0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -159,6 +154,9 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Width="140"
+                Height="50"
+                
+                Margin="0 0 0 20"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
 
         
@@ -189,34 +187,12 @@
          Grid.ColumnSpan="2"
          Grid.Row="4"
          Margin="0,0,0,0"
+         TextWrapping="Wrap"
          VerticalContentAlignment="Center"
          materialDesign:HintAssist.Hint="Время реализации"
+         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          FontSize="20"
          Height="60"
          Width="250"/>
-
-        <Button Content="X"
-                Background="White" 
-                Foreground="#FF8B7249"
-                FontFamily="Roboto" 
-                Click="ClearGuest"
-                FontSize="20"
-                Grid.Row="1"
-                Grid.Column="1"
-                Width="50"
-                Height="50"
-                Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249" Margin="135,26,15,24"/>
-
-        <Button Content="X"
-            Background="White" 
-            Foreground="#FF8B7249"
-            FontFamily="Roboto" 
-            Click="ClearStaff"
-            FontSize="20"
-            Grid.Row="2"
-            Grid.Column="1"
-            Width="50"
-            Height="50"
-            Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249" Margin="135,26,15,24" Cursor="Hand"/>
     </Grid>
 </Window>

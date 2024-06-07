@@ -72,10 +72,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnOk" Click="btnOk_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="Ок" ToolTip="Ok" Foreground="White" BorderBrush="#FF8B7249" Background="#FF8B7249" Cursor="Hand"/>
-                    <Button x:Name="btnCancel" Click="btnCancel_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="Отмена" ToolTip="Cancel" BorderBrush="#FF8B7249" Background="#FF8B7249" Cursor="Hand"/>
-                    <Button x:Name="btnYes" Click="btnYes_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Background="#FCF5EA" Margin="5" Width="100" Content="Да" ToolTip="Yes" BorderBrush="#FF8B7249" Foreground="#FF152D51"/>
-                    <Button x:Name="btnNo" Click="btnNo_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Content="Нет" ToolTip="No" Foreground="White" BorderBrush="#FF8B7249" Background="#FF8B7249"/>
+                    <Button x:Name="btnOk" Click="btnOk_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Margin="5" Width="100" Height="40" Content="Ок" ToolTip="Ок" Foreground="White" BorderBrush="#FF8B7249" Background="#FF8B7249" Cursor="Hand" FontSize="15"/>
+                    <Button x:Name="btnCancel" Click="btnCancel_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="50 0 0 0" Width="100" Height="40" Content="Отмена" ToolTip="Отмена" BorderBrush="#FF8B7249" Background="#FF8B7249" Cursor="Hand" FontSize="15"/>
+                    <Button x:Name="btnYes" Click="btnYes_Click" Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}" Background="#FCF5EA" Margin="0 0 0 0" Width="100" Height="40" Content="Да" ToolTip="Да" BorderBrush="#FF8B7249" Foreground="#FF152D51" FontSize="15"/>
+                    <Button x:Name="btnNo" Click="btnNo_Click" Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}" Margin="50 0 0 0" Width="100" Height="40" Content="Нет" ToolTip="Нет" Foreground="White" BorderBrush="#FF8B7249" Background="#FF8B7249" FontSize="15"/>
                 </Grid>
 
             </Grid>

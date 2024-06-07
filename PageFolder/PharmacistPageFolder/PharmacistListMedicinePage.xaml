@@ -36,20 +36,20 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
+                    <RowDefinition Height="150" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
 
-                <Image Source="\Resources\BankaTabletki.png" Grid.Column="7" Width="120"/>
+                <Image Source="\Resources\BankaTabletki.png" Grid.Column="7" Height="120"/>
 
                 <!--<Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>-->
 
                 <Grid Grid.Column="2"
                  Grid.ColumnSpan="3"
-                 Grid.Row="0" HorizontalAlignment="Center">
+                 Grid.Row="0" HorizontalAlignment="Center" Margin="0 0 0 30">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -82,10 +82,11 @@
           FontSize="20"
           Height="60"
           Width="200"
+          Grid.Row="0"
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Тип"
           BorderThickness="0 0 0 1"
-          SelectionChanged="TypeMedicineCB_SelectionChanged"/>
+          SelectionChanged="TypeMedicineCB_SelectionChanged" Margin="0 0 0 30" IsEditable="True"/>
 
                 <ComboBox Name="ActiveSubstanceCB"
           Grid.Column="5"
@@ -95,26 +96,43 @@
           FontSize="20"
           Height="60"
           Width="200"
-          Margin="40 0 -40 0"
+          Margin="40 0 -40 30"
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Активное вещ-во"
           BorderThickness="0 0 0 1"
-          SelectionChanged="ActiveSubstanceCB_SelectionChanged"/>
+          SelectionChanged="ActiveSubstanceCB_SelectionChanged" IsEditable="True"/>
 
-                <TextBlock x:Name="AddMedicine"
-                Text="Добавить"
-                Foreground="#FF152D51"
-                Grid.Column="6"
-                Height="25"
-                Width="100"
-                FontSize="20"
-                FontFamily="Roboto"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                TextDecorations="Underline"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="78,105,0,0"/>
-                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
+                <Button x:Name="AddMedicineBtn"
+        Height="50"
+        Width="160"
+        Grid.Row="0"
+        Grid.Column="6"
+        Background="#FF8B7249"
+        Foreground="White"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+        Click="AddMedicineBtn_Click"
+        BorderBrush="#FF8B7249"
+        Margin="55 0 -55 10">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                        <Image Source="\Resources\AddMedicineIcon.png" Width="25" Height="25" Margin="0,0,5,0"/>
+                        <TextBlock x:Name="AddMedicine"
+                   Text="Добавить"
+                   Foreground="White"
+                   Height="25"
+                   Width="100"
+                   FontSize="20"
+                   FontFamily="Roboto"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Cursor="Hand"
+                   Margin="0,0,0,0"/>
+                    </StackPanel>
+                </Button>
+
+
+                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" Margin="0 0 5 -28" VerticalScrollBarVisibility="Auto">
     <ListBox x:Name="ListMedicineLB"
              BorderBrush="#8B7249"
              Foreground="#FF152D51"
@@ -159,7 +177,7 @@
                         </Grid.RowDefinitions>
                         <Border Background="Transparent"
                                 BorderBrush="Black" BorderThickness="1"
-                                Height="200"
+                                Height="150"
                                 x:Name="MedicineEllipse"
                                 Width="130"
                                 Grid.Row="0"

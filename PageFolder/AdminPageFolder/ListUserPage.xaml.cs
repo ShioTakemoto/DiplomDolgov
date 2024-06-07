@@ -178,7 +178,7 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
             RefreshDataGrid();
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
             var addUserWindow = new AddUserWindow();
 
@@ -192,7 +192,10 @@ namespace DiplomDolgov.PageFolder.AdminPageFolder
             }
 
             addUserWindow.AddedUser += AddUserWindow_AddedUser;
+            addUserWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            addUserWindow.Topmost = true; // Устанавливаем на передний план
             addUserWindow.ShowDialog();
+            addUserWindow.Activate(); // Активируем окно
         }
 
         private void AddUserWindow_AddedUser(object sender, EventArgs e)

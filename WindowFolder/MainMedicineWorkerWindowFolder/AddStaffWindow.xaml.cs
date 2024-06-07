@@ -33,7 +33,10 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         public AddStaffWindow()
         {
             InitializeComponent();
-            UserCB.ItemsSource = DBEntities.GetContext().User.ToList();
+            var users = DBEntities.GetContext().User.ToList();
+            users.Insert(0, new User { IdUser = -1, LoginUser = string.Empty }); // Добавляем пустое значение
+            UserCB.ItemsSource = users;
+            UserCB.SelectedIndex = 0; // Устанавливаем пустое значение
             PostCB.ItemsSource = DBEntities.GetContext().Post.ToList();
             GenderCB.ItemsSource = DBEntities.GetContext().Gender.ToList();
         }
@@ -127,7 +130,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 }
 
                 int? idUser = null;
-                if (UserCB.SelectedItem != null)
+                if (UserCB.SelectedItem != null && (int)UserCB.SelectedValue != -1)
                 {
                     idUser = (int)UserCB.SelectedValue;
                 }
@@ -172,7 +175,10 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         private void AddPost(object sender, RoutedEventArgs e)
         {
             // Создание окна для ввода новой должности
-            var inputWindow = new InputDialogWindow("Введите новую должность");
+            var inputWindow = new InputDialogWindow("Введите новую должность")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 // Получение введенного текста

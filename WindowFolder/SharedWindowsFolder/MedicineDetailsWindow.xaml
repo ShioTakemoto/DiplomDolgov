@@ -4,82 +4,120 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomDolgov.ClassFolder"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Medicine Details" 
         WindowStyle="None"
-        Height="450" 
-        Width="800"
+        Height="700" 
+        Width="950"
         WindowStartupLocation="CenterScreen"
-        Opacity="0"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        Opacity="0.95">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ScrollViewer.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:StockToColorConverter x:Key="StockToColorConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="600"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <StackPanel Margin="20">
-                <Image x:Name="MedicineImage" Height="300" Width="300" Margin="0,0,0,20"/>
-                <TextBlock Text="Название: " FontWeight="Bold" FontSize="24"/>
-                <TextBlock Text="{Binding NameMedicine}" FontSize="22"/>
-                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="20"/>
-                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="20"/>
-                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="20"/>
-                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="20"/>
-                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding Dosage}" FontSize="20"/>
-                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="20"/>
-                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="20"/>
-                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="20"/>
-                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="22" Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}"/>
-                <TextBlock Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}" Text="{Binding StockCount}"  FontSize="20" />
-                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" Width="750" FontSize="20"/>
+                <Image x:Name="MedicineImage" Height="300" Width="300" Margin="20" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
 
-            </StackPanel>
+                <TextBlock Text="Название: " FontWeight="Bold" FontSize="24" Foreground="#FF152D51" Grid.Row="4" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding NameMedicine}" FontSize="22" Foreground="#FF152D51" Grid.Row="4" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Тип: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="5" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding TypeMedicine.NameTypeMedicine}" FontSize="20" Foreground="#FF152D51" Grid.Row="5" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Активное вещество: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="6" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding ActiveSubstance.NameActiveSubstance}" FontSize="20" Foreground="#FF152D51" Grid.Row="6" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Производитель: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="7" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding Manufacturer.NameManufacturer}" FontSize="20" Foreground="#FF152D51" Grid.Row="7" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Форма выпуска: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="8" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding ReleaseForm.NameReleaseForm}" FontSize="20" Foreground="#FF152D51" Grid.Row="8" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Дозировка: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="9" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding Dosage}" FontSize="20" Foreground="#FF152D51" Grid.Row="9" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Срок годности: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="10" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding BestBeforeDate.NameBestBeforeDate}" FontSize="20" Foreground="#FF152D51" Grid.Row="10" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Единиц в упаковке: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="11" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding UnitsPerPackage}" FontSize="20" Foreground="#FF152D51" Grid.Row="11" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Статус: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="12" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding PrescriptionDrugStatus.NamePrescriptionDrugStatus}" FontSize="20" Foreground="#FF152D51" Grid.Row="12" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Количество на складе: " FontWeight="Bold" FontSize="22" Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}" Grid.Row="13" Grid.Column="0" Margin="10"/>
+                <TextBlock Foreground="{Binding StockCount, Converter={StaticResource StockToColorConverter}}" Text="{Binding StockCount}" FontSize="20" Grid.Row="13" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Инструкция: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="14" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding Instructions}" TextWrapping="Wrap" FontSize="20" Foreground="#FF152D51" Grid.Row="14" Grid.Column="1" Margin="10"/>
+            </Grid>
         </ScrollViewer>
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="40"
-                Height="40" 
-                Margin="20,15,120,15" 
-                Grid.Column="1">
+
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="20" Height="20" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,100,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
+                    <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="40" 
-                Height="40"
-                Grid.Column="1">
+
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,18,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="CollapseAndUnfold" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Width="20" Height="20" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,60,0" Click="CollapseAndUnfold_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="pack://application:,,,/Resources/RectangleButton.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>

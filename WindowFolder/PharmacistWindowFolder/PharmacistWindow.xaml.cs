@@ -27,6 +27,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         public PharmacistWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new PharmacistListMedicinePage());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -78,6 +79,29 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
         public void HideOverlay1()
         {
             Overlay1.Visibility = Visibility.Collapsed;
+        }
+
+        private void CollapseAndUnfold_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
+                Topmost = true;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.CanResize;
+                Topmost = false;
+            }
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

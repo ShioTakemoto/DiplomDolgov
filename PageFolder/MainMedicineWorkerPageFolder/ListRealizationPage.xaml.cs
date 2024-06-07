@@ -105,9 +105,9 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 return;
             }
 
-            var result = MessageBox.Show($"Вы уверены, что хотите удалить запись {selectedRealization.DateTimeRealization}?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {selectedRealization.DateTimeRealization}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
-            if (result == MessageBoxResult.Yes)
+            if (result == true)
             {
                 try
                 {
@@ -123,7 +123,16 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             }
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void AddRealizationWindow_AddedRealizationSuccess(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+
+        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+        private void AddRealizBtn_Click(object sender, RoutedEventArgs e)
         {
             var addRealizationWindow = new AddRealizationWindow();
 
@@ -133,18 +142,11 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 mainMedicineWorkerMainWindow.ShowOverlay2();
                 addRealizationWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
             }
+
             addRealizationWindow.AddedRealizationSuccess += AddRealizationWindow_AddedRealizationSuccess;
-
+            addRealizationWindow.Topmost = true; // Устанавливаем на передний план
             addRealizationWindow.ShowDialog();
+            addRealizationWindow.Activate(); // Активируем окно
         }
-
-        private void AddRealizationWindow_AddedRealizationSuccess(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
-
-        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
     }
 }

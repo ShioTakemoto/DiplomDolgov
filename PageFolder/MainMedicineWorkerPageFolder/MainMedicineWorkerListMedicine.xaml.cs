@@ -122,9 +122,13 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             if (scrollViewer != null)
             {
                 if (e.Delta > 0)
+                {
                     scrollViewer.LineUp();
+                }
                 else
+                {
                     scrollViewer.LineDown();
+                }
                 e.Handled = true;
             }
         }

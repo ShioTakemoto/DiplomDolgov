@@ -50,16 +50,18 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
 
         private void LoadMedicineTypes()
         {
-            var types = DBEntities.GetContext().TypeMedicine.ToList();
-            types.Insert(0, new TypeMedicine());
-            TypeMedicineCB.ItemsSource = types;
+            var allTypes = DBEntities.GetContext().TypeMedicine.ToList();
+            allTypes.Insert(0, new TypeMedicine { NameTypeMedicine = "Все" });
+            TypeMedicineCB.ItemsSource = allTypes;
+            TypeMedicineCB.SelectedIndex = 0;
         }
 
         private void LoadActiveSubstance()
         {
-            var activeSubstances = DBEntities.GetContext().ActiveSubstance.ToList();
-            activeSubstances.Insert(0, new ActiveSubstance());
-            ActiveSubstanceCB.ItemsSource = activeSubstances;
+            var allSubstances = DBEntities.GetContext().ActiveSubstance.ToList();
+            allSubstances.Insert(0, new ActiveSubstance { NameActiveSubstance = "Все" });
+            ActiveSubstanceCB.ItemsSource = allSubstances;
+            ActiveSubstanceCB.SelectedIndex = 0;
         }
 
         private void FilterMedicines()
@@ -189,22 +191,6 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             FilterMedicines();
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var addMedicineWindow = new AddMedicineWindow();
-
-            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
-            if (pharmacistWindow != null)
-            {
-                // Показываем затемнянющий слой
-                pharmacistWindow.ShowOverlay1();
-                addMedicineWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
-            }
-            // Подписываемся на событие AddedMedicine, которое будет вызываться после успешного добавления медикамента
-            addMedicineWindow.AddedMedicine += AddMedicineWindow_AddedMedicine;
-            addMedicineWindow.ShowDialog();
-        }
-
         private void AddMedicineWindow_AddedMedicine(object sender, EventArgs e)
         {
             // Обновляем DataGrid при получении события об успешном добавлении медикамента
@@ -222,7 +208,14 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             var scrollViewer = FindParent<ScrollViewer>((DependencyObject)sender);
             if (scrollViewer != null)
             {
-                scrollViewer.LineUp();
+                if (e.Delta > 0)
+                {
+                    scrollViewer.LineUp();
+                }
+                else
+                {
+                    scrollViewer.LineDown();
+                }
                 e.Handled = true;
             }
         }
@@ -245,6 +238,26 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 return parent; // Если преобразование удалось, возвращаем найденный родительский объект
             else
                 return FindParent<T>(parentObject); // Если преобразование не удалось, продолжаем поиск родительских объектов рекурсивно
+        }
+
+        private void AddMedicineBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var addMedicineWindow = new AddMedicineWindow();
+
+            var pharmacistWindow = Window.GetWindow(this) as PharmacistWindow;
+            if (pharmacistWindow != null)
+            {
+                // Показываем затемняющий слой
+                pharmacistWindow.ShowOverlay1();
+                addMedicineWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
+            }
+
+            // Подписываемся на событие AddedMedicine, которое будет вызываться после успешного добавления медикамента
+            addMedicineWindow.AddedMedicine += AddMedicineWindow_AddedMedicine;
+
+            addMedicineWindow.Topmost = true; // Устанавливаем на передний план
+            addMedicineWindow.ShowDialog();
+            addMedicineWindow.Activate(); // Активируем окно
         }
     }
 }

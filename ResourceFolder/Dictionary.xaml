@@ -99,7 +99,12 @@
 
     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
         <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="17"/>
+    </Style>
+
+    <Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
         <Setter Property="FontSize" Value="15"/>
+        <!-- Размер шрифта для данных -->
     </Style>
 
     <Storyboard x:Key="PageFadeIn">
@@ -119,18 +124,5 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
-    <!-- Глобальный стиль для DataGrid -->
-    <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
-        <Setter Property="Background" Value="#FFDFDFE0"/>
-        <Setter Property="Foreground" Value="#FF152D51"/>
-        <Setter Property="BorderBrush" Value="#FF8B7249"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
-        <Setter Property="SelectionMode" Value="Single"/>
-        <Setter Property="IsReadOnly" Value="True"/>
-        <Style.Resources>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource WrapTextBlockStyle}"/>
-        </Style.Resources>
-    </Style>
 
 </ResourceDictionary>

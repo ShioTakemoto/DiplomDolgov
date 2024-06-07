@@ -1,6 +1,7 @@
 ﻿using DiplomDolgov.ClassFolder;
 using DiplomDolgov.PageFolder.AdminPageFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
         public AdminMenuWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new ListUserPage());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -62,6 +64,23 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
         public void HideOverlay()
         {
             Overlay.Visibility = Visibility.Collapsed;
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void CollapseAndUnfold_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+            }
         }
     }
 }

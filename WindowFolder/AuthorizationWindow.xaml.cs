@@ -3,27 +3,15 @@ using DiplomDolgov.WindowFolder.AdminWindowFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
 using DiplomDolgov.DataFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
-using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using System.Windows.Media.Animation;
+using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
+using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 
 namespace DiplomDolgov.WindowFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для AuthorizationWindow.xaml
-    /// </summary>
     public partial class AuthorizationWindow : Window
     {
         public AuthorizationWindow()
@@ -39,7 +27,7 @@ namespace DiplomDolgov.WindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool? Result = new MaterialDesignMessageBox($"Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+            bool? Result = new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
             if (Result.Value)
             {
@@ -53,8 +41,6 @@ namespace DiplomDolgov.WindowFolder
             {
                 new MaterialDesignMessageBox("Введите логин", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 LoginTB.Focus();
-
-
             }
             else if (string.IsNullOrWhiteSpace(PasswordPB.Password))
             {
@@ -75,29 +61,31 @@ namespace DiplomDolgov.WindowFolder
                     }
                     else
                     {
+                        Window nextWindow = null;
+                        string welcomeMessage = "";
+
                         switch (user.IdRole)
                         {
                             case 1:
-                                var admin = DBEntities.GetContext()
-                                    .User
-                                    .FirstOrDefault(c => c.LoginUser == user.LoginUser);
-                                new MaterialDesignMessageBox("Администратор, добро пожаловать", MessageType.Info, MessageButtons.Ok).ShowDialog();
-                                new AdminMenuWindow().Show();
+                                welcomeMessage = "Администратор, добро пожаловать";
+                                nextWindow = new AdminMenuWindow();
                                 break;
                             case 2:
-                                var pharmacist = DBEntities.GetContext()
-                                    .User
-                                    .FirstOrDefault(c => c.LoginUser == user.LoginUser);
-                                new MaterialDesignMessageBox("Фармацевт, добро пожаловать", MessageType.Info, MessageButtons.Ok).ShowDialog();
-                                new PharmacistWindow().Show();
+                                welcomeMessage = "Фармацевт, добро пожаловать";
+                                nextWindow = new PharmacistWindow();
                                 break;
                             case 3:
-                                var mainmedicine = DBEntities.GetContext()
-                                    .User
-                                    .FirstOrDefault(c => c.LoginUser == user.LoginUser);
-                                new MaterialDesignMessageBox("Главный мед. работник, добро пожаловать", MessageType.Info, MessageButtons.Ok).ShowDialog();
-                                new MainMedicineWorkerMainWindow().Show();
+                                welcomeMessage = "Главный мед. работник, добро пожаловать";
+                                nextWindow = new MainMedicineWorkerMainWindow();
                                 break;
+                        }
+
+                        if (nextWindow != null)
+                        {
+                            new MaterialDesignMessageBox(welcomeMessage, MessageType.Info, MessageButtons.Ok).ShowDialog();
+                            nextWindow.Closed += (s, args) => this.Show();
+                            this.Hide();
+                            nextWindow.Show();
                         }
                     }
                 }
@@ -116,6 +104,28 @@ namespace DiplomDolgov.WindowFolder
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+        private void CollapseAndUnfold_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
+                Topmost = true;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.CanResize;
+                Topmost = false;
+            }
         }
     }
 }

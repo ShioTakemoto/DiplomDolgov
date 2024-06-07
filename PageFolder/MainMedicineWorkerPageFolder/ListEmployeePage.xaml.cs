@@ -5,6 +5,7 @@ using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using DiplomDolgov.WindowFolder.SharedWindowsFolder;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,7 +118,10 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                     return;
                 }
 
-                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {staff.LastNameStaff}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+                var fioConverter = new DiplomDolgov.ClassFolder.FIOConverter();
+                string fullName = fioConverter.Convert(staff, typeof(string), null, CultureInfo.CurrentCulture) as string;
+
+                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {fullName}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
                 if (result == true)
                 {
@@ -154,6 +158,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
 
             var editStaffWindow = new EditStaffWindow(staff);
 
+            // Получаем ссылку на главное окно
             var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
             if (mainMedicineWorkerMainWindow != null)
             {
@@ -162,10 +167,14 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 editStaffWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
             }
 
+            editStaffWindow.Topmost = true; // Устанавливаем на передний план
             editStaffWindow.ShowDialog();
+            editStaffWindow.Activate(); // Активируем окно
+
             LoadStaff();
             ListStaffLB.Items.Refresh();
         }
+
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -195,24 +204,6 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             FilterStaff();
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var addStaffWindow = new AddStaffWindow();
-
-            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
-            if (mainMedicineWorkerMainWindow != null)
-            {
-                // Показываем затемняющий слой
-                mainMedicineWorkerMainWindow.ShowOverlay2();
-                addStaffWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
-            }
-
-            // Подписываемся на событие AddedManufacturer, которое будет вызываться после успешного добавления производителя
-            addStaffWindow.AddedStaff += AddStaffWindow_AddedStaff;
-
-            addStaffWindow.ShowDialog();
-        }
-
         private void AddStaffWindow_AddedStaff(object sender, EventArgs e)
         {
             LoadStaff();
@@ -223,7 +214,14 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             var scrollViewer = FindParent<ScrollViewer>((DependencyObject)sender);
             if (scrollViewer != null)
             {
-                scrollViewer.LineUp();
+                if (e.Delta > 0)
+                {
+                    scrollViewer.LineUp();
+                }
+                else
+                {
+                    scrollViewer.LineDown();
+                }
                 e.Handled = true;
             }
         }
@@ -237,6 +235,27 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 return parent;
             else
                 return FindParent<T>(parentObject);
+        }
+
+        private void AddStaffBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var addStaffWindow = new AddStaffWindow();
+
+            // Получаем ссылку на главное окно
+            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWorkerMainWindow != null)
+            {
+                // Показываем затемняющий слой
+                mainMedicineWorkerMainWindow.ShowOverlay2();
+                addStaffWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
+            }
+
+            // Подписываемся на событие AddedStaff, которое будет вызываться после успешного добавления сотрудника
+            addStaffWindow.AddedStaff += AddStaffWindow_AddedStaff;
+
+            addStaffWindow.Topmost = true; // Устанавливаем на передний план
+            addStaffWindow.ShowDialog();
+            addStaffWindow.Activate(); // Активируем окно
         }
     }
 }

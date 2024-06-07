@@ -4,6 +4,7 @@ using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -97,7 +98,10 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                     return;
                 }
 
-                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {guest.LastNameGuest} {guest.FirstNameGuest}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+                var fioConverter = new DiplomDolgov.ClassFolder.FIOConverter();
+                string fullName = fioConverter.Convert(guest, typeof(string), null, CultureInfo.CurrentCulture) as string;
+
+                bool? result = new MaterialDesignMessageBox($"Вы уверены что хотите удалить {fullName}?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
                 if (result == true)
                 {
@@ -140,8 +144,9 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
                 mainMedicineWorkerWindow.ShowOverlay2();
                 editGuestWindow.Closed += (s, args) => mainMedicineWorkerWindow.HideOverlay2();
             }
-
+            editGuestWindow.Topmost = true; // Устанавливаем на передний план
             editGuestWindow.ShowDialog();
+            editGuestWindow.Activate(); // Активируем окно
             LoadGuests();
             ListGuestsDG.Items.Refresh();
         }
@@ -158,24 +163,28 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             FilterGuests();
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var addGuestWindow = new AddGuestWindow();
-
-            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
-            if (mainMedicineWorkerMainWindow != null)
-            {
-                mainMedicineWorkerMainWindow.ShowOverlay2();
-                addGuestWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
-            }
-            addGuestWindow.AddedGuest += AddGuestWindow_AddedGuest;
-
-            addGuestWindow.ShowDialog();
-        }
-
         private void AddGuestWindow_AddedGuest(object sender, EventArgs e)
         {
             LoadGuests();
+        }
+
+        private void AddGuestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var addGuestWindow = new AddGuestWindow();
+
+            // Получаем ссылку на главное окно
+            var mainMedicineWorkerMainWindow = Window.GetWindow(this) as MainMedicineWorkerMainWindow;
+            if (mainMedicineWorkerMainWindow != null)
+            {
+                // Показываем затемняющий слой
+                mainMedicineWorkerMainWindow.ShowOverlay2();
+                addGuestWindow.Closed += (s, args) => mainMedicineWorkerMainWindow.HideOverlay2();
+            }
+
+            addGuestWindow.AddedGuest += AddGuestWindow_AddedGuest;
+            addGuestWindow.Topmost = true; // Устанавливаем на передний план
+            addGuestWindow.ShowDialog();
+            addGuestWindow.Activate(); // Активируем окно
         }
     }
 }

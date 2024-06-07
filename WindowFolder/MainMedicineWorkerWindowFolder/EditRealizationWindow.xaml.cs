@@ -180,15 +180,5 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             result = DatePicker.SelectedDate.Value.Date + selectedTime;
             return true;
         }
-
-        private void ClearGuest(object sender, RoutedEventArgs e)
-        {
-            GuestCB.SelectedIndex = -1;
-        }
-
-        private void ClearStaff(object sender, RoutedEventArgs e)
-        {
-            StaffCB.SelectedIndex = -1;
-        }
     }
 }

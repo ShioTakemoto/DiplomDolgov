@@ -20,9 +20,10 @@ namespace DiplomDolgov.WindowFolder.AdminWindowFolder
         public EditUserWindow(User user)
         {
             InitializeComponent();
+            LoadRoles();
             this.user = user;
             DataContext = this.user;
-            LoadRoles();
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

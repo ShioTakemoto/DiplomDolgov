@@ -19,33 +19,63 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Rectangle Grid.RowSpan="11" Fill="#FF152D51" Stroke="#FF8B7249" StrokeThickness="4"/>
         <Rectangle Grid.RowSpan="11" Fill="#FF152D51" Width="380" Margin="0,0,4,0"/>
         <Rectangle Grid.Column="1" Grid.ColumnSpan="4" Fill="White"/>
         <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="10" Fill="#FFDFDFE0"/>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="30" Height="30" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,70,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!--Увелечение области нажатия-->
+                        <Rectangle Fill="Transparent" Width="20" Height="20"/>
+                        <!-- Изображение -->
+                        <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="30" Height="30" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="CollapseAndUnfold" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Width="30" Height="30" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,40,0" Click="CollapseAndUnfold_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="pack://application:,,,/Resources/RectangleButton.png" Width="20" Height="20"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
         <Label Name="PageName" 
                Grid.Column="1" 
@@ -71,39 +101,11 @@
 
         <Image Grid.RowSpan="2" Source="\Resources\LogoPillMedicine.png" Width="150"/>
 
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="60"
-                Height="60"
-                Grid.Column="4"
-                Margin="192,0,132,0">
-            <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
-        <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="60" 
-                Height="60"
-                Grid.Column="4"
-                Margin="314,0,10,0">
-            <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-
         <StackPanel Grid.Row="3" Grid.RowSpan="8" Margin="0,-1,0,0" VerticalAlignment="Top">
-            <Border x:Name="ListMedicine" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
+            <Border x:Name="ListMedicine" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,20,0,0">
                 <Button x:Name="ListMedicineBtn"
-                    Height="60"
-                    Margin="10,10,10,10"
+                    Height="70"
+                    Margin="20,10, 20,-10"
                     Background="#FF8B7249"
                     Foreground="White"
                     VerticalAlignment="Center"
@@ -117,10 +119,10 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border x:Name="ListManufacturers" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
+            <Border x:Name="ListManufacturers" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,20,0,0">
                 <Button x:Name="ListManufacturersBtn"
-                    Height="60"
-                    Margin="10,10,10,10"
+                    Height="70"
+                    Margin="20,10,20,-10"
                     Background="#FF8B7249"
                     Foreground="White"
                     VerticalAlignment="Center"
@@ -134,10 +136,10 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border x:Name="ListOrders" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
+            <Border x:Name="ListOrders" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,20,0,0">
                 <Button x:Name="ListOrdersBtn"
-                    Height="60"
-                    Margin="10,10,10,10"
+                    Height="70"
+                    Margin="20,10,20,-10"
                     Background="#FF8B7249"
                     Foreground="White"
                     VerticalAlignment="Center"
@@ -151,10 +153,10 @@
                     </StackPanel>
                 </Button>
             </Border>
-            <Border x:Name="ListLittleTables" CornerRadius="10,0,0,10" VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
+            <Border x:Name="ListLittleTables" CornerRadius="10,0,0,10" VerticalAlignment="Center" Height="70" Margin="0,20,0,0">
                 <Button x:Name="ListLittleTablesBtn"
-                    Height="60"
-                    Margin="10,10,10,10"
+                    Height="70"
+                    Margin="20,10,20,-10"
                     Background="#FF8B7249"
                     Foreground="White"
                     VerticalAlignment="Center"
@@ -162,9 +164,9 @@
                     VerticalContentAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" BorderBrush="#FF8B7249" Click="ListLittleTablesBtn_Click">
 
-                    <StackPanel Orientation="Horizontal" Margin="0 0 40 0">
+                    <StackPanel Orientation="Horizontal" Margin="0 0 100 0">
                         <Image Source="/Resources/ListIcon.png" Height="40" Width="40" Margin="0,0,20,0" VerticalAlignment="Center"/>
-                        <Label x:Name="ListLittleTablesLabel" Content="Добавочные списки" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
+                        <Label x:Name="ListLittleTablesLabel" Content="Справочники" Foreground="#ffffff" FontSize="20" FontFamily="Roboto" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
                     </StackPanel>
                 </Button>
             </Border>

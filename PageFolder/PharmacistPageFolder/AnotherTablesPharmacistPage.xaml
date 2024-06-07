@@ -7,7 +7,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1500"
-      Title="Добавочные списки"
+      Title="Справочники"
       Opacity="0"
       Loaded="Page_Loaded">
     <Page.Resources>
@@ -29,7 +29,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="130"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -41,20 +41,20 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <Image Source="/Resources/ListsBackgrround.png" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="1" Height="120"/>
+        <Image Source="/Resources/ListsBackgrround.png" Grid.Column="5" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" Height="100"/>
 
         <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
 
         <Grid Grid.Column="2"
                  Grid.ColumnSpan="3"
-                 Grid.Row="1" HorizontalAlignment="Center">
+                 Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0 -25 0 25">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-110 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
             <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  materialDesign:HintAssist.Hint="Поиск"
@@ -74,13 +74,13 @@
 
         <DataGrid x:Name="ListTypeMedicineDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding TypeMedicine}" Grid.Row="2" Grid.Column="1"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding TypeMedicine}" Grid.Row="1" Grid.Column="1"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
-          Width="220"
+          Height="800"
+          Width="250"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -111,13 +111,13 @@
 
         <DataGrid x:Name="ListActiveSubstanceDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding ActiveSubstance}" Grid.Row="2" Grid.Column="2"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding ActiveSubstance}" Grid.Row="1" Grid.Column="2"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
-          Width="220"
+          Height="800"
+          Width="250"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -148,13 +148,13 @@
 
         <DataGrid x:Name="ListReleaseFormDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding ReleaseForm}" Grid.Row="2" Grid.Column="3"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding ReleaseForm}" Grid.Row="1" Grid.Column="3"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
-          Width="220"
+          Height="800"
+          Width="250"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -185,13 +185,13 @@
 
         <DataGrid x:Name="ListBestBeforeDateDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding BestBeforeDate}" Grid.Row="2" Grid.Column="4"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding BestBeforeDate}" Grid.Row="1" Grid.Column="4"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
-          Width="220"
+          Height="800"
+          Width="250"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -222,13 +222,13 @@
 
         <DataGrid x:Name="ListManufacturerCountryDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding ManufacturerCountry}" Grid.Row="2" Grid.Column="5"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding ManufacturerCountry}" Grid.Row="1" Grid.Column="5"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
-          Width="220"
+          Height="800"
+          Width="250"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"

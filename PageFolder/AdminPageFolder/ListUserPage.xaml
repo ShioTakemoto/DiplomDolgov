@@ -25,7 +25,7 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
@@ -43,25 +43,23 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
-
         <Grid Grid.Column="1"
-                 Grid.ColumnSpan="3"
-                 Grid.Row="1" HorizontalAlignment="Center" >
+              Grid.ColumnSpan="3"
+              Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0 0 0 50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-30 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
             <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  materialDesign:HintAssist.Hint="Поиск"
                  Grid.Column="0"
                  Grid.ColumnSpan="1"
                  Grid.Row="1"
-                 Width="580"
+                 Width="500"
                  Height="60"
                  FontSize="20"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -69,12 +67,13 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTB_TextChanged" Margin="-110 0 0 0"/>
+                 TextChanged="SearchTB_TextChanged" Margin="-200 0 0 0"/>
         </Grid>
 
         <ComboBox Name="RoleCB"
           Grid.Column="4"
-          Grid.Row="1"
+          Grid.Row="0"
+          Grid.RowSpan="2"
           SelectedValuePath="IdRole"
           SelectedItem="{Binding Role}"
           DisplayMemberPath="NameRole"
@@ -83,17 +82,17 @@
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Роль"
           BorderThickness="0 0 0 1"
-          SelectionChanged="RoleCB_SelectionChanged" Margin="-40 0 40 0"/>
+          SelectionChanged="RoleCB_SelectionChanged" Margin="-150 0 150 50" IsEditable="True"/>
 
         <DataGrid x:Name="ListUserDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding User}" Grid.Row="2" Grid.Column="1"
-          Grid.ColumnSpan="4"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding User}" Grid.Row="1" Grid.Column="1"
+          Grid.ColumnSpan="5"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
+          Height="790"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -120,46 +119,61 @@
                             Binding="{Binding LoginUser}"
                             Width="*"/>
 
-                <DataGridTextColumn Header="Пароль"
-                            Binding="{Binding PasswordUser}"
-                            Width="*"/>
+                <DataGridTemplateColumn x:Name="PasswordColumn" Header="Пароль" Width="*">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Пароль" VerticalAlignment="Center"/>
+                                <Button Name="TogglePasswords" 
+                                        Background="#00000000" 
+                                        Foreground="#00000000" 
+                                        Height="20" 
+                                        Width="20" 
+                                        Click="TogglePasswords_Click"
+                                        Margin="5,0,0,0">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Image Source="\Resources\Eye.png" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding PasswordUser}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
                 <DataGridTextColumn Header="Роль"
                             Binding="{Binding NameRole}"
                             Width="*"/>
-                </DataGrid.Columns>
+            </DataGrid.Columns>
         </DataGrid>
 
-        <Button Name="TogglePasswords" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Height="20" 
-                Width="20" 
-                Grid.Column="2" 
-                Grid.Row="2" Margin="190,60,40,20" Click="TogglePasswords_Click">
-            <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Eye.png" />
-                </ControlTemplate>
-            </Button.Template>
+        <Button x:Name="AddUserBtn"
+        Height="50"
+        Width="160"
+        Grid.Row="0"
+        Grid.RowSpan="2"
+        Grid.Column="4"
+        Margin="95 -10 -95 10"
+        Background="#FF8B7249"
+        Foreground="White"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+        Click="AddUserBtn_Click"
+        BorderBrush="#FF8B7249">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Image Source="\Resources\WhiteAddUser.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                <TextBlock Text="Добавить"
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   FontFamily="Roboto"/>
+            </StackPanel>
         </Button>
-
-        
-        <TextBlock x:Name="AddUser"
-                Text="Добавить"
-                Foreground="#FF152D51"
-                Grid.Column="5"
-                Grid.Row="1"
-                Height="25"
-                Width="100"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                TextDecorations="Underline"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="70,60,0,0"/>
-
-        <Image Source="\Resources\AddUser.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="35,35,185,0"/>
-
     </Grid>
 </Page>

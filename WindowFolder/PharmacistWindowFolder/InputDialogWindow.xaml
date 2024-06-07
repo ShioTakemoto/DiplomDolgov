@@ -24,10 +24,10 @@
         <Label Content="Введите новое значение для добавления" FontFamily="Roboto" Margin="28 10 0 0" FontWeight="Bold" FontSize="16"/>
 
         <TextBox x:Name="InputTextBox"
-                 Margin="10"
+                 Margin="0 30 0 0"
                  VerticalAlignment="Center"
                  FontSize="20"
-                 MinWidth="300"/>
+                 Width="250"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="OkButton"

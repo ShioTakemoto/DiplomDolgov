@@ -52,13 +52,20 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void AddRoomNumber(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новый номер комнаты");
+            var inputWindow = new InputDialogWindow("Введите новый номер комнаты")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
                 if (string.IsNullOrEmpty(inputText))
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
+                }
+                else if (!System.Text.RegularExpressions.Regex.IsMatch(inputText, @"^\d{4}$"))
+                {
+                    ShowErrorMessage("Номер комнаты должен состоять из 4 цифр!");
                 }
                 else
                 {
@@ -76,8 +83,11 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                         context.Room.Add(newRoom);
                         context.SaveChanges(); // Сохраняем изменения в базе данных
 
-                        // Добавляем новый номер комнаты в ComboBox
-                        AddComboBoxItem(RoomCB, newRoom);
+                        // Обновляем источник данных ComboBox
+                        RefreshComboBoxItems(RoomCB);
+
+                        // Устанавливаем новую комнату как выбранный элемент
+                        RoomCB.SelectedItem = newRoom;
                     }
                 }
             }

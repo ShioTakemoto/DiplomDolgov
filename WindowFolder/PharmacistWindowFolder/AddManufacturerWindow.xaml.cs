@@ -35,7 +35,10 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
         {
-            var inputWindow = new InputDialogWindow("Введите новую страну производителя");
+            var inputWindow = new InputDialogWindow("Введите новую страну производителя")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
@@ -109,7 +112,7 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                         return;
                     }
 
-                    if (!ContactPersonNameTB.Text.All(char.IsLetter))
+                    if (!ContactPersonNameTB.Text.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
                     {
                         ShowErrorMessage("Имя контактной персоны должно содержать только буквы");
                         return;

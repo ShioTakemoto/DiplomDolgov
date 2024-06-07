@@ -193,15 +193,5 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-
-        private void ClearGuest(object sender, RoutedEventArgs e)
-        {
-            GuestCB.SelectedIndex = -1;
-        }
-
-        private void ClearStaff(object sender, RoutedEventArgs e)
-        {
-            StaffCB.SelectedIndex = -1;
-        }
     }
 }

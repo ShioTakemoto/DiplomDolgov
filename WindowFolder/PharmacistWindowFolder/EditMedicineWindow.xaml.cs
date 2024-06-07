@@ -202,39 +202,70 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
                 if (existingMedicine != null)
                 {
-                    // Обновляем фото только если была выбрана новая фотография
-                    if (!string.IsNullOrEmpty(selectedFileName))
+                    // Производим проверки, как в методе AddButton
+
+                    if (ElementsToolsClass.AllFieldsFilled(this))
                     {
-                        existingMedicine.MedicinePhoto = medicine.MedicinePhoto;
+                        string dosageText = DosageTB.Text.Trim();
+                        dosageText = dosageText.Replace(',', '.');
+
+                        if (!decimal.TryParse(dosageText, NumberStyles.Number, CultureInfo.InvariantCulture, out var dosage))
+                        {
+                            ShowErrorMessage("Неверный формат дозировки");
+                            return;
+                        }
+
+                        if (!int.TryParse(UnitsPerPackageTB.Text, out var unitsPerPackage))
+                        {
+                            ShowErrorMessage("Неверный формат количества единиц в упаковке");
+                            return;
+                        }
+
+                        if (!ContainsOnlyLettersOrSpaces(NameMedicineTB.Text))
+                        {
+                            ShowErrorMessage("Некорректное наименование лекарства! Используйте только буквы.");
+                            return;
+                        }
+
+                        // Обновляем фото только если была выбрана новая фотография
+                        if (!string.IsNullOrEmpty(selectedFileName))
+                        {
+                            existingMedicine.MedicinePhoto = medicine.MedicinePhoto;
+                        }
+
+                        // Обновление привязок данных для TextBox
+                        NameMedicineTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                        DosageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                        UnitsPerPackageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                        InstructionsTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+                        // Обновление привязок данных для ComboBox
+                        TypeMedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                        ActiveSubstanceCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                        ReleaseFormCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                        BestBeforeDateCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                        PrescriptionDrugStatusCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                        ManufacturerCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
+                        context.SaveChanges();
+                        new MaterialDesignMessageBox("Изменения успешно сохранены!", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        Close();
                     }
-
-                    // Обновление привязок данных для TextBox
-                    NameMedicineTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                    DosageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                    UnitsPerPackageTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                    InstructionsTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-
-                    // Обновление привязок данных для ComboBox
-                    TypeMedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                    ActiveSubstanceCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                    ReleaseFormCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                    BestBeforeDateCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                    PrescriptionDrugStatusCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                    ManufacturerCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-
-                    context.SaveChanges();
-                    new MaterialDesignMessageBox("Изменения успешно сохранены!", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                    Close();
-                }
-                else
-                {
-                    new MaterialDesignMessageBox("Медикамент не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    else
+                    {
+                        new MaterialDesignMessageBox("Медикамент не найден!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 HandleException(ex);
             }
+        }
+
+        private bool ContainsOnlyLettersOrSpaces(string input)
+        {
+            return input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
 
         private bool IsValidName(string input)

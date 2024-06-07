@@ -42,20 +42,21 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <Image Source="\Resources\ManufacturerCard.png" Grid.Row="1" Grid.Column="6"/>
+        <Image Source="\Resources\ManufacturerCard.png" Grid.Row="0" Grid.RowSpan="2" Height="120" Grid.Column="6"/>
 
         <!--<Image Source="\Resources\Search.png" Grid.Row="1" Width="30" Height="30" Grid.Column="3" Margin="90,30,120,30"/>-->
 
         <Grid Grid.Column="2"
                  Grid.ColumnSpan="3"
-                 Grid.Row="1" HorizontalAlignment="Center">
+                 Grid.Row="0"
+              Grid.RowSpan="2" HorizontalAlignment="Center" Margin="0 0 0 40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="-30 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
             <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  materialDesign:HintAssist.Hint="Поиск"
@@ -75,7 +76,8 @@
 
         <ComboBox Name="ManufacturerCountryCB"
           Grid.Column="4"
-          Grid.Row="1"
+          Grid.Row="0"
+          Grid.RowSpan="2"
           SelectedValuePath="IdManufacturer"
           SelectedItem="{Binding Manufacturer}"
           DisplayMemberPath="NameManufacturerCountry"
@@ -84,18 +86,18 @@
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Страна"
           BorderThickness="0 0 0 1"
-          Margin="-30 0 30 0"
-          SelectionChanged="ManufacturerCountryCB_SelectionChanged"/>
+          Margin="-30 0 30 40"
+          SelectionChanged="ManufacturerCountryCB_SelectionChanged" IsEditable="True"/>
 
         <DataGrid x:Name="ListManufacturerDG" AutoGenerateColumns="False"
           IsReadOnly="True"
-          ItemsSource="{Binding Manufacturer}" Grid.Row="2" Grid.Column="1"
-          Grid.ColumnSpan="6"
-          Grid.RowSpan="8"
+          ItemsSource="{Binding Manufacturer}" Grid.Row="1" Grid.Column="1"
+          Grid.ColumnSpan="7"
+          Grid.RowSpan="10"
           Foreground="#FF152D51"
           Background="#FFDFDFE0"
           BorderBrush="#FF8B7249"
-          Height="700"
+          Height="790"
           SelectionMode="Single"
           BorderThickness="2"
           FontFamily="Roboto"
@@ -167,22 +169,35 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBlock x:Name="AddManufacturer"
-                Text="Добавить"
-                Foreground="#FF152D51"
-                Grid.Column="5"
-                Grid.Row="1"
-                Height="25"
-                Width="100"
-                FontSize="15"
-                FontFamily="Roboto"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                TextDecorations="Underline"
-                MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
-                Cursor="Hand" Margin="70,64,-70,-64"/>
-
-        <Image Source="\Resources\ManufacturerAdd.png" Grid.Column="5" Grid.Row="1" Width="30" Height="30" Margin="-100,20,70,-20"/>
+        <Button x:Name="AddManufacturerBtn"
+        Height="50"
+        Width="160"
+        Grid.Row="0"
+        Grid.RowSpan="2"
+        Grid.Column="5"
+        Background="#FF8B7249"
+        Foreground="White"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+        Click="AddManufacturerBtn_Click"
+        BorderBrush="#FF8B7249"
+        Margin="0 0 0 20">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Image Source="/Resources/Manufacturer.png" Width="25" Height="25" Margin="0,0,10,0"/>
+                <TextBlock x:Name="AddManufacturer"
+                   Text="Добавить"
+                   Foreground="White"
+                   Height="25"
+                   Width="100"
+                   FontSize="20"
+                   FontFamily="Roboto"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Cursor="Hand"
+                   Margin="0,0,0,0"/>
+            </StackPanel>
+        </Button>
 
     </Grid>
 </Page>

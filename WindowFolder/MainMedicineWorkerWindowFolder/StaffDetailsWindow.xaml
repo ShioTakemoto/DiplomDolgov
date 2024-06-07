@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder"
         mc:Ignorable="d"
-        Title="Medicine Details" 
+        Title="Staff Details" 
         WindowStyle="None"
-        Height="450" 
+        Height="600" 
         Width="800"
         WindowStartupLocation="CenterScreen"
         Opacity="0"
@@ -15,64 +15,97 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ScrollViewer.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/ResourceFolder/Dictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="600"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <StackPanel Margin="20">
-                <Image x:Name="StaffImage" Height="300" Width="300" Margin="0,0,0,20"/>
-                <TextBlock Text="Фамилия: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding LastNameStaff}" FontSize="20"/>
-                <TextBlock Text="Имя: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding FirstNameStaff}" FontSize="20"/>
-                <TextBlock Text="Отчество: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding MiddleNameStaff}" FontSize="20"/>
-                <TextBlock Text="Пользователь: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding User.LoginUser}" FontSize="20"/>
-                <TextBlock Text="Должность: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding Post.NamePost}" FontSize="20"/>
-                <TextBlock Text="Почта: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding EmailStaff}" FontSize="20"/>
-                <TextBlock Text="Номер телефона: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding PhoneNumberStaff}" FontSize="20"/>
-                <TextBlock Text="Пол: " FontWeight="Bold" FontSize="22"/>
-                <TextBlock Text="{Binding Gender.NameGender}" FontSize="20"/>
+                <Image x:Name="StaffImage" Height="300" Width="300" Margin="20" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
 
-            </StackPanel>
+                <TextBlock Text="Фамилия: " FontWeight="Bold" FontSize="24" Foreground="#FF152D51" Grid.Row="4" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding LastNameStaff}" FontSize="22" Foreground="#FF152D51" Grid.Row="4" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Имя: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="5" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding FirstNameStaff}" FontSize="20" Foreground="#FF152D51" Grid.Row="5" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Отчество: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="6" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding MiddleNameStaff}" FontSize="20" Foreground="#FF152D51" Grid.Row="6" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Пользователь: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="7" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding User.LoginUser}" FontSize="20" Foreground="#FF152D51" Grid.Row="7" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Должность: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="8" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding Post.NamePost}" FontSize="20" Foreground="#FF152D51" Grid.Row="8" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Почта: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="9" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding EmailStaff}" FontSize="20" Foreground="#FF152D51" Grid.Row="9" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Номер телефона: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="10" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding PhoneNumberStaff}" FontSize="20" Foreground="#FF152D51" Grid.Row="10" Grid.Column="1" Margin="10"/>
+
+                <TextBlock Text="Пол: " FontWeight="Bold" FontSize="22" Foreground="#FF152D51" Grid.Row="11" Grid.Column="0" Margin="10"/>
+                <TextBlock Text="{Binding Gender.NameGender}" FontSize="20" Foreground="#FF152D51" Grid.Row="11" Grid.Column="1" Margin="10"/>
+            </Grid>
         </ScrollViewer>
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="40"
-                Height="40" 
-                Margin="20,15,120,15" 
-                Grid.Column="1">
+
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="20" Height="20" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,100,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
+                    <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="40" 
-                Height="40"
-                Grid.Column="1">
+
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,18,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="CollapseAndUnfold" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Width="20" Height="20" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,60,0" Click="CollapseAndUnfold_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="pack://application:,,,/Resources/RectangleButton.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>

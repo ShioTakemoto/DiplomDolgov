@@ -83,6 +83,26 @@ namespace DiplomDolgov.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddMedicineIcon {
+            get {
+                object obj = ResourceManager.GetObject("AddMedicineIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AddStaffWhite {
+            get {
+                object obj = ResourceManager.GetObject("AddStaffWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AddUser {
             get {
                 object obj = ResourceManager.GetObject("AddUser", resourceCulture);
@@ -343,6 +363,16 @@ namespace DiplomDolgov.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RectangleButton {
+            get {
+                object obj = ResourceManager.GetObject("RectangleButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Role {
             get {
                 object obj = ResourceManager.GetObject("Role", resourceCulture);
@@ -366,6 +396,16 @@ namespace DiplomDolgov.Properties {
         internal static System.Drawing.Bitmap StaffListIcon {
             get {
                 object obj = ResourceManager.GetObject("StaffListIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WhiteAddUser {
+            get {
+                object obj = ResourceManager.GetObject("WhiteAddUser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

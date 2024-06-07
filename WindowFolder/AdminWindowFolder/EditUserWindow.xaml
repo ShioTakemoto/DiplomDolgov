@@ -38,28 +38,23 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="40"
-                Height="40"
-                Grid.Column="4" Margin="30,10,30,50">
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="20" Height="20" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-35 10 60 0">
             <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!--Увелечение области нажатия-->
+                        <Rectangle Fill="Transparent" Width="20" Height="20"/>
+                        <!-- Изображение -->
+                        <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
-        <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="40" 
-                Height="40"
-                Grid.Column="5" Margin="30,10,30,50">
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="20" Height="20" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 30 0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -136,7 +131,7 @@
                       Height="60"
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                       BorderThickness="0 0 0 1"
-                      Padding="40,0,0,0"/>
+                      Padding="40,0,0,0" IsEditable="True"/>
             </Grid>
 
             <Button Content="Сохранить"
@@ -148,6 +143,7 @@
                 Grid.Row="6"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
+                Height="50"
                 Width="140"
                 Style="{StaticResource MaterialDesignRaisedDarkButton}" BorderBrush="#FF8B7249"/>
 

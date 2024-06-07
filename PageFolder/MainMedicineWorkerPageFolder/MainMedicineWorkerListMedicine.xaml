@@ -35,14 +35,14 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
+                    <RowDefinition Height="150" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                     <RowDefinition Height="200" />
                 </Grid.RowDefinitions>
 
-                <Image Source="\Resources\BankaTabletki.png" Grid.Column="7" Width="120"/>
+                <Image Source="\Resources\BankaTabletki.png" Grid.Column="7" Width="120" Height="120"/>
 
                 <!--<Image Source="\Resources\Search.png" Grid.Row="0" Width="30" Height="30" Grid.Column="3" Margin="50,30,140,30"/>-->
 
@@ -53,9 +53,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="470 20 0 0" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
+                    <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Margin="470 20 0 30" Height="60" Width="30" Grid.Column="1" Foreground="#FF8B7249"/>
                     <TextBox Name="SearchTB"
-                 VerticalContentAlignment="Center"
+                 VerticalContentAlignment="Bottom"
                  HorizontalContentAlignment="Left"
                  FontFamily="Roboto"
                  Grid.Column="1"
@@ -69,7 +69,7 @@
                  SelectionBrush="#FF152D51" 
                  CaretBrush="#FF152D51" 
                  BorderBrush="#FF152D51"
-                 TextChanged="SearchTb_TextChanged" Margin="0,0,110,0"/>
+                 TextChanged="SearchTb_TextChanged" Margin="0,0,110,30" Cursor="IBeam"/>
                 </Grid>
 
                 <ComboBox Name="TypeMedicineCB"
@@ -83,7 +83,8 @@
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           materialDesign:HintAssist.Hint="Тип"
           BorderThickness="0 0 0 1"
-          SelectionChanged="TypeMedicineCB_SelectionChanged"/>
+          SelectionChanged="TypeMedicineCB_SelectionChanged"
+                          Cursor="Hand" Margin="0 0 0 30" IsEditable="True"/>
 
                 <ComboBox Name="ActiveSubstanceCB"
           Grid.Column="5"
@@ -97,8 +98,11 @@
           materialDesign:HintAssist.Hint="Активное вещ-во"
           BorderThickness="0 0 0 1"
           SelectionChanged="ActiveSubstanceCB_SelectionChanged"
-          Margin="110 0 -110 0"/>
-                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto">
+          Margin="110 0 -110 30"
+          Cursor="Hand" IsEditable="True"/>
+
+                
+                <ScrollViewer Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" VerticalScrollBarVisibility="Auto" Margin="0 0 5 -28">
                     <ListBox x:Name="ListMedicineLB"
              BorderBrush="#8B7249"
              Foreground="#FF152D51"
@@ -106,7 +110,7 @@
              BorderThickness="2"
              Padding="0"
              MouseDoubleClick="ListMedicineLB_MouseDoubleClick"
-             PreviewMouseWheel="ListBox_PreviewMouseWheel">
+             PreviewMouseWheel="ListBox_PreviewMouseWheel" Cursor="Hand">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="#8B7249" BorderThickness="0,0,0,1" Padding="0 0 0 0">
@@ -133,7 +137,7 @@
                                         </Grid.RowDefinitions>
                                         <Border Background="Transparent"
                                 BorderBrush="Black" BorderThickness="1"
-                                Height="200"
+                                Height="150"
                                 x:Name="MedicineEllipse"
                                 Width="130"
                                 Grid.Row="0"

@@ -26,6 +26,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         public MainMedicineWorkerMainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new MainMedicineWorkerListMedicine());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -82,6 +83,29 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         public void HideOverlay2()
         {
             Overlay2.Visibility = Visibility.Collapsed;
+        }
+
+        private void CollapseAndUnfold_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
+                Topmost = true;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.CanResize;
+                Topmost = false;
+            }
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

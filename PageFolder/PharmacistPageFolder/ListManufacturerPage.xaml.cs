@@ -1,6 +1,7 @@
 ﻿using DiplomDolgov.ClassFolder;
 using DiplomDolgov.DataFolder;
 using DiplomDolgov.WindowFolder.CustomMessageBox;
+using DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder;
 using DiplomDolgov.WindowFolder.PharmacistWindowFolder;
 using System;
 using System.Linq;
@@ -128,8 +129,9 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
                 pharmacistWindow.ShowOverlay1();
                 editManufacturerWindow.Closed += (s, args) => pharmacistWindow.HideOverlay1();
             }
-
+            editManufacturerWindow.Topmost = true; // Устанавливаем на передний план
             editManufacturerWindow.ShowDialog();
+            editManufacturerWindow.Activate(); // Активируем окно
             RefreshDataGrid();
             ListManufacturerDG.Items.Refresh();
         }
@@ -149,7 +151,13 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             Search();
         }
 
-        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void AddManufacturerWindow_AddedManufacturer(object sender, EventArgs e)
+        {
+            // Обновляем DataGrid при получении события об успешном добавлении производителя
+            RefreshDataGrid();
+        }
+
+        private void AddManufacturerBtn_Click(object sender, RoutedEventArgs e)
         {
             var addManufacturerWindow = new AddManufacturerWindow();
 
@@ -164,13 +172,9 @@ namespace DiplomDolgov.PageFolder.PharmacistPageFolder
             // Подписываемся на событие AddedManufacturer, которое будет вызываться после успешного добавления производителя
             addManufacturerWindow.AddedManufacturer += AddManufacturerWindow_AddedManufacturer;
 
+            addManufacturerWindow.Topmost = true; // Устанавливаем на передний план
             addManufacturerWindow.ShowDialog();
-        }
-
-        private void AddManufacturerWindow_AddedManufacturer(object sender, EventArgs e)
-        {
-            // Обновляем DataGrid при получении события об успешном добавлении производителя
-            RefreshDataGrid();
+            addManufacturerWindow.Activate(); // Активируем окно
         }
     }
 }

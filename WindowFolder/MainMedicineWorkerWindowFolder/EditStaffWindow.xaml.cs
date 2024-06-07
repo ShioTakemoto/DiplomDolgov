@@ -183,7 +183,10 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         private void AddPost(object sender, RoutedEventArgs e)
         {
             // Создание окна для ввода новой должности
-            var inputWindow = new InputDialogWindow("Введите новую должность");
+            var inputWindow = new InputDialogWindow("Введите новую должность")
+            {
+                Topmost = true // Устанавливаем окно на передний план
+            };
             if (inputWindow.ShowDialog() == true)
             {
                 // Получение введенного текста

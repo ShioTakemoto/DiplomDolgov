@@ -19,34 +19,36 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
-            <ColumnDefinition Width="384"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <Rectangle Grid.RowSpan="11" Fill="#FF152D51" Stroke="#FF8B7249" StrokeThickness="4"/>
-        <Rectangle Grid.RowSpan="11" Fill="#FF152D51" Width="380" Margin="0,0,4,0"/>
+        <Rectangle Grid.RowSpan="11" Fill="#FF152D51" Width="380" Margin="0 0 4 0"/>
         <Rectangle Grid.Column="1" Grid.ColumnSpan="4" Fill="White"/>
         <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="10" Fill="#FFDFDFE0"/>
 
-        <Image Source="\Resources\PrintBackground.png" Grid.Column="4" Grid.Row="2" Grid.RowSpan="9"/>
+        <Grid Grid.Row="0" Grid.ColumnSpan="5" Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+
+        <Image Source="\Resources\PrintBackground.png" Grid.Column="4" Grid.Row="2" Grid.RowSpan="9" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
         <Label Name="PageName" 
                Grid.Column="1" 
@@ -59,7 +61,7 @@
                Margin="56,0,328,0" 
                Foreground="#FF152D51" 
                FontWeight="Bold"/>
-        
+
         <Label Name="WindowName" 
                Grid.Row="2" 
                VerticalContentAlignment="Center" 
@@ -72,40 +74,41 @@
 
         <Image Grid.RowSpan="2" Source="\Resources\LogoPillMedicine.png" Width="150"/>
 
-        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="MinusBtn_Click"
-                Width="60"
-                Height="60"
-                Grid.Column="4"
-                Margin="192,0,132,0">
+        <Button Name="MinusBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="MinusBtn_Click" Width="30" Height="30" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,70,0">
             <Button.Template>
-                <ControlTemplate>
-                    <Image Source="\Resources\Minus.png" />
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <!--Увелечение области нажатия-->
+                        <Rectangle Fill="Transparent" Width="20" Height="20"/>
+                        <!-- Изображение -->
+                        <Image Source="pack://application:,,,/Resources/Minus.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
-        <Button Name="ExitBtn" BorderBrush="Black" Background="#00000000" 
-                Foreground="#00000000" 
-                Click="ExitBtn_Click"
-                Width="60" 
-                Height="60"
-                Grid.Column="4"
-                Margin="314,0,10,0">
+        <Button x:Name="ExitBtn" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Click="ExitBtn_Click" Width="30" Height="30" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="\Resources\Close.png" />
+                    <Image Source="pack://application:,,,/Resources/Close.png" Width="20" Height="20"/>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="CollapseAndUnfold" BorderBrush="Black" Background="#00000000" Foreground="#00000000" Width="30" Height="30" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,40,0" Click="CollapseAndUnfold_Click">
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Source="pack://application:,,,/Resources/RectangleButton.png" Width="20" Height="20"/>
                 </ControlTemplate>
             </Button.Template>
         </Button>
 
         <StackPanel Grid.Row="3" Grid.RowSpan="8" Margin="0,-1,0,0">
-            <Border x:Name="ListUser" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,0,0,0">
+            <Border x:Name="ListUser" CornerRadius="10,0,0,10"  VerticalAlignment="Center" Height="70" Margin="0,20,0,0">
                 <Button x:Name="ListUserBtn"
                     Click="ListUserBtn_Click"
-                    Height="60"
-                    Margin="10,10,10,10"
+                    Height="70"
+                    Margin="20,10,20,-10"
                     Background="#FF8B7249"
                     Foreground="White"
                     VerticalAlignment="Center"
@@ -121,12 +124,19 @@
             </Border>
         </StackPanel>
 
+        <StackPanel Grid.Row="1"
+               Grid.RowSpan="10"
+               Grid.Column="1"
+               Grid.ColumnSpan="3">
         <Frame Grid.Row="1"
                Grid.RowSpan="10"
                Grid.Column="1"
                Grid.ColumnSpan="3"
                x:Name="MainFrame"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
                NavigationUIVisibility="Hidden"/>
+        </StackPanel>
 
         <Border x:Name="Overlay"
                 Background="Black"
@@ -134,6 +144,6 @@
                 Visibility="Collapsed"
                 Grid.RowSpan="11"
                 Grid.ColumnSpan="5" />
-        
+
     </Grid>
 </Window>

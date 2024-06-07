@@ -1,28 +1,13 @@
 ﻿using DiplomDolgov.ClassFolder;
 using DiplomDolgov.DataFolder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 {
-    /// <summary>
-    /// Логика взаимодействия для StaffDetailsWindow.xaml
-    /// </summary>
     public partial class StaffDetailsWindow : Window
     {
-        
         public StaffDetailsWindow(Staff selectedStaff)
         {
             InitializeComponent();
@@ -41,12 +26,35 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
-            WindowAnimationHelper.CloseWindowWithFadeOut(this);
+            this.Close();
         }
 
         private void MinusBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void CollapseAndUnfold_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
+                Topmost = true;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.CanResize;
+                Topmost = false;
+            }
         }
     }
 }

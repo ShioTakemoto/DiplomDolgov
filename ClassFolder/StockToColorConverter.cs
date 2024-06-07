@@ -17,9 +17,9 @@ namespace DiplomDolgov.ClassFolder
             if (value is int stockCount)
             {
                 // Задаем кисть в зависимости от значения StockCount
-                if (stockCount <= 5)
+                if (stockCount < 5)
                 {
-                    return new SolidColorBrush(Colors.Red); // Например, если StockCount меньше или равен 5, возвращаем красную кисть
+                    return new SolidColorBrush(Colors.Red); // Например, если StockCount меньше 5, возвращаем красную кисть
                 }
                 else
                 {
