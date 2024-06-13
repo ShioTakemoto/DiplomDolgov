@@ -54,6 +54,19 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             MedicineCB.ItemsSource = context.Medicine.ToList();
             GuestCB.ItemsSource = GuestsWithEmpty;
             StaffCB.ItemsSource = StaffWithEmpty;
+
+            // Установка текущих значений для редактирования
+            if (currentRealization.IdGuest.HasValue)
+            {
+                GuestCB.SelectedValue = currentRealization.IdGuest;
+            }
+
+            if (currentRealization.IdStaff.HasValue)
+            {
+                StaffCB.SelectedValue = currentRealization.IdStaff;
+            }
+
+            MedicineCB.SelectedValue = currentRealization.IdMedicine;
         }
 
         private void SaveButton(object sender, RoutedEventArgs e)

@@ -196,7 +196,7 @@
                   BorderThickness="0 0 0 1" IsEditable="True"/>
         
 
-        <Button Content="Добавить"
+        <Button Content="Сохранить"
                 Background="#FF8B7249" 
                 Foreground="White"
                 FontFamily="Roboto" 
