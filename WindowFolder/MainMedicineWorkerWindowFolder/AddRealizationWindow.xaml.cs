@@ -24,30 +24,34 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class AddRealizationWindow : Window
     {
-        public List<Guests> Guests { get; set; }
-        public List<Staff> Staff { get; set; }
+        public List<Guests> GuestsWithEmpty { get; set; }
+        public List<Staff> StaffWithEmpty { get; set; }
         public event EventHandler AddedRealizationSuccess;
         public AddRealizationWindow()
         {
             InitializeComponent();
-            LoadMedicines();
-            Guests = DBEntities.GetContext().Guests.ToList();
-            Staff = DBEntities.GetContext().Staff.ToList();
+            LoadData();
             DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadMedicines();
+            LoadData();
             var fadeInAnimation = (Storyboard)this.Resources["WindowFadeIn"];
             fadeInAnimation.Begin(this);
         }
 
-        private void LoadMedicines()
+        private void LoadData()
         {
-            MedicineCB.ItemsSource = DBEntities.GetContext().Medicine.ToList();
-            Guests = DBEntities.GetContext().Guests.ToList(); // Инициализация списка гостей
-            Staff = DBEntities.GetContext().Staff.ToList(); // Инициализация списка сотрудников
+            var context = DBEntities.GetContext();
+
+            GuestsWithEmpty = new List<Guests> { new Guests { IdGuest = -1, LastNameGuest = "", FirstNameGuest = "", MiddleNameGuest = "" } }
+                .Concat(context.Guests.ToList()).ToList();
+
+            StaffWithEmpty = new List<Staff> { new Staff { IdStaff = -1, LastNameStaff = "", FirstNameStaff = "", MiddleNameStaff = "" } }
+                .Concat(context.Staff.ToList()).ToList();
+
+            MedicineCB.ItemsSource = context.Medicine.ToList();
         }
 
         private void AddButton(object sender, RoutedEventArgs e)
@@ -75,13 +79,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 if (!TryGetDateTime(out DateTime dateTimeRealization))
                     return;
 
-                if (GuestCB.SelectedIndex < 0 && StaffCB.SelectedIndex < 0)
+                bool isGuestSelected = GuestCB.SelectedValue != null && (int)GuestCB.SelectedValue != -1;
+                bool isStaffSelected = StaffCB.SelectedValue != null && (int)StaffCB.SelectedValue != -1;
+
+                if (!isGuestSelected && !isStaffSelected)
                 {
                     ShowErrorMessage("Выберите либо гостя, либо сотрудника.");
                     return;
                 }
 
-                if (GuestCB.SelectedIndex >= 0 && StaffCB.SelectedIndex >= 0)
+                if (isGuestSelected && isStaffSelected)
                 {
                     ShowErrorMessage("Нельзя выбрать одновременно и гостя, и сотрудника.");
                     return;
@@ -121,12 +128,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     Count = count
                 };
 
-                if (GuestCB.SelectedIndex >= 0)
+                if (isGuestSelected)
                 {
                     newRealization.IdGuest = Convert.ToInt32(GuestCB.SelectedValue);
                 }
 
-                if (StaffCB.SelectedIndex >= 0)
+                if (isStaffSelected)
                 {
                     newRealization.IdStaff = Convert.ToInt32(StaffCB.SelectedValue);
                 }

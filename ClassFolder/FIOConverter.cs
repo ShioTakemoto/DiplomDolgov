@@ -15,10 +15,16 @@ namespace DiplomDolgov.ClassFolder
         {
             if (value is Guests guest)
             {
+                if (guest.IdGuest == -1)
+                    return string.Empty;
+
                 return $"{guest.LastNameGuest} {guest.FirstNameGuest[0]}. {guest.MiddleNameGuest[0]}.";
             }
             else if (value is Staff staff)
             {
+                if (staff.IdStaff == -1)
+                    return string.Empty;
+
                 return $"{staff.LastNameStaff} {staff.FirstNameStaff[0]}. {staff.MiddleNameStaff[0]}.";
             }
             else

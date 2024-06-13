@@ -23,18 +23,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     /// </summary>
     public partial class EditRealizationWindow : Window
     {
-        private Realization realization;
-        private DBEntities _context;
+        public List<Guests> GuestsWithEmpty { get; set; }
+        public List<Staff> StaffWithEmpty { get; set; }
+        private Realization currentRealization;
 
         public EditRealizationWindow(Realization realization)
         {
             InitializeComponent();
-            this.realization = realization;
-            DataContext = this.realization;
-            _context = DBEntities.GetContext();
-
-            Loaded += EditRealizationWindow_Loaded; // Добавляем обработчик события загрузки окна
-            Loaded += EditRealization1Window_Loaded;
+            currentRealization = realization;
+            LoadData();
+            DataContext = currentRealization;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -43,35 +41,20 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             fadeInAnimation.Begin(this);
         }
 
-        private void EditRealization1Window_Loaded(object sender, RoutedEventArgs e)
+        private void LoadData()
         {
-            // Устанавливаем значения DatePicker и TimeTextBox после загрузки окна
-            DatePicker.SelectedDate = realization.DateTimeRealization.Date;
-            TimeTextBox.Text = realization.DateTimeRealization.ToString("HH:mm");
+            var context = DBEntities.GetContext();
+
+            GuestsWithEmpty = new List<Guests> { new Guests { IdGuest = -1, LastNameGuest = "", FirstNameGuest = "", MiddleNameGuest = "" } }
+                .Concat(context.Guests.ToList()).ToList();
+
+            StaffWithEmpty = new List<Staff> { new Staff { IdStaff = -1, LastNameStaff = "", FirstNameStaff = "", MiddleNameStaff = "" } }
+                .Concat(context.Staff.ToList()).ToList();
+
+            MedicineCB.ItemsSource = context.Medicine.ToList();
+            GuestCB.ItemsSource = GuestsWithEmpty;
+            StaffCB.ItemsSource = StaffWithEmpty;
         }
-
-        private void EditRealizationWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            GuestCB.ItemsSource = _context.Guests.ToList();
-            StaffCB.ItemsSource = _context.Staff.ToList();
-            MedicineCB.ItemsSource = _context.Medicine.ToList();
-
-            GuestCB.SelectedItem = _context.Guests.FirstOrDefault(guest => guest.IdGuest == realization.IdGuest);
-            StaffCB.SelectedItem = _context.Staff.FirstOrDefault(staff => staff.IdStaff == realization.IdStaff);
-            MedicineCB.SelectedItem = _context.Medicine.FirstOrDefault(med => med.IdMedicine == realization.IdMedicine);
-        }
-
-        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
-
-        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
-
-        private void ExitBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (new MaterialDesignMessageBox("Вы уверены, что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
-                WindowAnimationHelper.CloseWindowWithFadeOut(this);
-        }
-
-        private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
 
         private void SaveButton(object sender, RoutedEventArgs e)
         {
@@ -95,90 +78,110 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                     return;
                 }
 
-                if (!TryParseDateTime(out DateTime dateTimeRealization))
+                if (!TryGetDateTime(out DateTime dateTimeRealization))
                     return;
 
-                if (GuestCB.SelectedIndex < 0 && StaffCB.SelectedIndex < 0)
+                bool isGuestSelected = GuestCB.SelectedValue != null && (int)GuestCB.SelectedValue != -1;
+                bool isStaffSelected = StaffCB.SelectedValue != null && (int)StaffCB.SelectedValue != -1;
+
+                if (!isGuestSelected && !isStaffSelected)
                 {
                     ShowErrorMessage("Выберите либо гостя, либо сотрудника.");
                     return;
                 }
 
-                if (GuestCB.SelectedIndex >= 0 && StaffCB.SelectedIndex >= 0)
+                if (isGuestSelected && isStaffSelected)
                 {
                     ShowErrorMessage("Нельзя выбрать одновременно и гостя, и сотрудника.");
                     return;
                 }
 
                 int selectedMedicineId = Convert.ToInt32(MedicineCB.SelectedValue);
-                var selectedMedicine = _context.StockUnit.FirstOrDefault(m => m.IdMedicine == selectedMedicineId);
+                var selectedMedicine = DBEntities.GetContext().Medicine.FirstOrDefault(m => m.IdMedicine == selectedMedicineId);
 
-                if (selectedMedicine == null || count > selectedMedicine.Count)
+                if (selectedMedicine == null)
                 {
-                    ShowErrorMessage("Указанное количество превышает доступное на складе.");
+                    ShowErrorMessage("Медикамент не найден.");
                     return;
                 }
 
-                // Получаем разницу между новым и старым количеством медикамента
-                int quantityDifference = count - realization.Count;
+                var stockUnit = selectedMedicine.StockUnit.FirstOrDefault(su => su.IdMedicine == selectedMedicineId);
 
-                // Обновляем количество медикамента в StockUnit
-                selectedMedicine.Count -= quantityDifference;
-
-                realization.IdMedicine = selectedMedicineId;
-                realization.Reason = ReasonTB.Text;
-                realization.DateTimeRealization = dateTimeRealization;
-                realization.Count = count;
-
-                if (GuestCB.SelectedIndex >= 0)
+                if (stockUnit == null)
                 {
-                    realization.IdGuest = Convert.ToInt32(GuestCB.SelectedValue);
-                }
-                else
-                {
-                    realization.IdGuest = null;
+                    ShowErrorMessage("Данные о запасах для выбранного медикамента отсутствуют.");
+                    return;
                 }
 
-                if (StaffCB.SelectedIndex >= 0)
+                if (count > stockUnit.Count)
                 {
-                    realization.IdStaff = Convert.ToInt32(StaffCB.SelectedValue);
-                }
-                else
-                {
-                    realization.IdStaff = null;
+                    ShowErrorMessage($"Недостаточное количество медикамента на складе. Доступно: {stockUnit.Count}");
+                    return;
                 }
 
-                
+                currentRealization.IdMedicine = selectedMedicineId;
+                currentRealization.Reason = ReasonTB.Text;
+                currentRealization.DateTimeRealization = dateTimeRealization;
+                currentRealization.Count = count;
 
-                // Обновляем привязки данных
-                GuestCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                StaffCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                MedicineCB.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                ReasonTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                CountTB.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                DatePicker.GetBindingExpression(DatePicker.SelectedDateProperty)?.UpdateSource();
-                TimeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                _context.SaveChanges();
-                ShowSuccessMessage("Данные успешно сохранены");
-                Close();
+                if (isGuestSelected)
+                {
+                    currentRealization.IdGuest = Convert.ToInt32(GuestCB.SelectedValue);
+                    currentRealization.IdStaff = null;
+                }
+                else if (isStaffSelected)
+                {
+                    currentRealization.IdStaff = Convert.ToInt32(StaffCB.SelectedValue);
+                    currentRealization.IdGuest = null;
+                }
+
+                DBEntities.GetContext().SaveChanges();
+                ShowSuccessMessage("Запись обновлена.");
+                this.Close();
             }
             catch (Exception ex)
             {
-                ShowErrorMessage("Ошибка при сохранении данных: " + ex.Message);
+                ShowErrorMessage("Ошибка: " + ex.Message);
             }
         }
 
-        private bool TryParseDateTime(out DateTime result)
+        private bool TryGetDateTime(out DateTime dateTime)
         {
-            result = DateTime.Now;
-            if (DatePicker.SelectedDate == null || !TimeSpan.TryParseExact(TimeTextBox.Text, "hh\\:mm", System.Globalization.CultureInfo.InvariantCulture, out TimeSpan selectedTime))
+            dateTime = DateTime.MinValue;
+            if (!DatePicker.SelectedDate.HasValue)
             {
-                ShowErrorMessage("Неверный формат времени! Введите время в формате ЧЧ:ММ.");
+                ShowErrorMessage("Выберите дату реализации.");
                 return false;
             }
 
-            result = DatePicker.SelectedDate.Value.Date + selectedTime;
+            if (string.IsNullOrWhiteSpace(TimeTextBox.Text))
+            {
+                ShowErrorMessage("Введите время реализации.");
+                return false;
+            }
+
+            string date = DatePicker.SelectedDate.Value.ToShortDateString();
+            string dateTimeString = $"{date} {TimeTextBox.Text}";
+
+            if (!DateTime.TryParse(dateTimeString, out dateTime))
+            {
+                ShowErrorMessage("Введите корректные дату и время реализации.");
+                return false;
+            }
+
             return true;
         }
+
+        private void ShowErrorMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+        private void ShowSuccessMessage(string message) => new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (new MaterialDesignMessageBox("Вы уверены что хотите выйти?", MessageType.Confirmation, MessageButtons.YesNo).ShowDialog() == true)
+                WindowAnimationHelper.CloseWindowWithFadeOut(this);
+        }
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     }
 }
