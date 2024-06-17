@@ -94,6 +94,7 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             if (selectedMedicine != null)
             {
                 var detailsWindow = new MedicineDetailsWindow(selectedMedicine);
+                detailsWindow.Topmost = true; // Установка окна поверх всех окон
                 detailsWindow.Show();
             }
         }

@@ -240,16 +240,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         {
             // Получение контекста базы данных
             var context = DBEntities.GetContext();
-            // Получение набора данных для типа T
+            // Получение набора данных для типа T из контекста базы данных
             var dbSet = context.Set<T>();
-            // Формирование имени свойства для поиска
+            // Формирование имени свойства для поиска (например, если T - это Product, то свойство будет NameProduct)
             var propertyName = $"Name{typeof(T).Name}";
 
-            // Создание параметра выражения для типа T
+            // Создание параметра выражения для типа T (используется для создания динамического запроса к базе данных)
             var parameter = System.Linq.Expressions.Expression.Parameter(typeof(T), "item");
-            // Создание выражения для доступа к свойству
+            // Создание выражения для доступа к свойству NameProduct (или другому свойству, указанному в propertyName)
             var property = System.Linq.Expressions.Expression.Property(parameter, propertyName);
-            // Создание выражения константы для inputText
+            // Создание выражения константы для inputText (значение, которое мы хотим проверить)
             var constant = System.Linq.Expressions.Expression.Constant(inputText, typeof(string));
             // Создание выражения равенства для сравнения свойства с inputText
             var equality = System.Linq.Expressions.Expression.Equal(property, constant);
@@ -259,6 +259,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             // Выполнение запроса для проверки существования элемента в базе данных
             var existingItem = dbSet.FirstOrDefault(lambda);
 
+            // Проверка наличия существующего элемента
             if (existingItem != null)
             {
                 // Показ сообщения об ошибке, если элемент уже существует

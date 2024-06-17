@@ -152,12 +152,13 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             return int.TryParse(input, out _);
         }
 
-        private void AddComboBoxItem<T>(ComboBox comboBox, T newItem)
+        // Метод для добавления элемента в ComboBox
+        private void AddComboBoxItem<T>(ComboBox comboBox, object newItem)
         {
             // Проверяем, что newItem не равен null
             if (newItem != null)
             {
-                // Получаем текущий источник данных
+                // Получаем текущий источник данных ComboBox
                 var itemsSource = comboBox.ItemsSource as IList<T>;
 
                 // Если источник данных равен null, создаем новый список
@@ -167,12 +168,12 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 }
 
                 // Добавляем новый элемент в источник данных
-                itemsSource.Add(newItem);
+                itemsSource.Add((T)newItem);
 
                 // Устанавливаем обновленный список как источник данных ComboBox
                 comboBox.ItemsSource = itemsSource;
 
-                // Устанавливаем выбранным новый элемент
+                // Устанавливаем выбранным новый элемент в ComboBox
                 comboBox.SelectedItem = newItem;
             }
         }

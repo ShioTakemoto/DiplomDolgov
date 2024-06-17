@@ -185,13 +185,26 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             }
         }
 
+        // Метод для получения идентификатора выбранного элемента ComboBox
         private int GetComboBoxItemId<T>(ComboBox comboBox) where T : class
         {
+            // Получаем выбранный элемент ComboBox и приводим его к типу T
             var selectedItem = comboBox.SelectedItem as T;
+
+            // Проверяем, что выбранный элемент не равен null
             if (selectedItem != null)
             {
-                return (int)selectedItem.GetType().GetProperty($"Id{typeof(T).Name}").GetValue(selectedItem);
+                // Формируем имя свойства, которое содержит идентификатор (например, IdProduct для типа Product)
+                var propertyName = $"Id{typeof(T).Name}";
+
+                // Получаем значение свойства идентификатора выбранного элемента
+                var propertyValue = selectedItem.GetType().GetProperty(propertyName).GetValue(selectedItem);
+
+                // Приводим значение свойства к типу int и возвращаем его
+                return (int)propertyValue;
             }
+
+            // Возвращаем -1, если выбранный элемент равен null или не удалось получить идентификатор
             return -1;
         }
 
@@ -226,16 +239,20 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             new MaterialDesignMessageBox(message, MessageType.Success, MessageButtons.Ok).ShowDialog();
         }
 
+        // Метод для добавления элемента в ComboBox и базу данных
         private void AddComboBoxItem<T>(ComboBox comboBox, string inputText) where T : class
         {
+            // Получаем контекст базы данных
             var context = DBEntities.GetContext();
+            // Получаем набор данных для типа T
             var dbSet = context.Set<T>();
+            // Формируем имя свойства, по которому будем искать дубликаты (например, для типа Product, свойство будет NameProduct)
             var propertyName = $"Name{typeof(T).Name}";
 
-            // Получаем значение свойства за пределами запроса LINQ
+            // Получаем значение свойства для нового элемента
             var propertyValue = inputText;
 
-            // Создаем список для хранения всех элементов
+            // Получаем все элементы из набора данных
             var allItems = dbSet.ToList();
 
             // Проверяем, существует ли элемент с таким же значением свойства
@@ -243,26 +260,30 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
             if (existingItem != null)
             {
+                // Показываем сообщение об ошибке, если элемент уже существует
                 ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
             }
             else
             {
+                // Создаем новый экземпляр элемента типа T
                 var newItem = (T)Activator.CreateInstance(typeof(T));
+                // Устанавливаем значение свойства propertyName для нового элемента
                 newItem.GetType().GetProperty(propertyName).SetValue(newItem, propertyValue);
 
+                // Добавляем новый элемент в набор данных и сохраняем изменения в базе данных
                 dbSet.Add(newItem);
                 context.SaveChanges();
 
-                // Получаем коллекцию, которая автоматически уведомляет о изменениях
+                // Создаем наблюдаемую коллекцию для автоматического уведомления о изменениях
                 var observableCollection = new ObservableCollection<T>(allItems);
 
-                // Обновляем ComboBox.ItemsSource, подписывая его на события изменения коллекции
+                // Устанавливаем обновленную наблюдаемую коллекцию как источник данных для ComboBox
                 comboBox.ItemsSource = observableCollection;
 
-                // Добавляем новый элемент в коллекцию
+                // Добавляем новый элемент в наблюдаемую коллекцию
                 observableCollection.Add(newItem);
 
-                // Устанавливаем новый элемент как выбранный
+                // Устанавливаем новый элемент как выбранный в ComboBox
                 comboBox.SelectedItem = newItem;
             }
         }

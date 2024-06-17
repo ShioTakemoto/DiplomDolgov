@@ -28,12 +28,16 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
     {
         private Staff staff;
         private string selectedFileName = "";
+        public int? IdUser { get; set; } // Теперь может принимать null значения
         public EditStaffWindow(Staff staff)
         {
             InitializeComponent();
             this.staff = staff;
             DataContext = this.staff;
-            UserCB.ItemsSource = DBEntities.GetContext().User.ToList();
+            var users = DBEntities.GetContext().User.ToList();
+            users.Insert(0, new User { IdUser = -1, LoginUser = string.Empty }); // Добавляем пустое значение
+            UserCB.ItemsSource = users;
+            UserCB.SelectedIndex = 0; // Устанавливаем пустое значение
             PostCB.ItemsSource = DBEntities.GetContext().Post.ToList();
             GenderCB.ItemsSource = DBEntities.GetContext().Gender.ToList();
         }
@@ -187,23 +191,28 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             {
                 Topmost = true // Устанавливаем окно на передний план
             };
+
+            // Отображаем окно для ввода текста и ждем, пока пользователь закроет его
             if (inputWindow.ShowDialog() == true)
             {
-                // Получение введенного текста
+                // Получение введенного текста из окна
                 var inputText = inputWindow.InputText;
+
+                // Проверка, не пустое ли поле ввода
                 if (string.IsNullOrEmpty(inputText))
                 {
-                    // Показ сообщения об ошибке, если поле пустое
+                    // Показываем сообщение об ошибке, если поле пустое
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
+                // Проверка наличия только букв в введенном тексте
                 else if (!ContainsOnlyLetters(inputText))
                 {
-                    // Показ сообщения об ошибке, если введены недопустимые символы
+                    // Показываем сообщение об ошибке, если введены недопустимые символы
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
-                    // Добавление новой должности в ComboBox и базу данных
+                    // Вызываем метод для добавления новой должности в ComboBox и базу данных
                     AddComboBoxItem<Post>(PostCB, inputText);
                 }
             }
@@ -212,35 +221,43 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
         // Метод для добавления элемента в ComboBox и базу данных
         private void AddComboBoxItem<T>(ComboBox comboBox, string inputText) where T : class
         {
-            // Получение контекста базы данных
+            // Получаем контекст базы данных
             var context = DBEntities.GetContext();
-            // Получение набора данных для типа T
+
+            // Получаем DbSet для типа T
             var dbSet = context.Set<T>();
-            // Формирование имени свойства для поиска
+
+            // Формируем имя свойства для поиска (например, NameManufacturerCountry для ManufacturerCountry)
             var propertyName = $"Name{typeof(T).Name}";
 
-            // Поиск существующего элемента с таким же значением свойства
-            var existingItem = dbSet.FirstOrDefault(item =>
+            // Создаем список всех элементов типа T
+            var allItems = dbSet.ToList();
+
+            // Проверяем, существует ли элемент с таким же значением свойства
+            var existingItem = allItems.FirstOrDefault(item =>
                 (string)item.GetType().GetProperty(propertyName).GetValue(item) == inputText);
 
             if (existingItem != null)
             {
-                // Показ сообщения об ошибке, если элемент уже существует
+                // Если элемент уже существует, показываем сообщение об ошибке
                 ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
             }
             else
             {
-                // Создание нового элемента типа T
-                var newItem = (T)Activator.CreateInstance(typeof(T));
-                // Установка значения свойства для нового элемента
+                // Создаем новый объект типа T
+                var newItem = Activator.CreateInstance<T>();
+
+                // Устанавливаем значение свойства propertyName для нового элемента
                 newItem.GetType().GetProperty(propertyName).SetValue(newItem, inputText);
 
-                // Добавление нового элемента в набор данных и сохранение изменений в базе данных
+                // Добавляем новый элемент в DbSet и сохраняем изменения в базе данных
                 dbSet.Add(newItem);
                 context.SaveChanges();
 
-                // Обновление источника данных для ComboBox и установка нового элемента как выбранного
+                // Обновляем источник данных для ComboBox
                 comboBox.ItemsSource = dbSet.ToList();
+
+                // Устанавливаем новый элемент как выбранный в ComboBox
                 comboBox.SelectedItem = newItem;
             }
         }

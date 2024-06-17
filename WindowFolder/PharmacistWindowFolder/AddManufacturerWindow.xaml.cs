@@ -33,44 +33,63 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             ManufacturerCountryCB.ItemsSource = DBEntities.GetContext().ManufacturerCountry.ToList();
         }
 
+        // Обработчик добавления новой страны производителя
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
         {
+            // Создаем окно для ввода новой страны производителя
             var inputWindow = new InputDialogWindow("Введите новую страну производителя")
             {
                 Topmost = true // Устанавливаем окно на передний план
             };
+
+            // Отображаем окно и ожидаем ввода пользователя
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
+
+                // Проверяем, что поле не пустое
                 if (string.IsNullOrEmpty(inputText))
                 {
                     ShowErrorMessage("Поле не должно быть пустым!");
                 }
+                // Проверяем, что введены только допустимые символы
                 else if (!IsValidName(inputText))
                 {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы.");
                 }
                 else
                 {
+                    // Вызываем метод для добавления новой страны производителя
                     AddNewManufacturerCountry(inputText);
                 }
             }
         }
 
+        // Метод для добавления новой страны производителя в базу данных
         private void AddNewManufacturerCountry(string inputText)
         {
+            // Получаем контекст базы данных
             var context = DBEntities.GetContext();
+
+            // Проверяем, существует ли уже страна с таким же именем
             if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
             {
+                // Выводим сообщение об ошибке, если страна уже существует
                 ShowErrorMessage("Такая страна уже существует!");
             }
             else
             {
+                // Создаем новый объект страны производителя
                 var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
+
+                // Добавляем новую страну в базу данных и сохраняем изменения
                 context.ManufacturerCountry.Add(newManufacturerCountry);
                 context.SaveChanges();
 
+                // Перезагружаем список стран производителей
                 LoadManufacturerCountries();
+
+                // Устанавливаем новую страну производителя как выбранную в ComboBox
                 ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
             }
         }
@@ -188,11 +207,18 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private int GetSelectedItemId<T>(ComboBox comboBox) where T : class
         {
+            // Получаем выбранный элемент из комбо-бокса
             var selectedItem = comboBox.SelectedItem;
+
+            // Проверяем, что выбранный элемент не равен null
             if (selectedItem != null)
             {
+                // Получаем тип выбранного элемента и получаем его свойство "Id{тип T}"
+                // Приводим значение свойства к типу int и возвращаем его
                 return (int)selectedItem.GetType().GetProperty($"Id{typeof(T).Name}").GetValue(selectedItem);
             }
+
+            // Если выбранный элемент равен null, возвращаем -1
             return -1;
         }
     }

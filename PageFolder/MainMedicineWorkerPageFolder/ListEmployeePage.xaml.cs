@@ -209,31 +209,51 @@ namespace DiplomDolgov.PageFolder.MainMedicineWorkerPageFolder
             LoadStaff();
         }
 
+        //Этот метод предназначен для обработки события прокрутки колесика
+        //мыши(MouseWheel) для ListBox.Когда пользователь прокручивает
+        //колесико мыши над ListBox, метод пытается найти родительский элемент
+        //типа ScrollViewer, чтобы управлять прокруткой.
         private void ListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            // Находим родительский элемент типа ScrollViewer для элемента ListBox, вызвавшего событие
             var scrollViewer = FindParent<ScrollViewer>((DependencyObject)sender);
+
+            // Если родительский элемент ScrollViewer найден
             if (scrollViewer != null)
             {
+                // Если колесико мыши прокручивается вверх (e.Delta > 0)
                 if (e.Delta > 0)
                 {
+                    // Прокручиваем содержимое ScrollViewer на одну строку вверх
                     scrollViewer.LineUp();
                 }
-                else
+                else // Если колесико мыши прокручивается вниз (e.Delta <= 0)
                 {
+                    // Прокручиваем содержимое ScrollViewer на одну строку вниз
                     scrollViewer.LineDown();
                 }
+
+                // Устанавливаем e.Handled в true, чтобы указать, что событие обработано
                 e.Handled = true;
             }
         }
 
         private T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
+            // Получаем родительский элемент для данного дочернего элемента
             DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+
+            // Если родительского элемента нет, возвращаем null
             if (parentObject == null) return null;
+
+            // Пробуем преобразовать родительский элемент к типу T
             T parent = parentObject as T;
+
+            // Если преобразование удалось и родительский элемент является типом T, возвращаем его
             if (parent != null)
                 return parent;
             else
+                // Если преобразование не удалось, рекурсивно вызываем этот метод для родительского элемента
                 return FindParent<T>(parentObject);
         }
 

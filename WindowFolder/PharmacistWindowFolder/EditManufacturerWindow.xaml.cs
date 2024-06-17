@@ -61,36 +61,63 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
                 WindowAnimationHelper.CloseWindowWithFadeOut(this);
         }
 
+        // Обработчик события для добавления новой страны производителя
         private void AddManufacturerCountry(object sender, RoutedEventArgs e)
         {
+            // Открываем диалоговое окно для ввода новой страны производителя
             var inputWindow = new InputDialogWindow("Введите новую страну производителя")
             {
                 Topmost = true // Устанавливаем окно на передний план
             };
+
+            // Если пользователь подтвердил ввод данных в диалоговом окне
             if (inputWindow.ShowDialog() == true)
             {
                 var inputText = inputWindow.InputText;
+
+                // Проверяем, что введенный текст не пустой
                 if (string.IsNullOrEmpty(inputText))
+                {
                     ShowErrorMessage("Поле не должно быть пустым!");
+                }
+                // Проверяем валидность введенного имени страны производителя
                 else if (!IsValidName(inputText))
+                {
                     ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
+                }
                 else
+                {
+                    // Вызываем метод для добавления новой страны производителя
                     AddNewManufacturerCountry(inputText);
+                }
             }
         }
 
+        // Метод для добавления новой страны производителя в базу данных
         private void AddNewManufacturerCountry(string inputText)
         {
             var context = DBEntities.GetContext();
+
+            // Проверяем, существует ли уже страна производителя с таким же именем
             if (context.ManufacturerCountry.Any(mc => mc.NameManufacturerCountry == inputText))
+            {
                 ShowErrorMessage("Такая страна уже существует!");
+            }
             else
             {
+                // Создаем новый объект страны производителя
                 var newManufacturerCountry = new ManufacturerCountry { NameManufacturerCountry = inputText };
+
+                // Добавляем новую страну производителя в контекст базы данных
                 context.ManufacturerCountry.Add(newManufacturerCountry);
+
+                // Сохраняем изменения в базе данных
                 context.SaveChanges();
 
+                // Обновляем источник данных ComboBox с странами производителя
                 ManufacturerCountryCB.ItemsSource = context.ManufacturerCountry.ToList();
+
+                // Устанавливаем новую страну производителя как выбранную в ComboBox
                 ManufacturerCountryCB.SelectedItem = newManufacturerCountry;
             }
         }

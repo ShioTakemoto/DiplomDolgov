@@ -125,7 +125,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
             // Проверяем, что newItem не равен null
             if (newItem != null)
             {
-                // Получаем текущий источник данных
+                // Получаем текущий источник данных ComboBox
                 var itemsSource = comboBox.ItemsSource as IList<T>;
 
                 // Если источник данных равен null, создаем новый список
@@ -140,7 +140,7 @@ namespace DiplomDolgov.WindowFolder.MainMedicineWorkerWindowFolder
                 // Устанавливаем обновленный список как источник данных ComboBox
                 comboBox.ItemsSource = itemsSource;
 
-                // Устанавливаем выбранным новый элемент
+                // Устанавливаем выбранным новый элемент в ComboBox
                 comboBox.SelectedItem = newItem;
             }
         }

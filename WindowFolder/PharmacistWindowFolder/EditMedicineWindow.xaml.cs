@@ -90,20 +90,28 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
 
         private void AddBestBeforeDate(object sender, RoutedEventArgs e) => AddNewItem<BestBeforeDate>("Введите новый срок годности", BestBeforeDateCB, bb => bb.NameBestBeforeDate);
 
+        // Метод для добавления нового элемента типа T в базу данных и ComboBox
         private void AddNewItem<T>(string message, ComboBox comboBox, Func<T, string> selector) where T : class, new()
         {
+            // Показываем диалоговое окно для ввода нового элемента
             var inputText = ShowInputDialog(message);
+
+            // Проверяем, что введенный текст не пустой
             if (string.IsNullOrEmpty(inputText))
             {
                 ShowErrorMessage("Поле не должно быть пустым!");
                 return;
             }
+
+            // Проверяем валидность введенного имени
             if (!IsValidName(inputText))
             {
                 ShowErrorMessage("Недопустимые символы! Допускаются только буквы и пробелы.");
                 return;
             }
 
+            // Получаем контекст базы данных
+            var context = DBEntities.GetContext();
             var dbSet = context.Set<T>();
             var propertyName = $"Name{typeof(T).Name}";
 
@@ -114,46 +122,53 @@ namespace DiplomDolgov.WindowFolder.PharmacistWindowFolder
             var allItems = dbSet.ToList();
 
             // Проверяем, существует ли элемент с таким же значением свойства
-            var existingItem = allItems.FirstOrDefault(item => (string)item.GetType().GetProperty(propertyName).GetValue(item) == propertyValue);
+            var existingItem = allItems.FirstOrDefault(item => selector(item) == propertyValue);
 
             if (existingItem != null)
             {
+                // Показываем сообщение об ошибке, если элемент уже существует
                 ShowErrorMessage($"Такой {typeof(T).Name.ToLower()} уже существует!");
             }
             else
             {
-                var newItem = Activator.CreateInstance<T>();
+                // Создаем новый экземпляр элемента типа T
+                var newItem = new T();
+
+                // Устанавливаем значение свойства Name<тип T> для нового элемента
                 newItem.GetType().GetProperty(propertyName).SetValue(newItem, propertyValue);
 
+                // Добавляем новый элемент в набор данных и сохраняем изменения в базе данных
                 dbSet.Add(newItem);
                 try
                 {
                     context.SaveChanges();
 
-                    // Получаем коллекцию, которая автоматически уведомляет о изменениях
+                    // Создаем ObservableCollection для автоматического уведомления об изменениях
                     var observableCollection = new ObservableCollection<T>(allItems);
 
-                    // Обновляем ComboBox.ItemsSource, подписывая его на события изменения коллекции
+                    // Обновляем источник данных ComboBox, подписывая его на события изменения коллекции
                     comboBox.ItemsSource = observableCollection;
 
                     // Добавляем новый элемент в коллекцию
                     observableCollection.Add(newItem);
 
-                    // Устанавливаем новый элемент как выбранный
+                    // Устанавливаем новый элемент как выбранный в ComboBox
                     comboBox.SelectedItem = newItem;
                 }
                 catch (DbEntityValidationException ex)
                 {
+                    // Обрабатываем ошибки валидации сущностей
                     HandleValidationErrors(ex);
                 }
                 catch (Exception ex)
                 {
+                    // Обрабатываем другие ошибки
                     Console.WriteLine($"An error occurred: {ex}");
                 }
             }
         }
 
-    private string ShowInputDialog(string message)
+        private string ShowInputDialog(string message)
         {
             var inputWindow = new InputDialogWindow(message);
             return inputWindow.ShowDialog() == true ? inputWindow.InputText : null;
